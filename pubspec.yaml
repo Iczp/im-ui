@@ -4,12 +4,19 @@ version: 0.0.1
 homepage:
 
 environment:
-  sdk: '>=2.18.1 <3.0.0'
+  sdk: ">=2.18.1 <3.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  im_core:
+    git:
+      name: im_core
+      url: https://github.com/Iczp/im-core.git
+      ref: v0.0.4
+      #path: ../../packages/im_core
+
 
 dev_dependencies:
   flutter_test:
