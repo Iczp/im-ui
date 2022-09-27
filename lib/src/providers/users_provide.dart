@@ -1,15 +1,19 @@
 import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:im_core/im_core.dart';
 
 /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
-
 class UsersProvide with ChangeNotifier, DiagnosticableTreeMixin {
   ///
   UsersProvide() {
     initData();
   }
+
+  ///
+  static final _instance = UsersProvide();
+
+  ///
+  static UsersProvide get instance => _instance;
 
   ///登录用户 id(dev)
   String? _loginUserId;
@@ -27,12 +31,12 @@ class UsersProvide with ChangeNotifier, DiagnosticableTreeMixin {
   final Map<String, AppUserDto> _users = <String, AppUserDto>{};
 
   static const data = [
-    ['zhongpei', '陈忠培'],
-    ['zhuwei', '朱伟'],
-    ['wangqilian', '王启联'],
-    ['wanglifeng', '王李凤'],
-    ['aaaa', 'aaaa'],
-    ['bbbbb', 'bbbbb'],
+    ['zhongpei', 'zhongpei'],
+    ['zhuwei', 'zhuwei'],
+    ['wangqilian', 'wangqilian'],
+    ['wanglifeng', 'wanglifeng'],
+    ['china', 'china'],
+    ['flutter', 'flutter'],
   ];
   // ignore: non_constant_identifier_names
   AsyncInitialize() {
