@@ -18,7 +18,7 @@ import '../widgets/menu_button.dart';
 import '../widgets/message_template/message_widget.dart';
 import '../widgets/operation_menus.dart';
 import 'widget/message_list_view.dart';
-import 'widget/notice_widget.dart';
+// import 'widget/notice_widget.dart';
 
 /// 聊天页
 class ChatingPage extends StatefulWidget {
