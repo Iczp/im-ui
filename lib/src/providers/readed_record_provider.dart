@@ -46,6 +46,12 @@ class ReadedRecordProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   ///
+  static final _instance = ReadedRecordProvider();
+
+  ///
+  static ReadedRecordProvider get instance => _instance;
+
+  ///
   final _readedMaps = <String, ReadedRecordModel>{};
 
   ///

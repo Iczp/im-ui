@@ -7,7 +7,7 @@ import '../models/result_model.dart';
 
 class MessageProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ///
-  static final MessageProvider _instance = MessageProvider();
+  static final _instance = MessageProvider();
 
   ///
   static MessageProvider get instance => _instance;

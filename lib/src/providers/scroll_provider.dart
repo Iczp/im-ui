@@ -20,6 +20,12 @@ class ScrollProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   ///
+  static final _instance = ScrollProvider();
+
+  ///
+  static ScrollProvider get instance => _instance;
+
+  ///
   final _scrollMaps = <String, ScrollModel>{};
 
   ///

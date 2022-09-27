@@ -5,6 +5,21 @@ import '../app.dart';
 /// -- by iczp.net 2022.8.29
 class KeyboardProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ///
+  KeyboardProvider({double? keyboardHeight}) {
+    if (keyboardHeight != null) {
+      _keyboardHeight = keyboardHeight;
+    } else {
+      _keyboardHeight = getKeyboardHeight() ?? defaultHeight;
+    }
+  }
+
+  ///
+  static final _instance = KeyboardProvider();
+
+  ///
+  static KeyboardProvider get instance => _instance;
+
+  ///
   static const double defaultHeight = 321;
 
   ///
@@ -14,15 +29,6 @@ class KeyboardProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   ///
   get keyboardHeight => _keyboardHeight;
-
-  ///
-  KeyboardProvider({double? keyboardHeight}) {
-    if (keyboardHeight != null) {
-      _keyboardHeight = keyboardHeight;
-    } else {
-      _keyboardHeight = getKeyboardHeight() ?? defaultHeight;
-    }
-  }
 
   ///
   void setKeyboardHeight(value) {

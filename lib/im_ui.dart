@@ -13,15 +13,16 @@ class ImUi {
   }
 
   ///
-  static List<SingleChildWidget> initProviders() {
-    return [
-      ChangeNotifierProvider(create: (_) => UsersProvide()),
-      ChangeNotifierProvider(create: (_) => MessageProvider.instance),
-      ChangeNotifierProvider(create: (_) => KeyboardProvider()),
-      ChangeNotifierProvider(create: (_) => MaxLogIdProvider()),
-      ChangeNotifierProvider(create: (_) => ProcessProvider.instance),
-      ChangeNotifierProvider(create: (_) => ReadedRecordProvider()),
-      ChangeNotifierProvider(create: (_) => ScrollProvider()),
-    ];
-  }
+  static List<SingleChildWidget>? _providies;
+
+  ///
+  static List<SingleChildWidget> get providies => _providies ??= [
+        ChangeNotifierProvider(create: (_) => UsersProvide.instance),
+        ChangeNotifierProvider(create: (_) => MessageProvider.instance),
+        ChangeNotifierProvider(create: (_) => KeyboardProvider.instance),
+        ChangeNotifierProvider(create: (_) => MaxLogIdProvider.instance),
+        ChangeNotifierProvider(create: (_) => ProcessProvider.instance),
+        ChangeNotifierProvider(create: (_) => ReadedRecordProvider.instance),
+        ChangeNotifierProvider(create: (_) => ScrollProvider.instance),
+      ];
 }

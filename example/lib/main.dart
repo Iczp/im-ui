@@ -11,7 +11,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ...ImUi.initProviders(),
+        ...ImUi.providies,
       ],
       child: const MyApp(),
     ),
