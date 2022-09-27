@@ -1,0 +1,255 @@
+import 'dart:async';
+import 'dart:math';
+
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:im/commons/mixins/logger_mixin.dart';
+import 'package:im/commons/utils.dart';
+import 'package:im/enums/message_type_enum.dart';
+import 'package:im/widgets/message_content/message_content_widget.dart';
+import 'package:im/widgets/message_content/sound_content_widget.dart';
+import 'package:im/widgets/message_content/text_content_widget.dart';
+
+class MessageBodyWidget extends MessageContentWidget {
+  const MessageBodyWidget({
+    Key? key,
+    // required this.messageBodyKey,
+    // required super.isSoundPlay,
+    // required super.message,
+    required super.arguments,
+    // super.onMessageTap,
+    // super.onMessageLongPressed,
+    this.longPressMillisecond = 300,
+    this.minSilderDistance = 0,
+  }) : super(key: key);
+
+  ///长按时间
+  final int longPressMillisecond;
+
+  ///最小滑动距离
+  final double minSilderDistance;
+
+  // ///
+  // final GlobalKey messageBodyKey;
+
+  ///
+  @override
+  State<MessageBodyWidget> createState() => _MessageBodyWidgetState();
+}
+
+class _MessageBodyWidgetState extends State<MessageBodyWidget>
+    with loggerMixin {
+  // ///
+  final GlobalKey messageBodyGlobalKey = GlobalKey();
+  // widget.arguments.messageBodyKey; //GlobalKey();
+
+  /// startTime
+  // ignore: unused_field
+  DateTime? _startTime;
+
+  /// timer
+  Timer? _timer;
+
+  ///指针
+  PointerEvent? _pointerEvent;
+
+  ///滑动距离
+  double _distance = 0;
+
+  bool _isLongPressed = false;
+
+  ///触发 LongPressed 事件
+  void _emitLongPressedEvent() {
+    _isLongPressed = true;
+    if (widget.arguments.onMessageLongPress != null) {
+      widget.arguments.onMessageLongPress!(messageBodyGlobalKey);
+    }
+    Utils.vibrateSuccess();
+  }
+
+  ///触发 Tap 事件
+  void _emitTapEvent() {
+    if (widget.arguments.onMessageTap != null) {
+      widget.arguments.onMessageTap!();
+    }
+
+    Utils.vibrateSuccess();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  ///
+  void _disposePointer() {
+    _isLongPressed = false;
+    _pointerEvent = null;
+    _startTime = null;
+    _distance = 0;
+    _timer?.cancel();
+  }
+
+  ///
+  Widget listener() {
+    return Listener(
+      // key: messageBodyGlobalKey,
+      onPointerMove: (event) {
+        // logger.d('onPointerMove:$event');
+        if (_pointerEvent == null) {
+          return;
+        }
+        _distance = sqrt(
+                pow(event.position.dx - _pointerEvent!.position.dx, 2) +
+                    pow(event.position.dy - _pointerEvent!.position.dy, 2))
+            .abs();
+        // logger.d('onPointerMove:$distance');
+      },
+      onPointerDown: (event) {
+        _startTime = DateTime.now();
+        _distance = 0;
+        _pointerEvent = event;
+        _isLongPressed = false;
+        // logger.d(
+        //     'onPointerDown:${event.localPosition},${event.position}，$startTime');
+        // ignore: avoid_print
+        _timer = Timer(Duration(milliseconds: widget.longPressMillisecond), () {
+          // 按住且不滑动时，才触发onLongPress事件
+          if (_distance > widget.minSilderDistance) {
+            // logger.i('onPointerDown:$distance');
+            _disposePointer();
+            return;
+          }
+          _emitLongPressedEvent();
+          _disposePointer();
+        });
+      },
+      onPointerUp: (event) {
+        // logger.d('onPointerUp:${event.localPosition},${event.position}');
+        if (_startTime != null) {
+          var s = DateTime.now().millisecond - _startTime!.microsecond;
+          if (!_isLongPressed && s < widget.longPressMillisecond) {
+            _emitTapEvent();
+          }
+        }
+        _disposePointer();
+      },
+      onPointerCancel: (event) {
+        // logger.d('onPointerCancel:$event');
+        _disposePointer();
+      },
+      child: _buildMessageBody(),
+    );
+  }
+
+  ///
+  @override
+  Widget build(BuildContext context) {
+    // var messageBodyGlobalKey = widget.arguments.messageBodyKey;
+    logger.i('build:${toString()}-messageBodyGlobalKey:$messageBodyGlobalKey');
+    // return listener();
+    return GestureDetector(
+      key: messageBodyGlobalKey,
+      onTap: _emitTapEvent,
+      onLongPress: _emitLongPressedEvent,
+      child: _buildMessageBody(),
+    );
+  }
+
+  Widget _buildMessageBody() {
+    switch (widget.arguments.message.type) {
+      case MessageTypeEnum.sound:
+        return SoundContentWidget(
+          arguments: widget.arguments,
+          // message: widget.arguments.message,
+          // isSoundPlay: widget.arguments.isSoundPlay,
+          isRedaed: false,
+        );
+      case MessageTypeEnum.text:
+        return TextContentWidget(
+          arguments: widget.arguments,
+          // message: widget.arguments.message,
+        );
+      default:
+        return const SizedBox();
+    }
+  }
+}
+
+class CustomLongPressGestureRecognizer extends LongPressGestureRecognizer {
+  // @override
+  // void rejectGesture(int pointer) {
+  //   //不，我不要失败，我要成功
+  //   //super.rejectGesture(pointer);
+  //   //宣布成功
+  //   super.acceptGesture(pointer);
+  // }
+}
+
+class CustomTapGestureRecognizer extends TapGestureRecognizer {
+  @override
+  void rejectGesture(int pointer) {
+    //不，我不要失败，我要成功
+    //super.rejectGesture(pointer);
+    //宣布成功
+    super.acceptGesture(pointer);
+  }
+}
+
+//创建一个新的GestureDetector，用我们自定义的 CustomTapGestureRecognizer 替换默认的
+RawGestureDetector customGestureDetector({
+  GestureLongPressCallback? onLongPress,
+  GestureTapCallback? onTap,
+  Widget? child,
+}) {
+  return RawGestureDetector(
+    gestures: {
+      CustomLongPressGestureRecognizer: GestureRecognizerFactoryWithHandlers<
+          CustomLongPressGestureRecognizer>(
+        () => CustomLongPressGestureRecognizer(),
+        (detector) {
+          detector.onLongPress = onLongPress;
+        },
+      ),
+      CustomTapGestureRecognizer:
+          GestureRecognizerFactoryWithHandlers<CustomTapGestureRecognizer>(
+        () => CustomTapGestureRecognizer(),
+        (detector) {
+          detector.onTap = onTap;
+        },
+      ),
+    },
+    child: child,
+  );
+}
+
+class CustomGestureDetector extends RawGestureDetector {
+  CustomGestureDetector({
+    Key? key,
+    this.onLongPress,
+    this.onTap,
+    super.child,
+  }) : super(
+          key: key,
+          gestures: {
+            CustomLongPressGestureRecognizer:
+                GestureRecognizerFactoryWithHandlers<
+                    CustomLongPressGestureRecognizer>(
+              () => CustomLongPressGestureRecognizer(),
+              (detector) {
+                detector.onLongPress = onLongPress;
+              },
+            ),
+            CustomTapGestureRecognizer: GestureRecognizerFactoryWithHandlers<
+                CustomTapGestureRecognizer>(
+              () => CustomTapGestureRecognizer(),
+              (detector) {
+                detector.onTap = onTap;
+              },
+            ),
+          },
+        );
+
+  final GestureLongPressCallback? onLongPress;
+  final GestureTapCallback? onTap;
+}
