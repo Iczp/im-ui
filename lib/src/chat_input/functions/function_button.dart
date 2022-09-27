@@ -6,8 +6,8 @@ import 'package:im_core/im_core.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
-import '../../../commons/utils.dart';
-import '../../chat_input.dart';
+import '../../commons/utils.dart';
+import '../chat_input.dart';
 import 'function_button_widget.dart';
 
 ///

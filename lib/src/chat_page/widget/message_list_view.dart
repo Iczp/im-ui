@@ -12,7 +12,7 @@ import '../../providers/keyboard_provider.dart';
 import '../../providers/message_provider.dart';
 import '../../providers/readed_record_provider.dart';
 import '../../providers/users_provide.dart';
-import '../../widgets/chat_input.dart';
+import '../../chat_input/chat_input.dart';
 import '../../widgets/dialog/message_menu_dialog.dart';
 import '../../widgets/message_template/message_resolver.dart';
 import 'loading_widget.dart';

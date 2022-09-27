@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
-import 'package:im_ui/src/widgets/chat-input/send_btn.dart';
+import 'package:im_ui/src/chat_input/send_btn.dart';
 
-import '../../models/sound_inputed_model.dart';
-import '../../models/sound_inputing_model.dart';
+import '../models/sound_inputed_model.dart';
+import '../models/sound_inputing_model.dart';
 import 'icon_btn.dart';
-import 'input_bar_button/face_input_button.dart';
-import 'input_bar_button/function_input_button.dart';
+import 'buttons/face_input_button.dart';
+import 'buttons/function_input_button.dart';
 import 'input_mode_button.dart';
 import 'inputing_container.dart';
 

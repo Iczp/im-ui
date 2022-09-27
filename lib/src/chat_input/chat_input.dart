@@ -6,11 +6,11 @@ import 'package:im_core/im_core.dart';
 import 'package:logger/logger.dart';
 
 import '../models/sound_inputing_model.dart';
-import 'message_template/message_preview.dart';
-import 'chat-input/input_bar.dart';
-import 'chat-input/input_function_button_all.dart';
-import 'chat-input/inputing_container.dart';
-import 'chat-input/keyboard_container.dart';
+import '../widgets/message_template/message_preview.dart';
+import 'input_bar.dart';
+import 'input_function_buttons.dart';
+import 'inputing_container.dart';
+import 'keyboard_container.dart';
 
 class ChatInput extends StatefulWidget {
   ///

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'input_function_button/function_button.dart';
+import 'functions/function_button.dart';
 
 class InputFunctionContainer extends StatefulWidget {
   ///

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 
-import '../../models/sound_inputed_model.dart';
-import '../../models/sound_inputing_model.dart';
-import 'sound_input_container.dart';
+import '../models/sound_inputed_model.dart';
+import '../models/sound_inputing_model.dart';
+import 'sound_input/sound_input_container.dart';
 import 'text_input_container.dart';
 
 class InputModeContainer extends StatefulWidget {

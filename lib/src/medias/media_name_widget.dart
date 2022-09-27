@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/users_provide.dart';
+import '../providers/users_provide.dart';
 
 // class UserNameWidget extends StatefulWidget {
 //   const UserNameWidget({Key? key}) : super(key: key);

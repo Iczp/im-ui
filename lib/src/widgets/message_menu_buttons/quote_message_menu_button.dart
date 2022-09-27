@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import 'package:logger/logger.dart';
 import 'message_menu_button.dart';
-import '../chat_input.dart';
+import '../../chat_input/chat_input.dart';
 
 class QuoteMessageMenuButton extends MessageMenuButton {
   ///

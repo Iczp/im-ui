@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-
 import 'package:im_core/im_core.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+
 import 'src/apis/api.dart';
 import 'src/providers/max_log_id_provider.dart';
 import 'src/providers/message_provider.dart';
 import 'src/providers/readed_record_provider.dart';
-import 'src/widgets/chat-input/input_function_button_all.dart';
-import 'src/widgets/chat_input.dart';
+import 'src/chat_input/input_function_buttons.dart';
+import 'src/chat_input/chat_input.dart';
 import 'src/widgets/dialog/media_menu_dialog.dart';
 import 'src/widgets/dialog/message_menu_dialog.dart';
 import 'src/widgets/mask.dart';

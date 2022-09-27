@@ -5,7 +5,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:im_core/im_core.dart';
 
 import 'input_face_container.dart';
-import 'input_function_button/function_button.dart';
+import 'functions/function_button.dart';
 import 'input_function_container.dart';
 import 'keyboard_sized_box.dart';
 

@@ -9,9 +9,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:video_compress/video_compress.dart';
 
-import '../../../commons/utils.dart';
-import '../../../models/size_model.dart';
-import '../../../providers/process_provide.dart';
+import '../../commons/utils.dart';
+import '../../models/size_model.dart';
+import '../../providers/process_provide.dart';
 import 'function_button.dart';
 
 class VideoFunctionButton extends FunctionButton {

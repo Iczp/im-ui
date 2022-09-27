@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 
-import '../../commons/utils.dart';
+import '../commons/utils.dart';
 
 /// Example for EmojiPickerFlutter
 class InputFaceContainer extends StatefulWidget {
