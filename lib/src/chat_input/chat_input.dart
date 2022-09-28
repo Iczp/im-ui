@@ -6,7 +6,7 @@ import 'package:im_core/im_core.dart';
 import 'package:logger/logger.dart';
 
 import '../models/sound_inputing_model.dart';
-import '../widgets/message_template/message_preview.dart';
+import '../messages/message_preview.dart';
 import 'input_bar.dart';
 import 'input_function_buttons.dart';
 import 'inputing_container.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+///选择容器
 class ChoiceContainer extends StatefulWidget {
   const ChoiceContainer({
     Key? key,

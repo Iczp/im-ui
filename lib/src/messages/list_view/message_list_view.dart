@@ -13,8 +13,8 @@ import '../../providers/message_provider.dart';
 import '../../providers/readed_record_provider.dart';
 import '../../providers/users_provide.dart';
 import '../../chat_input/chat_input.dart';
-import '../../widgets/dialog/message_menu_dialog.dart';
-import '../../widgets/message_template/message_resolver.dart';
+import '../../menus/message_menu_dialog.dart';
+import '../message_resolver.dart';
 import 'loading_widget.dart';
 import 'reminder_positioned.dart';
 

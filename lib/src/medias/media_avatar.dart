@@ -7,6 +7,7 @@ import 'package:transparent_image/transparent_image.dart';
 import '../models/message_arguments.dart';
 import '../providers/users_provide.dart';
 
+/// 头像
 class MediaAvatar extends StatefulWidget {
   const MediaAvatar({
     Key? key,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import '../../commons/utils.dart';
 import '../../models/message_arguments.dart';
-import '../../widgets/message_template/message_widget.dart';
+import '../message_widget.dart';
 
 class MessageTemplateWidget<TMessage extends MessageDto>
     extends MessageWidget<TMessage> {

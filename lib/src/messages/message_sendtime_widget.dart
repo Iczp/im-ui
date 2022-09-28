@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../commons/utils.dart';
+import '../commons/utils.dart';
 
 /// 消息发送时间
 class MessageSendtimeWidget extends StatelessWidget {

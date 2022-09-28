@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import '../message_menu_buttons/message_menu_button.dart';
-import '../mask.dart';
+import 'buttons/message_menu_button.dart';
+import '../widgets/mask.dart';
 
 ///消息右键菜单
 class MessageMenuDialog extends StatefulWidget {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 import '../../models/message_arguments.dart';
-import '../message_menu_buttons/message_menu_button_widget.dart';
+import '../message_menu_button_widget.dart';
 
 class MessageMenuButton extends StatefulWidget {
   ///

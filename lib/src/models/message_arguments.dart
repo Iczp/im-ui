@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import 'package:im_core/im_core.dart';
 
-import '../widgets/dialog/message_menu_dialog.dart';
-import '../widgets/menu_button.dart';
+import '../menus/message_menu_dialog.dart';
+import '../menus/menu_button.dart';
 
 /// 消息长按
 typedef GlobalKeyCallback = void Function(GlobalKey);

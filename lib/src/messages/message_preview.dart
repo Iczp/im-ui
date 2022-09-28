@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:im_core/im_core.dart';
-import '../../commons/utils.dart';
-import '../close_btn.dart';
+import '../commons/utils.dart';
+import '../widgets/close_btn.dart';
 
 ///消息预览（引用等）
 class MessagePreview extends StatefulWidget {

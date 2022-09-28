@@ -2,11 +2,11 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 
-import '../../../models/message_arguments.dart';
-import '../../message_menu_buttons_all.dart';
-import '../../wifi_icon.dart';
-import '../bubble_container.dart';
-import '../message_template_widget.dart';
+import '../../models/message_arguments.dart';
+import '../../widgets/message_menu_buttons_all.dart';
+import '../../widgets/wifi_icon.dart';
+import '../containers/bubble_container.dart';
+import 'message_template_widget.dart';
 import '../message_widget.dart';
 
 class SoundMessageWidget extends MessageTemplateWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import 'package:logger/logger.dart';
-import '../../chat_page/widget/message_list_view.dart';
+import '../../messages/list_view/message_list_view.dart';
 import 'message_menu_button.dart';
 
 class ChoiceMessageMenuButton extends MessageMenuButton {

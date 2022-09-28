@@ -12,12 +12,12 @@ import 'src/providers/readed_record_provider.dart';
 import 'src/chat_input/input_function_buttons.dart';
 import 'src/chat_input/chat_input.dart';
 import 'src/widgets/dialog/media_menu_dialog.dart';
-import 'src/widgets/dialog/message_menu_dialog.dart';
+import 'src/menus/message_menu_dialog.dart';
 import 'src/widgets/mask.dart';
-import 'src/widgets/menu_button.dart';
-import 'src/widgets/message_template/message_widget.dart';
+import 'src/menus/menu_button.dart';
+import 'src/messages/message_widget.dart';
 import 'src/widgets/operation_menus.dart';
-import 'src/chat_page/widget/message_list_view.dart';
+import 'src/messages/list_view/message_list_view.dart';
 // import 'widget/notice_widget.dart';
 
 /// 聊天页

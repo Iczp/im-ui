@@ -5,13 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:im_core/im_core.dart';
 
-import '../../../commons/utils.dart';
-import '../../../models/message_arguments.dart';
-import '../../../models/size_model.dart';
-import '../../../providers/process_provide.dart';
-import '../../message_menu_buttons_all.dart';
-import '../image_container.dart';
-import '../message_template_widget.dart';
+import '../../commons/utils.dart';
+import '../../models/message_arguments.dart';
+import '../../models/size_model.dart';
+import '../../providers/process_provide.dart';
+import '../../widgets/message_menu_buttons_all.dart';
+import '../containers/image_container.dart';
+import 'message_template_widget.dart';
 import '../message_widget.dart';
 
 ///

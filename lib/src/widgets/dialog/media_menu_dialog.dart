@@ -2,7 +2,7 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 
-import '../menu_button.dart';
+import '../../menus/menu_button.dart';
 
 ///头像右键菜单
 class MediaMenuDialog extends StatefulWidget {

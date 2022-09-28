@@ -1,13 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:im_core/im_core.dart';
 
-import '../../models/message_arguments.dart';
-import 'message_template_widget.dart';
-import 'message_widget/file_message_widget.dart';
-import 'message_widget/image_message_widget.dart';
-import 'message_widget/sound_message_widget.dart';
-import 'message_widget/text_message_widget.dart';
-import 'message_widget/video_message_widget.dart';
+import '../models/message_arguments.dart';
+import 'templates/message_template_widget.dart';
+import 'templates/file_message_widget.dart';
+import 'templates/image_message_widget.dart';
+import 'templates/sound_message_widget.dart';
+import 'templates/text_message_widget.dart';
+import 'templates/video_message_widget.dart';
 
 ///消息分解
 class MessageResolver extends StatelessWidget {
