@@ -12,7 +12,7 @@ import 'templates/video_message_widget.dart';
 ///消息分解
 class MessageResolver extends StatelessWidget {
   ///
-  MessageResolver({
+  const MessageResolver({
     Key? key,
     required this.arguments,
     this.footer,
