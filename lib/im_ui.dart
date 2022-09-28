@@ -5,7 +5,7 @@ import 'package:im_ui/src/app.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-export 'src/widgets.dart';
+export 'widgets.dart';
 
 class ImUi {
   static void initialized() {
