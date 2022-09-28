@@ -1,9 +1,10 @@
 library im_ui;
 
-import 'package:im_ui/providers.dart';
-import 'package:im_ui/src/app.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+
+import 'providers.dart';
+import 'src/app.dart';
 
 export 'widgets.dart';
 
