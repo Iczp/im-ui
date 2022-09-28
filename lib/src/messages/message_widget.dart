@@ -119,6 +119,7 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
     Utils.vibrateSuccess();
   }
 
+  ///
   void navToMessageViewer() {
     var messageList = MessageListViewState.of(context)
         ?.messageList
@@ -129,7 +130,10 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
       Logger().w('_messageList:${messageList?.length}');
       return;
     }
+
     Logger().d('_messageList:${messageList?.length}');
+
+    ///
     Navigator.push(
       context,
       PageRouteBuilder(

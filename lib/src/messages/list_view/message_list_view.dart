@@ -18,6 +18,7 @@ import '../message_resolver.dart';
 import 'loading_widget.dart';
 import 'reminder_positioned.dart';
 
+///
 class MessageListView extends StatefulWidget {
   ///消息长按
   final ValueChanged<MessageDto>? onMessageLongPress;

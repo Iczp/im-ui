@@ -4,7 +4,7 @@ import 'package:im_core/im_core.dart';
 import '../commons/utils.dart';
 import '../widgets/close_btn.dart';
 
-///消息预览（引用等）
+/// 消息预览（引用等）
 class MessagePreview extends StatefulWidget {
   const MessagePreview({
     Key? key,
