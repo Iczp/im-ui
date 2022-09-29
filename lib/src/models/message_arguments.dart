@@ -1,12 +1,11 @@
 import 'package:flutter/widgets.dart';
-
 import 'package:im_core/im_core.dart';
 
 import '../menus/message_menu_dialog.dart';
 import '../menus/menu_button.dart';
 
-/// 消息长按
-typedef GlobalKeyCallback = void Function(GlobalKey);
+// /// 消息长按
+// typedef GlobalKeyCallback = void Function(GlobalKey);
 
 ///头像长按
 typedef MediaAvatarLongPressCallback = void Function(
@@ -52,22 +51,22 @@ class MessageArguments {
   final bool isReaded;
 
   ///消息长按
-  final GlobalKeyCallback? onMessageLongPress;
+  final ValueChanged<MessageArguments>? onMessageLongPress;
 
   ///消息点击
-  final GestureTapCallback? onMessageTap;
+  final ValueChanged<MessageArguments>? onMessageTap;
 
   ///
   final GlobalKey<MessageMenuDialogState>? messageDialogKey;
+
+  /// 选择状态变化
+  final ValueChanged<bool>? onMessageChanged;
 
   // ///
   // final MenuTapCallback? onMenuTap;
 
   ///选择模式
   final ChoiceModeEnum? choiceMode;
-
-  /// 选择状态变化
-  final ValueChanged<bool>? onMessageChanged;
 
   ///是否选择 （选择模式时使用）
   final bool isChecked;

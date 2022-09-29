@@ -14,11 +14,11 @@ class SoundMessageWidget extends MessageTemplateWidget {
   final double maxWidth;
 
   ///
-  SoundMessageWidget({
-    Key? key,
+  const SoundMessageWidget({
+    super.key,
     required super.arguments,
     this.maxWidth = 240,
-  }) : super(key: key);
+  });
 
   // ///
   // bool get isSoundPlay => arguments.isSoundPlay;

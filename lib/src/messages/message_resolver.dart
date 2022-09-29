@@ -21,40 +21,38 @@ class MessageResolver extends StatelessWidget {
   ///消息参数
   final MessageArguments arguments;
 
+  ///
   final Widget? footer;
 
   ///
   MessageTypeEnum get messageType => arguments.message.type;
 
-  ///
-  GlobalKey get globalKey => arguments.message.globalKey;
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        buildMessageItem(context),
+        buildMessageItem(),
         footer ?? const SizedBox(),
       ],
     );
   }
 
-  Widget buildMessageItem(BuildContext context) {
+  Widget buildMessageItem() {
     // Logger().d('${toString()}--build');
     switch (messageType) {
       case MessageTypeEnum.text:
-        return TextMessageWidget(key: globalKey, arguments: arguments);
+        return TextMessageWidget(arguments: arguments);
       case MessageTypeEnum.sound:
-        return SoundMessageWidget(key: globalKey, arguments: arguments);
+        return SoundMessageWidget(arguments: arguments);
       case MessageTypeEnum.image:
-        return ImageMessageWidget(key: globalKey, arguments: arguments);
+        return ImageMessageWidget(arguments: arguments);
       case MessageTypeEnum.video:
-        return VideoMessageWidget(key: globalKey, arguments: arguments);
+        return VideoMessageWidget(arguments: arguments);
       case MessageTypeEnum.file:
-        return FileMessageWidget(key: globalKey, arguments: arguments);
+        return FileMessageWidget(arguments: arguments);
       default:
         break;
     }
-    return MessageTemplateWidget(key: globalKey, arguments: arguments);
+    return MessageTemplateWidget(arguments: arguments);
   }
 }

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
-import 'package:im_ui/im_ui.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
@@ -14,14 +13,18 @@ import '../../providers/readed_record_provider.dart';
 import '../../providers/users_provide.dart';
 import '../../chat_input/chat_input.dart';
 import '../../menus/message_menu_dialog.dart';
+import '../../widgets/text_divider.dart';
 import '../message_resolver.dart';
 import 'loading_widget.dart';
 import 'reminder_positioned.dart';
 
 ///
 class MessageListView extends StatefulWidget {
-  ///消息长按
-  final ValueChanged<MessageDto>? onMessageLongPress;
+  /// 消息长按
+  final ValueChanged<MessageArguments>? onMessageLongPress;
+
+  /// 消息单击
+  final ValueChanged<MessageArguments>? onMessageTap;
 
   ///
   final GlobalKey<MessageMenuDialogState>? messageDialogKey;
@@ -35,14 +38,19 @@ class MessageListView extends StatefulWidget {
   ///
   final int scrollMode;
 
+  /// 以下是新消息
+  final Widget newMessageWidget;
+
   ///
   const MessageListView({
     GlobalKey? key,
-    this.onMessageLongPress,
     this.messageDialogKey,
     this.chatInputKey,
     required this.media,
     this.scrollMode = 0,
+    this.onMessageLongPress,
+    this.onMessageTap,
+    this.newMessageWidget = const TextDivider('以下是新消息'),
   }) : super(key: key);
 
   @override
@@ -575,7 +583,7 @@ class MessageListViewState extends State<MessageListView>
         reverse: _isReverse,
 
         ///设置消息是否可以拖拽
-        buildDefaultDragHandles: false,
+        buildDefaultDragHandles: _isBuildMessageDarg,
         // controller: _scrollController,
         scrollController: scrollController,
         itemCount: _messageList.length,
@@ -587,6 +595,7 @@ class MessageListViewState extends State<MessageListView>
               index != (_isReverse ? 0 : messageList.length - 1) &&
                   (_readedLogId?.globalKey == message.globalKey ||
                       _readedLogId?.logId == message.logId);
+
           return MessageResolver(
             key: ValueKey(message.globalKey.toString()),
             arguments: MessageArguments(
@@ -601,14 +610,12 @@ class MessageListViewState extends State<MessageListView>
               messageDialogKey: widget.messageDialogKey,
               isSoundPlay: index == _activeMessageIndex,
               // onMediaLongPress: onMediaLongPressed,
-              // onMessageLongPress: (messageBodyKey) =>
-              //     widget.onMessageLongPress?.call(message),
-              // onMessageTap: () => onMessageTap(index),
+              onMessageLongPress: widget.onMessageLongPress,
+              onMessageTap: widget.onMessageTap,
               // onMenuTap: (_) => onMessageMenuTap(_, index),
               // onMessageChanged: (_) => onMessageChanged(_, index),
             ),
-            footer:
-                shouldShowNew ? const TextDivider('以下是新消息') : const SizedBox(),
+            footer: shouldShowNew ? widget.newMessageWidget : const SizedBox(),
           );
         },
         onReorder: (int oldIndex, int newIndex) {

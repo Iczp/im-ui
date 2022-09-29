@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
-import '../../commons/utils.dart';
-import '../../models/message_arguments.dart';
 import '../message_widget.dart';
 
 class MessageTemplateWidget<TMessage extends MessageDto>
     extends MessageWidget<TMessage> {
-  MessageTemplateWidget({
-    Key? key,
+  const MessageTemplateWidget({
+    super.key,
     required super.arguments,
-  }) : super(key: key);
+  });
 
   // static const double marginAll = 8;
 
-  @override
-  GestureTapCallback? get onMessageTap => (() {
-        Utils.vibrateIfSuccess(super.onMessageTap);
-      });
+  // @override
+  // GestureTapCallback? get onMessageTap => (() {
+  //       Utils.vibrateIfSuccess(super.onMessageTap);
+  //     });
 
-  @override
-  GlobalKeyCallback? get onMessageLongPress => ((_) {
-        Utils.vibrateIfSuccess(() {
-          super.onMessageLongPress!(_);
-        });
-      });
+  // @override
+  // VoidCallback? get onMessageLongPress => (() {
+  //       Utils.vibrateIfSuccess(() {
+  //         super.onMessageLongPress!();
+  //       });
+  //     });
 
   ///
   @override

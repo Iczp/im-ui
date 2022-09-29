@@ -16,11 +16,11 @@ class ImageMessageWidget extends MessageTemplateWidget {
   final double radius;
 
   ///
-  ImageMessageWidget({
-    Key? key,
+  const ImageMessageWidget({
+    super.key,
     required super.arguments,
     this.radius = 4,
-  }) : super(key: key);
+  });
 
   @override
   State<ImageMessageWidget> createState() => _ImageMessageWidgetState();

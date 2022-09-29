@@ -20,11 +20,11 @@ class VideoMessageWidget extends MessageTemplateWidget {
   final double radius;
 
   ///
-  VideoMessageWidget({
-    Key? key,
+  const VideoMessageWidget({
+    super.key,
     required super.arguments,
     this.radius = 4,
-  }) : super(key: key);
+  });
 
   @override
   State<VideoMessageWidget> createState() => _VideoMessageWidgetState();

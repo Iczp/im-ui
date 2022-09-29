@@ -16,10 +16,10 @@ import 'message_template_widget.dart';
 import '../message_widget.dart';
 
 class FileMessageWidget extends MessageTemplateWidget {
-  FileMessageWidget({
-    Key? key,
+  const FileMessageWidget({
+    super.key,
     required super.arguments,
-  }) : super(key: key);
+  });
 
   @override
   State<FileMessageWidget> createState() => _FileMessageWidgetState();

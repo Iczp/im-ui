@@ -9,10 +9,10 @@ import 'message_template_widget.dart';
 import '../message_widget.dart';
 
 class TextMessageWidget extends MessageTemplateWidget {
-  TextMessageWidget({
-    Key? key,
+  const TextMessageWidget({
+    super.key,
     required super.arguments,
-  }) : super(key: key);
+  });
 
   ///文本
   TextContentDto get content => arguments.message.getContent<TextContentDto>();

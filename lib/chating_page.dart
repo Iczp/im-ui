@@ -2,10 +2,12 @@ import 'dart:async';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
+import 'package:im_ui/src/widgets/message_menu_buttons_all.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 import 'src/apis/api.dart';
+import 'src/models/message_arguments.dart';
 import 'src/providers/max_log_id_provider.dart';
 import 'src/providers/message_provider.dart';
 import 'src/providers/readed_record_provider.dart';
@@ -73,6 +75,9 @@ class _ChatingPageState extends State<ChatingPage>
 
   ///========================================
   final GlobalKey<MessageMenuDialogState> _messageDialogKey = GlobalKey();
+
+  MessageMenuDialogState? get messageMenuDialogState =>
+      _messageDialogKey.currentState;
 
   ///
   final GlobalKey<ChatInputState> _chatInputKey = GlobalKey();
@@ -253,14 +258,29 @@ class _ChatingPageState extends State<ChatingPage>
   }
 
   /// 消息内容长按
-  void onMessageLongPressed(MessageDto message) {
-    Logger().i('onMessageLongPressed:$message');
-    setState(() {
-      // setScrollable(false);
-      // _messageCurrentIndex = index;
-      _messageSourceKey = message.globalKey;
-      _maskCaller = MessageMenuDialog.caller;
-    });
+  void onMessageLongPress(MessageArguments arguments) {
+    Logger().i('onMessageLongPressed:${arguments.message}');
+
+    var menus = <MessageMenuButton>[
+      CopyMessageMenuButton(arguments),
+      QuoteMessageMenuButton(arguments),
+      SoundPlayMessageMenuButton(arguments),
+      ForwardMessageMenuButton(arguments),
+      FavoriteMessageMenuButton(arguments),
+      ReminderMessageMenuButton(arguments),
+      HeadphonesMessageMenuButton(arguments),
+      ChoiceMessageMenuButton(arguments),
+      RollbackMessageMenuButton(arguments),
+      ShareMessageMenuButton(arguments),
+    ];
+
+    messageMenuDialogState?.open(arguments.message.contentGlobalKey, menus);
+    // setState(() {
+    //   // setScrollable(false);
+    //   // _messageCurrentIndex = index;
+    //   _messageSourceKey = message.globalKey;
+    //   _maskCaller = MessageMenuDialog.caller;
+    // });
   }
 
   /// 头像长按
@@ -555,7 +575,7 @@ class _ChatingPageState extends State<ChatingPage>
       key: _listViewKey,
       messageDialogKey: _messageDialogKey,
       chatInputKey: _chatInputKey,
-      onMessageLongPress: onMessageLongPressed,
+      onMessageLongPress: onMessageLongPress,
       scrollMode: widget.scrollMode,
       //   );
       // },

@@ -3,7 +3,6 @@ import 'package:im_core/im_core.dart';
 import 'package:logger/logger.dart';
 
 import 'list_view/message_list_view.dart';
-import '../commons/utils.dart';
 import '../message_viewer/message_viewer_page.dart';
 import '../models/message_arguments.dart';
 import '../chat_input/chat_input.dart';
@@ -18,10 +17,10 @@ import 'message_state_widget.dart';
 /// 消息组件
 abstract class MessageWidget<TMessage extends MessageDto>
     extends StatefulWidget {
-  MessageWidget({
-    Key? key,
+  const MessageWidget({
+    super.key,
     required this.arguments,
-  }) : super(key: arguments.message.globalKey);
+  });
 
   ///消息参数
   final MessageArguments arguments;
@@ -39,10 +38,11 @@ abstract class MessageWidget<TMessage extends MessageDto>
   bool get isSoundPlay => arguments.isSoundPlay;
 
   ///消息长按
-  GlobalKeyCallback? get onMessageLongPress => arguments.onMessageLongPress;
+  ValueChanged<MessageArguments>? get onMessageLongPress =>
+      arguments.onMessageLongPress;
 
   ///消息点击
-  GestureTapCallback? get onMessageTap => arguments.onMessageTap;
+  ValueChanged<MessageArguments>? get onMessageTap => arguments.onMessageTap;
 
   ///
   bool get isSendTimeDisplay => arguments.isSendTimeDisplay;
@@ -59,22 +59,24 @@ abstract class MessageWidget<TMessage extends MessageDto>
   ///头像长按事件
   MediaAvatarLongPressCallback? get onMediaLongPressed =>
       arguments.onMediaLongPress;
-
-  // ///
-  // GlobalKey get messageBodyKey => arguments.messageBodyKey;
-
-  ///
-  DateTime get sendTime => arguments.message.sendTime;
-
-  final _messageStateGlobalKey = GlobalKey();
-
-  GlobalKey get messageStateGlobalKey => _messageStateGlobalKey;
 }
 
 class MessageWidgetState<T extends MessageWidget> extends State<T>
     implements IMessageWidgetState {
   ///
-  final GlobalKey messageBodyGlobalKey = GlobalKey();
+  DateTime get sendTime => arguments.message.sendTime;
+
+  ///
+  final stateGlobalKey = GlobalKey();
+
+  ///
+  GlobalKey get contentGlobalKey => widget.arguments.message.contentGlobalKey;
+
+  ///
+  LayerLink get contentLayerLink => widget.arguments.message.contentLayerLink;
+
+  ///
+  LayerLink get layerLink => widget.arguments.message.layerLink;
 
   ///
   MessageArguments get arguments => widget.arguments;
@@ -102,21 +104,23 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
   @override
   List<MessageMenuButton> buildMessageMenus(MessageArguments arguments) => [];
 
-  ///
-  void _openMenuDialog() {
-    var menus = buildMessageMenus.call(arguments);
-    if (menus.isEmpty) {
-      return;
-    }
-    Logger().d('_openMenuDialog');
-    widget.arguments.messageDialogKey?.currentState
-        ?.open(messageBodyGlobalKey, menus);
-  }
+  // ///
+  // void _openMenuDialog() {
+  //   var menus = buildMessageMenus.call(arguments);
+  //   if (menus.isEmpty) {
+  //     return;
+  //   }
+  //   Logger().d('_openMenuDialog');
+  //   widget.arguments.messageDialogKey?.currentState
+  //       ?.open(contentGlobalKey, menus);
+  // }
 
   ///触发 LongPressed 事件
   void onMessageLongPressed() {
-    _openMenuDialog();
-    Utils.vibrateSuccess();
+    // _openMenuDialog();
+    // Utils.vibrateSuccess();
+
+    widget.arguments.onMessageLongPress?.call(widget.arguments);
   }
 
   ///
@@ -156,7 +160,7 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
         widget.arguments.chatInputKey?.state<ChatInputState>();
     chatInputState?.closeChatInput();
     // Utils.vibrateSuccess();
-    widget.arguments.onMessageTap?.call();
+    widget.arguments.onMessageTap?.call(widget.arguments);
   }
 
   ///
@@ -166,9 +170,7 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
     //   messageState = value;
     // });
     widget.message.setMessageState(MessageStateEnum.success);
-    widget.messageStateGlobalKey
-        .state<MessageStateWidgetState>()
-        ?.setMessageState(value);
+    stateGlobalKey.state<MessageStateWidgetState>()?.setMessageState(value);
   }
 
   ///
@@ -190,23 +192,6 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
 
   Widget bodyGestureDetector({required Widget child}) {
     return GestureDetector(
-      key: messageBodyGlobalKey,
-      // onTapDown: (details) {
-      //   setState(() {
-      //     Logger().i('onTapDown isHover');
-      //     isHover = true;
-      //   });
-      // },
-      // onTapUp: (details) {
-      //   setState(() {
-      //     isHover = false;
-      //   });
-      // },
-      // onTapCancel: () {
-      //   setState(() {
-      //     isHover = false;
-      //   });
-      // },
       onTap: onMessageTap,
       onLongPress: onMessageLongPressed,
       child: child,
@@ -220,9 +205,9 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
       return const SizedBox();
     }
     return MessageSendtimeWidget(
-      key: ValueKey(widget.sendTime),
+      key: ValueKey(sendTime),
       isDisplay: widget.isSendTimeDisplay,
-      sendTime: widget.sendTime,
+      sendTime: sendTime,
     );
   }
 
@@ -254,7 +239,6 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
   @override
   Widget buildMessageStateWidget(BuildContext context) {
     return MessageStateWidget(
-      key: widget.messageStateGlobalKey,
       isDisplay: widget.isSelf,
       // state: messageState,
       state: widget.message.state,
@@ -279,13 +263,18 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
         Stack(
           children: [
             Padding(
+              key: contentGlobalKey,
               padding: EdgeInsets.only(
                 left: widget.isSelf ? width : 0,
                 right: widget.isSelf ? 0 : width,
               ),
-              child: buildMessageContentWidget(context),
+              child: CompositedTransformTarget(
+                link: contentLayerLink,
+                child: buildMessageContentWidget(context),
+              ),
             ),
             Positioned(
+              key: stateGlobalKey,
               left: widget.isSelf ? 0 : null,
               right: widget.isSelf ? null : 0,
               top: 0,
@@ -355,34 +344,37 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
 
   @override
   Widget buildMessageBanner(BuildContext context) {
-    return ChoiceContainer(
-      isChecked: widget.arguments.isChecked,
-      isChoiceMode: arguments.isChoiceMode,
-      onChanged: (value) {
-        widget.arguments.onMessageChanged?.call(value!);
-      },
-      margin: const EdgeInsets.all(MessageArguments.marginAll),
-      size: MessageArguments.mediaSize,
-      child: Row(
-        textDirection: widget.isSelf ? TextDirection.rtl : TextDirection.ltr,
-        // mainAxisAlignment: MainAxisAlignment.start,
-        // verticalDirection: VerticalDirection.up,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildMediaAvatarWidget(context),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: widget.isSelf
-                  ? CrossAxisAlignment.end
-                  : CrossAxisAlignment.start,
-              children: [
-                buildMediaNameWidget(context),
-                buildMessageBodyWidget(context),
-                buildQuoteMessageWidget(context),
-              ],
+    return CompositedTransformTarget(
+      link: layerLink,
+      child: ChoiceContainer(
+        isChecked: widget.arguments.isChecked,
+        isChoiceMode: arguments.isChoiceMode,
+        onChanged: (value) {
+          widget.arguments.onMessageChanged?.call(value!);
+        },
+        margin: const EdgeInsets.all(MessageArguments.marginAll),
+        size: MessageArguments.mediaSize,
+        child: Row(
+          textDirection: widget.isSelf ? TextDirection.rtl : TextDirection.ltr,
+          // mainAxisAlignment: MainAxisAlignment.start,
+          // verticalDirection: VerticalDirection.up,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildMediaAvatarWidget(context),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: widget.isSelf
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
+                children: [
+                  buildMediaNameWidget(context),
+                  buildMessageBodyWidget(context),
+                  buildQuoteMessageWidget(context),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
