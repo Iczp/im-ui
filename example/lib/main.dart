@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import 'package:im_ui/chating_page.dart';
 import 'package:im_ui/im_ui.dart';
+import 'package:im_ui/providers.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   ImUi.initialized();
+  UsersProvide.instance.setLoginUser(AppUserDto(
+    id: 'zhongpei',
+    account: 'zhongpei',
+    name: '陈忠培**',
+  ));
   runApp(
     MultiProvider(
       providers: [
