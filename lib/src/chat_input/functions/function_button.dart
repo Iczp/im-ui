@@ -22,10 +22,10 @@ abstract class FunctionButton<TMessageContent extends MessageContent>
   });
 
   ///
-  String get text => '拍照';
+  String get text;
 
   ///
-  IconData get icon => Icons.camera_alt;
+  IconData get icon;
 
   ///发送
   final ValueChanged<TMessageContent>? onSend;

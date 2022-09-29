@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:im_ui/src/commons/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 ///
@@ -62,7 +62,7 @@ Future<bool?> showToast({
   Color? backgroundColor,
   Color? textColor,
 }) {
-  Vibrate.feedback(FeedbackType.success);
+  Utils.vibrateSuccess();
   return Fluttertoast.showToast(
     msg: msg,
     textColor: textColor ?? Colors.black,

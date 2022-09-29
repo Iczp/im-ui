@@ -4,6 +4,7 @@ import 'package:filesize/filesize.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 
 /// 格式化时间
 String formatDuration(int milliseconds) {
@@ -53,7 +54,7 @@ class Utils {
       // ]);
       Vibrate.feedback(feedbackType);
     } else {
-      log('feedback $feedbackType');
+      Logger().w('feedback $feedbackType');
     }
   }
 
@@ -65,8 +66,8 @@ class Utils {
   ///振动反馈: sussess
   static void vibrateIfSuccess(VoidCallback? callback) {
     if (callback != null) {
-      vibrateFeedBack(FeedbackType.success);
       callback();
+      vibrateFeedBack(FeedbackType.success);
     }
   }
 

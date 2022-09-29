@@ -1,4 +1,3 @@
-export 'src/providers/counter_provider.dart';
 export 'src/providers/keyboard_provider.dart';
 export 'src/providers/max_log_id_provider.dart';
 export 'src/providers/message_provider.dart';

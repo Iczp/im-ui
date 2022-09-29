@@ -7,13 +7,13 @@ import '../message_menu_button_widget.dart';
 
 class MessageMenuButton extends StatefulWidget {
   ///
-  final MessageArguments arguments;
-
-  ///
   const MessageMenuButton(
     this.arguments, {
     super.key,
   });
+
+  ///
+  final MessageArguments arguments;
 
   ///
   String get text => '';
