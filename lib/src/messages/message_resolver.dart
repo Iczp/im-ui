@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:im_core/im_core.dart';
 
 import '../models/message_arguments.dart';
-import 'templates/message_template_widget.dart';
+import 'templates/message_item_widget.dart';
 import 'templates/file_message_widget.dart';
 import 'templates/image_message_widget.dart';
 import 'templates/sound_message_widget.dart';
@@ -53,6 +53,6 @@ class MessageResolver extends StatelessWidget {
       default:
         break;
     }
-    return MessageTemplateWidget(arguments: arguments);
+    return MessageItemWidget(arguments: arguments);
   }
 }

@@ -17,10 +17,10 @@ import 'message_state_widget.dart';
 /// 消息组件
 abstract class MessageWidget<TMessage extends MessageDto>
     extends StatefulWidget {
-  const MessageWidget({
-    super.key,
+  MessageWidget({
+    Key? key,
     required this.arguments,
-  });
+  }) : super(key: arguments.message.globalKey);
 
   ///消息参数
   final MessageArguments arguments;
@@ -239,6 +239,7 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
   @override
   Widget buildMessageStateWidget(BuildContext context) {
     return MessageStateWidget(
+      key: stateGlobalKey,
       isDisplay: widget.isSelf,
       // state: messageState,
       state: widget.message.state,
@@ -263,18 +264,17 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
         Stack(
           children: [
             Padding(
-              key: contentGlobalKey,
               padding: EdgeInsets.only(
                 left: widget.isSelf ? width : 0,
                 right: widget.isSelf ? 0 : width,
               ),
               child: CompositedTransformTarget(
+                key: contentGlobalKey,
                 link: contentLayerLink,
                 child: buildMessageContentWidget(context),
               ),
             ),
             Positioned(
-              key: stateGlobalKey,
               left: widget.isSelf ? 0 : null,
               right: widget.isSelf ? null : 0,
               top: 0,

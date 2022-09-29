@@ -12,11 +12,11 @@ import '../../models/message_arguments.dart';
 
 import '../../widgets/message_menu_buttons_all.dart';
 import '../containers/bubble_container.dart';
-import 'message_template_widget.dart';
+import 'message_item_widget.dart';
 import '../message_widget.dart';
 
-class FileMessageWidget extends MessageTemplateWidget {
-  const FileMessageWidget({
+class FileMessageWidget extends MessageItemWidget {
+  FileMessageWidget({
     super.key,
     required super.arguments,
   });

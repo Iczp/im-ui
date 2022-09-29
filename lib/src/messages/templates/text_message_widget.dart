@@ -5,11 +5,11 @@ import '../../models/message_arguments.dart';
 
 import '../../widgets/message_menu_buttons_all.dart';
 import '../containers/bubble_container.dart';
-import 'message_template_widget.dart';
+import 'message_item_widget.dart';
 import '../message_widget.dart';
 
-class TextMessageWidget extends MessageTemplateWidget {
-  const TextMessageWidget({
+class TextMessageWidget extends MessageItemWidget {
+  TextMessageWidget({
     super.key,
     required super.arguments,
   });

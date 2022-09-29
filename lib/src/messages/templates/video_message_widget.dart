@@ -11,16 +11,16 @@ import '../../models/size_model.dart';
 import '../../providers/process_provide.dart';
 import '../../widgets/message_menu_buttons_all.dart';
 import '../containers/image_container.dart';
-import 'message_template_widget.dart';
+import 'message_item_widget.dart';
 import '../message_widget.dart';
 
 ///
-class VideoMessageWidget extends MessageTemplateWidget {
+class VideoMessageWidget extends MessageItemWidget {
   ///
   final double radius;
 
   ///
-  const VideoMessageWidget({
+  VideoMessageWidget({
     super.key,
     required super.arguments,
     this.radius = 4,

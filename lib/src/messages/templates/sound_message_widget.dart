@@ -6,15 +6,15 @@ import '../../models/message_arguments.dart';
 import '../../widgets/message_menu_buttons_all.dart';
 import '../../widgets/wifi_icon.dart';
 import '../containers/bubble_container.dart';
-import 'message_template_widget.dart';
+import 'message_item_widget.dart';
 import '../message_widget.dart';
 
-class SoundMessageWidget extends MessageTemplateWidget {
+class SoundMessageWidget extends MessageItemWidget {
   ///
   final double maxWidth;
 
   ///
-  const SoundMessageWidget({
+  SoundMessageWidget({
     super.key,
     required super.arguments,
     this.maxWidth = 240,

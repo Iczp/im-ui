@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import '../message_widget.dart';
 
-class MessageTemplateWidget<TMessage extends MessageDto>
+class MessageItemWidget<TMessage extends MessageDto>
     extends MessageWidget<TMessage> {
-  const MessageTemplateWidget({
+  MessageItemWidget({
     super.key,
     required super.arguments,
   });
@@ -25,9 +25,8 @@ class MessageTemplateWidget<TMessage extends MessageDto>
 
   ///
   @override
-  State<MessageTemplateWidget> createState() => MessageItemWidgetState();
+  State<MessageItemWidget> createState() => MessageItemWidgetState();
 }
 
 ///
-class MessageItemWidgetState<T>
-    extends MessageWidgetState<MessageTemplateWidget> {}
+class MessageItemWidgetState<T> extends MessageWidgetState<MessageItemWidget> {}

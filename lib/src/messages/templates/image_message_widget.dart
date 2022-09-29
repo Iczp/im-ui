@@ -8,15 +8,15 @@ import '../../models/message_arguments.dart';
 import '../../models/size_model.dart';
 import '../../widgets/message_menu_buttons_all.dart';
 import '../containers/image_container.dart';
-import 'message_template_widget.dart';
+import 'message_item_widget.dart';
 import '../message_widget.dart';
 
-class ImageMessageWidget extends MessageTemplateWidget {
+class ImageMessageWidget extends MessageItemWidget {
   ///
   final double radius;
 
   ///
-  const ImageMessageWidget({
+  ImageMessageWidget({
     super.key,
     required super.arguments,
     this.radius = 4,
