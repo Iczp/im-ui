@@ -79,7 +79,7 @@ class _InputFaceContainerState extends State<InputFaceContainer> {
             indicatorColor: Colors.blue,
             iconColor: Colors.black54,
             iconColorSelected: Colors.blue,
-            progressIndicatorColor: Colors.blue,
+            // progressIndicatorColor: Colors.blue,
             backspaceColor: Colors.blue,
             skinToneDialogBgColor: Colors.white,
             skinToneIndicatorColor: Colors.grey,
