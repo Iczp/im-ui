@@ -63,7 +63,7 @@ class _InputFaceContainerState extends State<InputFaceContainer> {
   @override
   Widget build(BuildContext context) {
     return EmojiPicker(
-        onEmojiSelected: (Category category, Emoji emoji) {
+        onEmojiSelected: (Category? category, Emoji emoji) {
           _onEmojiSelected(emoji);
         },
         onBackspacePressed: _onBackspacePressed,
