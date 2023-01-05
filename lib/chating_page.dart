@@ -180,7 +180,7 @@ class _ChatingPageState extends State<ChatingPage>
     if (messages.isNotEmpty) {
       context
           .read<ReadedRecordProvider>()
-          .setReaded(sessionId, messages.last.logId, messages.last.globalKey);
+          .setReaded(sessionId, messages.last.autoId, messages.last.globalKey);
     }
     Logger().d('setReaded messages.length:${messages.length}');
   }
@@ -202,10 +202,11 @@ class _ChatingPageState extends State<ChatingPage>
     var logId = MaxLogIdProvider.takeMaxLogId();
     return MessageDto(
       id: GlobalKey().toString(),
-      logId: logId,
-      sender: messageList.length % 2 == 0 ? 'zhongpei' : widget.media.mediaId,
-      receiver: messageList.length % 2 == 1 ? 'zhongpei' : widget.media.mediaId,
-      media: MediaTypeEnum.personal,
+      autoId: logId,
+      senderId: messageList.length % 2 == 0 ? 'zhongpei' : widget.media.mediaId,
+      receiverId:
+          messageList.length % 2 == 1 ? 'zhongpei' : widget.media.mediaId,
+      // media: MediaTypeEnum.personal,
       content: content,
       sendTime: DateTime.now(),
       state: MessageStateEnum.pending,

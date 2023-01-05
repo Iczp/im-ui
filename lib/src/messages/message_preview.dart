@@ -118,7 +118,7 @@ class _MessagePreviewState extends State<MessagePreview> {
   ///消息类型图标
   Widget messageTypeIcon() {
     return Text(
-      widget.message!.type.toText(),
+      widget.message!.type!.toText(),
       style: _textStyle,
     );
   }

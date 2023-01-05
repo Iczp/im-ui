@@ -18,7 +18,7 @@ class Api {
     MessageDto message,
     void Function()? callback,
   ) async {
-    Logger().d('sessionId:$sessionId,logid:${message.logId}');
+    Logger().d('sessionId:$sessionId,logid:${message.autoId}');
     await Future.delayed(Duration(milliseconds: Random().nextInt(2000) + 500));
 // var dio = Dio();
 // CancelToken token = CancelToken();
@@ -26,7 +26,7 @@ class Api {
 
     ///
     message.setMessageState(MessageStateEnum.success);
-    var logId = (message.logId.toInt() + Random().nextInt(10)).toDouble();
+    var logId = (message.autoId.toInt() + Random().nextInt(10)).toDouble();
     message.setLogId(logId);
     await MaxLogIdProvider.setMaxLogId(logId);
 

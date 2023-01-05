@@ -25,7 +25,7 @@ class MessageResolver extends StatelessWidget {
   final Widget? footer;
 
   ///
-  MessageTypeEnum get messageType => arguments.message.type;
+  MessageTypeEnum get messageType => arguments.message.type!;
 
   @override
   Widget build(BuildContext context) {

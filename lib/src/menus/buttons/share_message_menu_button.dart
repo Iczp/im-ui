@@ -33,7 +33,7 @@ class _ShareMessageMenuButtonState
     Logger().i('${toString()} - ${message.type}');
     super.onTap();
 
-    var senderInfo = context.read<UsersProvide>().getById(message.sender);
+    var senderInfo = context.read<UsersProvide>().getById(message.senderId);
 
     var sendName = '${senderInfo?.name}';
     switch (message.type) {

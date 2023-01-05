@@ -7,19 +7,19 @@ import 'package:logger/logger.dart';
 
 ///
 class ReadedRecordModel {
-  ReadedRecordModel(this.logId, this.globalKey);
-  final double logId;
+  ReadedRecordModel(this.autoId, this.globalKey);
+  final double autoId;
   final GlobalKey? globalKey;
 
   ///
 
   ReadedRecordModel.fromJson(Map<String, dynamic> json)
-      : logId = json['logId'],
+      : autoId = json['logId'],
         globalKey = null;
 
   ///
   Map<String, dynamic> toJson() => {
-        'logId': logId,
+        'logId': autoId,
         'globalKey': globalKey.toString(),
       };
 
@@ -41,7 +41,7 @@ class ReadedRecordProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ReadedRecordProvider.init(List<ReadedDto> readedList) {
     /// readed
     for (var x in readedList) {
-      _readedMaps[x.sessionId!] = ReadedRecordModel(x.logId!, null);
+      _readedMaps[x.sessionId!] = ReadedRecordModel(x.autoId!, null);
     }
   }
 

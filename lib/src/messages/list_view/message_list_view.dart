@@ -268,14 +268,14 @@ class MessageListViewState extends State<MessageListView>
 
   ///
   List<MessageDto> generateMessage(int count) => List.generate(count, (index) {
-        double logId = (_messageList.length + 1 + index).toDouble();
+        double autoId = (_messageList.length + 1 + index).toDouble();
         return MessageDto(
           id: GlobalKey().toString(),
-          logId: logId,
-          sender: index % 2 == 0 ? 'zhongpei' : widget.media.mediaId,
-          receiver: index % 2 == 1 ? 'zhongpei' : widget.media.mediaId,
-          media: MediaTypeEnum.personal,
-          content: TextContentDto(text: 'logId:$logId'),
+          autoId: autoId,
+          senderId: index % 2 == 0 ? 'zhongpei' : widget.media.mediaId,
+          receiverId: index % 2 == 1 ? 'zhongpei' : widget.media.mediaId,
+          // media: MediaTypeEnum.personal,
+          content: TextContentDto(text: 'logId:$autoId'),
           sendTime: DateTime.now(),
           state: MessageStateEnum.success,
           type: MessageTypeEnum.text,
@@ -560,8 +560,8 @@ class MessageListViewState extends State<MessageListView>
       return true;
     }
     var diff = _messageList[index]
-        .sendTime
-        .difference(_messageList[previousIndex].sendTime);
+        .sendTime!
+        .difference(_messageList[previousIndex].sendTime!);
 
     return diff.inMinutes >= 3;
   }
@@ -594,7 +594,7 @@ class MessageListViewState extends State<MessageListView>
           var shouldShowNew =
               index != (_isReverse ? 0 : messageList.length - 1) &&
                   (_readedLogId?.globalKey == message.globalKey ||
-                      _readedLogId?.logId == message.logId);
+                      _readedLogId?.autoId == message.autoId);
 
           return MessageResolver(
             key: ValueKey(message.globalKey.toString()),

@@ -64,7 +64,7 @@ abstract class MessageWidget<TMessage extends MessageDto>
 class MessageWidgetState<T extends MessageWidget> extends State<T>
     implements IMessageWidgetState {
   ///
-  DateTime get sendTime => arguments.message.sendTime;
+  DateTime get sendTime => arguments.message.sendTime!;
 
   ///
   final stateGlobalKey = GlobalKey();
@@ -215,8 +215,8 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
   @override
   Widget buildMediaAvatarWidget(BuildContext context) {
     return MediaAvatar(
-      meidaId: widget.message.sender,
-      meidaType: widget.message.senderType,
+      meidaId: widget.message.senderId,
+      meidaType: MediaTypeEnum.personal, //==
       isDisplay: widget.isMediaAvatarDisplay,
       size: MessageArguments.mediaSize,
       onLongPressed: (p0, p1, p2) {
@@ -229,8 +229,8 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
   @override
   Widget buildMediaNameWidget(BuildContext context) {
     return MediaNameWidget(
-      mediaId: widget.message.sender,
-      mediaType: widget.message.senderType,
+      mediaId: widget.message.senderId,
+      mediaType: MediaTypeEnum.personal, //==
       isDisplay: widget.isMediaNameDisplay,
     );
   }

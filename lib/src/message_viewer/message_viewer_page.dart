@@ -62,11 +62,11 @@ class _MessageViewerPageState extends State<MessageViewerPage> {
         .forEach((message) {
       if (message.type == MessageTypeEnum.video) {
         var videoContent = message.getContent<VideoContentDto>();
-        _videoControlles[message.logId.toString()] =
+        _videoControlles[message.autoId.toString()] =
             VideoPlayerController.file(File(videoContent.path!))
               ..initialize().then((value) => null);
         setState(() {});
-        Logger().d(message.logId);
+        Logger().d(message.autoId);
       }
     });
     // _controller = VideoPlayerController.network(
@@ -96,7 +96,7 @@ class _MessageViewerPageState extends State<MessageViewerPage> {
         ?.where((x) =>
             [MessageTypeEnum.image, MessageTypeEnum.video].contains(x.type))
         .forEach((message) {
-      _videoControlles[message.logId.toString()]?.dispose();
+      _videoControlles[message.autoId.toString()]?.dispose();
     });
     setState(() {
       backgroundColor = Colors.transparent;
@@ -260,7 +260,7 @@ class _MessageViewerPageState extends State<MessageViewerPage> {
 
   PhotoViewGalleryPageOptions videoMessageViewer(MessageDto message) {
     ///
-    var videoController = _videoControlles[message.logId.toString()]!;
+    var videoController = _videoControlles[message.autoId.toString()]!;
 
     ///
     var videoContent = message.getContent<VideoContentDto>();
@@ -305,7 +305,7 @@ class _MessageViewerPageState extends State<MessageViewerPage> {
   ///
   PhotoViewGalleryPageOptions chewieVideoMessageViewer(MessageDto message) {
     ///
-    var videoController = _videoControlles[message.logId.toString()]!;
+    var videoController = _videoControlles[message.autoId.toString()]!;
 
     ///
     var videoContent = message.getContent<VideoContentDto>();
