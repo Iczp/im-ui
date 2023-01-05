@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import 'package:im_ui/chating_page.dart';
+import 'package:im_ui/session_page.dart';
 import 'package:im_ui/im_ui.dart';
 import 'package:im_ui/providers.dart';
 import 'package:provider/provider.dart';
@@ -97,7 +98,21 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             },
             child: const Text('chat-page'),
-          )
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) {
+                    // return ChatPage();
+                    return const SessionPage();
+                  },
+                ),
+              );
+            },
+            child: const Text('session list view'),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(

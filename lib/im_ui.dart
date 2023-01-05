@@ -2,7 +2,7 @@ library im_ui;
 
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-
+import 'package:im_core/services.dart';
 import 'providers.dart';
 import 'src/app.dart';
 
@@ -11,6 +11,9 @@ export 'widgets.dart';
 class ImUi {
   static void initialized() {
     appInitialized();
+    HttpHelper.init(
+      baseUrl: 'http://10.0.5.20:8044',
+    );
   }
 
   ///
