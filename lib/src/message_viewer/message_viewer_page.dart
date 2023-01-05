@@ -8,6 +8,8 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:video_player/video_player.dart';
 
+import 'package:chewie/chewie.dart';
+
 class MessageViewerPage extends StatefulWidget {
   ///
   final List<MessageDto> messages;
@@ -241,7 +243,8 @@ class _MessageViewerPageState extends State<MessageViewerPage> {
   PhotoViewGalleryPageOptions buildItem(BuildContext context, int index) {
     var message = widget.messages[index];
     if (message.type == MessageTypeEnum.video) {
-      return videoMessageViewer(message);
+      return chewieVideoMessageViewer(message);
+      // return videoMessageViewer(message);
     } else {
       return imageMessageViewer(message);
     }
@@ -296,6 +299,41 @@ class _MessageViewerPageState extends State<MessageViewerPage> {
       onTapDown: (context, details, controllerValue) {
         Logger().d(controllerValue.position);
       },
+    );
+  }
+
+  ///
+  PhotoViewGalleryPageOptions chewieVideoMessageViewer(MessageDto message) {
+    ///
+    var videoController = _videoControlles[message.logId.toString()]!;
+
+    ///
+    var videoContent = message.getContent<VideoContentDto>();
+
+    Logger().d('chewieVideoMessageViewer:$videoController');
+
+    final videoPlayerController = VideoPlayerController.network(
+        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4');
+
+    videoPlayerController.initialize().then((value) => null);
+
+    final chewieController = ChewieController(
+      // aspectRatio: videoContent.width / videoContent.height,
+      videoPlayerController: videoPlayerController,
+      autoPlay: true,
+      looping: true,
+    );
+
+    ///
+    return PhotoViewGalleryPageOptions.customChild(
+      minScale: PhotoViewComputedScale.contained,
+      maxScale: PhotoViewComputedScale.contained,
+      disableGestures: true,
+      tightMode: true,
+      // ignore: prefer_const_constructors
+      child: Chewie(
+        controller: chewieController,
+      ),
     );
   }
 }
