@@ -4,6 +4,7 @@ import 'package:im_core/entities.dart';
 import 'package:im_core/enums.dart';
 
 import '../../medias.dart';
+import '../../nav.dart';
 import '../commons/utils.dart';
 import '../widgets/expand.dart';
 
@@ -26,35 +27,32 @@ class SessionUnitItemState extends State<SessionUnitItem> {
   ///
   SessionUnit get item => widget.data;
 
-  ///
   GlobalKey get globalKey => item.globalKey;
 
-  ///
   ChatObject get dest => widget.data.destination ?? ChatObject();
 
-  ///
   String get title => dest.name ?? '';
 
-  ///
   MessageDto? get lastMessage => item.lastMessage;
 
-  ///
   String get subtitle => 'subtitle:$title-getItemInfo(int index)';
 
-  ///
   DateTime? get sendTime => lastMessage?.sendTime ?? DateTime.now();
 
-  ///
   String get sendTimeDisplay => sendTime != null ? formatTime(sendTime!) : '';
 
-  ///
-  late int badge = item.badge ?? 0;
+  int get badge => item.badge ?? 0;
 
-  ///
   bool get isImmersed => false; //item.isImmersed;
 
+  int get reminderAllCount => item.reminderAllCount ?? 0;
+
+  int get reminderMeCount => item.reminderMeCount ?? 0;
+
+  bool get isRemind => reminderMeCount + reminderAllCount > 0;
+
   void setBadge(int value) {
-    badge = value;
+    item.badge = badge;
     setState(() {});
   }
 
@@ -64,9 +62,9 @@ class SessionUnitItemState extends State<SessionUnitItem> {
     return InkWell(
       key: globalKey,
       onTap: () {
-        // Nav.toChat(context);
-        badge++;
-        setBadge(badge);
+        item.badge = item.badge! + 1;
+        setBadge(item.badge!);
+        Nav.toChat(context, sessionUnitId: item.id);
       },
       child: Container(
         height: 56,

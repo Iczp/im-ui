@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import 'package:im_ui/chating_page.dart';
+import 'package:im_ui/nav.dart';
 import 'package:im_ui/session_page.dart';
 import 'package:im_ui/im_ui.dart';
 import 'package:im_ui/providers.dart';
@@ -103,19 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) {
-                    // return ChatPage();
-                    return const ChatingPage(
-                      title: 'title',
-                      // scrollMode: index % 2,
-                      media: MediaInput.build('china', MediaTypeEnum.personal),
-                    );
-                  },
-                ),
-              );
+              Nav.toChat(context, sessionUnitId: 'ddddd');
             },
             child: const Text('chat-page'),
           ),

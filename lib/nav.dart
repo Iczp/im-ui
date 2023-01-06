@@ -3,11 +3,14 @@ import 'package:im_core/entities.dart';
 import 'package:im_core/enums.dart';
 import 'package:im_ui/im_ui.dart';
 
-import '../../chating_page.dart';
+import 'chating_page.dart';
 
 class Nav {
   ///
-  static void toChat(BuildContext context) {
+  static void toChat(
+    BuildContext context, {
+    required String sessionUnitId,
+  }) {
     print('ImUi.globalKey.currentContext:${ImUi.globalKey.currentContext}');
 
     Navigator.push(
@@ -15,9 +18,9 @@ class Nav {
       CupertinoPageRoute(
         builder: (context) {
           // return ChatPage();
-          return const ChatingPage(
-            title: 'title',
-            media: MediaInput.build('zhongpei', MediaTypeEnum.personal),
+          return ChatingPage(
+            title: sessionUnitId,
+            media: const MediaInput.build('zhongpei', MediaTypeEnum.personal),
           );
         },
       ),
