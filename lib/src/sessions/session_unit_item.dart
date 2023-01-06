@@ -2,7 +2,6 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/entities.dart';
 import 'package:im_core/enums.dart';
-import 'package:im_ui/src/commons/nav.dart';
 
 import '../../medias.dart';
 import '../commons/utils.dart';
@@ -49,10 +48,15 @@ class SessionUnitItemState extends State<SessionUnitItem> {
   String get sendTimeDisplay => sendTime != null ? formatTime(sendTime!) : '';
 
   ///
-  int get badge => item.badge ?? 0;
+  late int badge = item.badge ?? 0;
 
   ///
   bool get isImmersed => false; //item.isImmersed;
+
+  void setBadge(int value) {
+    badge = value;
+    setState(() {});
+  }
 
   ///
   @override
@@ -60,7 +64,9 @@ class SessionUnitItemState extends State<SessionUnitItem> {
     return InkWell(
       key: globalKey,
       onTap: () {
-        Nav.toChat(context);
+        // Nav.toChat(context);
+        badge++;
+        setBadge(badge);
       },
       child: Container(
         height: 56,
@@ -106,7 +112,7 @@ class SessionUnitItemState extends State<SessionUnitItem> {
                   ),
                   separated: const SizedBox(width: 8),
                   child: const Text(
-                    'subtitleDioMixin.ure>.<',
+                    'subtitleDioMixin.ure >.<',
                     style: TextStyle(color: Colors.grey, fontSize: 12),
                     overflow: TextOverflow.ellipsis,
                   ),
