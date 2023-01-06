@@ -7,25 +7,32 @@ class LoadingWidget extends StatefulWidget {
     Key? key,
     this.color,
     this.height = 48,
+    this.visible = true,
   }) : super(key: key);
   final double height;
 
   final Color? color;
+
+  final bool visible;
 
   @override
   State<LoadingWidget> createState() => LoadingWidgetState();
 }
 
 class LoadingWidgetState extends State<LoadingWidget> {
-  bool _isVisible = false;
+  ///
+  late bool _isVisible = widget.visible;
 
+  ///
   double get height => widget.height;
 
+  ///
   void show() {
     _isVisible = true;
     setState(() {});
   }
 
+  ///
   void hide() {
     _isVisible = false;
     setState(() {});

@@ -19,13 +19,16 @@ class SessionUnitItem extends StatefulWidget {
   final SessionUnit data;
 
   @override
-  State<SessionUnitItem> createState() => _SessionUnitItemState();
+  State<SessionUnitItem> createState() => SessionUnitItemState();
 }
 
 ///
-class _SessionUnitItemState extends State<SessionUnitItem> {
+class SessionUnitItemState extends State<SessionUnitItem> {
   ///
   SessionUnit get item => widget.data;
+
+  ///
+  GlobalKey get globalKey => item.globalKey;
 
   ///
   ChatObject get dest => widget.data.destination ?? ChatObject();
@@ -45,19 +48,23 @@ class _SessionUnitItemState extends State<SessionUnitItem> {
   ///
   String get sendTimeDisplay => sendTime != null ? formatTime(sendTime!) : '';
 
+  ///
   int get badge => item.badge ?? 0;
 
+  ///
   bool get isImmersed => false; //item.isImmersed;
 
   ///
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      key: globalKey,
       onTap: () {
         Nav.toChat(context);
       },
-      child: SizedBox(
-        height: 52,
+      child: Container(
+        height: 56,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Expand(
           fixed: MediaAvatar(
             meidaId: dest.id!,

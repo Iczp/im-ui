@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
+import 'package:im_ui/src/messages/list_view/loading_widget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'session_unit_item.dart';
@@ -33,6 +34,9 @@ class _SessionListViewState extends State<SessionListView> {
       RefreshController(initialRefresh: false);
 
   ///
+  late bool isInited = false;
+
+  ///
   @override
   void initState() {
     super.initState();
@@ -57,6 +61,7 @@ class _SessionListViewState extends State<SessionListView> {
       skipCount: sesssionUnitList.length,
     ).fetch().then((ret) {
       sesssionUnitList = ret.items;
+      isInited = true;
       setState(() {});
     });
   }
@@ -102,6 +107,12 @@ class _SessionListViewState extends State<SessionListView> {
 
   @override
   Widget build(BuildContext context) {
+    if (!isInited) {
+      return const Center(
+          child: LoadingWidget(
+        color: Colors.red,
+      ));
+    }
     return ListView.builder(
         itemCount: sesssionUnitList.length,
         controller: _controller,

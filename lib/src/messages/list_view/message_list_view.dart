@@ -634,8 +634,13 @@ class MessageListViewState extends State<MessageListView>
         onReorderEnd: (index) {
           // Logger().d('onReorderEnd:$index');
         },
-        header: LoadingWidget(key: _headerKey, color: Colors.red),
-        footer: LoadingWidget(key: _footerKey, color: Colors.green),
+        header: LoadingWidget(
+          key: _headerKey,
+          color: Colors.red,
+          visible: false,
+        ),
+        footer:
+            LoadingWidget(key: _footerKey, color: Colors.green, visible: false),
       ),
     );
   }

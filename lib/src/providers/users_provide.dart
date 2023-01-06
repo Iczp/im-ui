@@ -58,10 +58,10 @@ class UsersProvide with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   static const imgs = [
-    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
+    'http://www.rctea.com/uploadFiles/newsFiles/2022/2022-8/4fb98bb3.jpg',
+    'http://www.rctea.com/uploadFiles/product/475/320x320/159fff1e.jpg',
     'http://www.rctea.com/uploadFiles/product/300/320x320/8647b328.png',
     'http://www.rctea.com/uploadFiles/product/439/320x320/1dc87fa4.jpg',
-    'http://www.rctea.com/uploadFiles/newsFiles/2022/2022-8/4fb98bb3.jpg',
     'http://www.rctea.com/uploadFiles/product/164/320x320/2f877c44.jpg',
     'http://www.rctea.com/uploadFiles/product/475/320x320/159fff1e.jpg',
   ];

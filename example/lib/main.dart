@@ -52,12 +52,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int badge = 0;
+
   int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+  ///
+  void fetchBadge() {
+    SessionUnitGetBadge(ownerId: 'b700aef5-d48b-4aac-9bbe-52fdcdfd53cb')
+        .fetch()
+        .then((count) {
+      badge = count;
+      setState(() {});
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchBadge();
+  }
+
+  void _incrementCounter() {
+    badge = 0;
+    _counter++;
+    setState(() {});
+    fetchBadge();
   }
 
   @override
@@ -112,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               );
             },
-            child: const Text('session list view'),
+            child: Text('session list view($badge)'),
           ),
         ],
       ),
