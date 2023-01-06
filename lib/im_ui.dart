@@ -1,5 +1,6 @@
 library im_ui;
 
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:im_core/services.dart';
@@ -9,6 +10,10 @@ import 'src/app.dart';
 export 'widgets.dart';
 
 class ImUi {
+  static final GlobalKey _globalKey = GlobalKey();
+  static GlobalKey get globalKey => _globalKey;
+
+  ///
   static void initialized() {
     appInitialized();
     HttpHelper.init(

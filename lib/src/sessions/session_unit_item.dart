@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/entities.dart';
 import 'package:im_core/enums.dart';
+import 'package:im_ui/src/commons/nav.dart';
 
 import '../../medias.dart';
 import '../commons/utils.dart';
@@ -52,6 +53,9 @@ class _SessionUnitItemState extends State<SessionUnitItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () {
+        Nav.toChat(context);
+      },
       child: SizedBox(
         height: 52,
         child: Expand(

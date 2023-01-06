@@ -53,7 +53,7 @@ class _SessionListViewState extends State<SessionListView> {
   void fetchData() {
     SessionUnitGetList(
       ownerId: widget.ownerId,
-      maxResultCount: 30,
+      maxResultCount: 20,
       skipCount: sesssionUnitList.length,
     ).fetch().then((ret) {
       sesssionUnitList = ret.items;

@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      key: ImUi.globalKey,
       title: 'im ui Demo',
       theme: ThemeData(
         primarySwatch: Colors.teal,
