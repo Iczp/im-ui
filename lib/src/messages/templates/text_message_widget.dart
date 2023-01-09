@@ -15,8 +15,9 @@ class TextMessageWidget extends MessageItemWidget {
   });
 
   ///文本
-  TextContentDto get content =>
-      TextContentDto.fromJson(arguments.message.content);
+  TextContentDto get content => (arguments.message.content is TextContentDto)
+      ? arguments.message.content
+      : TextContentDto.fromJson(arguments.message.content);
 
   @override
   State<TextMessageWidget> createState() => _TextMessageWidgetState();
