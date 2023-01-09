@@ -31,14 +31,17 @@ class ChatingPage extends StatefulWidget {
     super.key,
     required this.media,
     required this.title,
+    this.scrollMode = 0,
+    required this.sessionUnitId,
 
     ///
     this.choiceMode,
     // this.choiceMode,
     this.choiceMaxCount,
     this.choiceMinCount,
-    this.scrollMode = 0,
   });
+
+  final String sessionUnitId;
 
   ///
   final MediaInput media;
@@ -113,11 +116,12 @@ class _ChatingPageState extends State<ChatingPage>
   ChatInputState get chatInputState => _chatInputKey.currentState!;
 
   ///
-  String get sessionId => widget.media.sessionId;
+  String get sessionUnitId => widget.sessionUnitId;
 
   ///
   @override
   void initState() {
+    super.initState();
     // Logger().i('initState');
 
     _choiceMode = widget.choiceMode;
@@ -129,7 +133,7 @@ class _ChatingPageState extends State<ChatingPage>
     //   Logger().d(event);
     // });
     WidgetsBinding.instance.addObserver(this);
-    super.initState();
+    fetchData();
   }
 
   @override
@@ -139,6 +143,15 @@ class _ChatingPageState extends State<ChatingPage>
     subscription?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     Logger().w('chating page dispose');
+  }
+
+  void fetchData() {
+    SessionUnitGetMessageList(id: sessionUnitId).fetch().then((ret) {
+      Logger().e(ret.totalCount);
+      messageProvider.append(sessionUnitId, ret.items[0]);
+      messageListViewState.setMessages(ret.items);
+      messageListViewState.setState(() {});
+    });
   }
 
   ///
@@ -159,7 +172,7 @@ class _ChatingPageState extends State<ChatingPage>
     //     'scrollController maxScrollExtent:${_messageListViewState.scrollController.position.maxScrollExtent}');
 
     // context.read<ScrollProvider>().storageScroll(
-    //     sessionId,
+    //     sessionUnitId,
     //     ScrollModel(
     //       maxScrollExtent:
     //           _messageListViewState.scrollController.position.maxScrollExtent,
@@ -176,11 +189,10 @@ class _ChatingPageState extends State<ChatingPage>
 
   ///
   void setReaded() async {
-    var messages = MessageProvider.getMessages(sessionId);
+    var messages = MessageProvider.getMessages(sessionUnitId);
     if (messages.isNotEmpty) {
-      context
-          .read<ReadedRecordProvider>()
-          .setReaded(sessionId, messages.last.autoId, messages.last.globalKey);
+      context.read<ReadedRecordProvider>().setReaded(
+          sessionUnitId, messages.last.autoId, messages.last.globalKey);
     }
     Logger().d('setReaded messages.length:${messages.length}');
   }
@@ -208,10 +220,10 @@ class _ChatingPageState extends State<ChatingPage>
           messageList.length % 2 == 1 ? 'zhongpei' : widget.media.mediaId,
       // media: MediaTypeEnum.personal,
       content: content,
-      sendTime: DateTime.now(),
+      creationTime: DateTime.now(),
       state: MessageStateEnum.pending,
       quoteMessage: chatInputState.quoteMessage,
-      type: content.messageType,
+      messageType: content.messageType,
       // rollbackTime: DateTime.now(),
     );
   }
@@ -228,15 +240,16 @@ class _ChatingPageState extends State<ChatingPage>
 
     // chatingStreamController.sink.add(['dddddddd']);
     messageListViewState.appendMessage(message);
-    messageProvider.setMessages(sessionId, messageListViewState.messageList);
+    messageProvider.setMessages(
+        sessionUnitId, messageListViewState.messageList);
     messageListViewState.scrollToNewLine();
     chatInputState.setQuoteMessage(null);
 
-    api.sendMessage(sessionId, message, () {}).then((value) {
+    api.sendMessage(sessionUnitId, message, () {}).then((value) {
       message.globalKey
           .state<MessageWidgetState>()
           ?.setMessageState(MessageStateEnum.success);
-      messageProvider.updateMessage(sessionId, message);
+      messageProvider.updateMessage(sessionUnitId, message);
     }).catchError((err) {
       Logger().e(err);
     });
@@ -307,7 +320,7 @@ class _ChatingPageState extends State<ChatingPage>
   //       break;
 
   //     case MenuTypeEnum.copy:
-  //       if (message.type == MessageTypeEnum.text) {
+  //       if (message.messageType == MessageTypeEnum.text) {
   //         var text = message.getContent<TextContentDto>().text;
   //         Logger().d('copy');
   //         Clipboard.setData(ClipboardData(text: text));
@@ -569,7 +582,7 @@ class _ChatingPageState extends State<ChatingPage>
   ///
   buildMessageListView() {
     // return Selector<ChatingProvider, List<MessageDto>>(
-    //   selector: (p0, p1) => p1.getSessionMessages(sessionId),
+    //   selector: (p0, p1) => p1.getSessionMessages(sessionUnitId),
     //   builder: (context, messages, child) {
     return MessageListView(
       media: widget.media,

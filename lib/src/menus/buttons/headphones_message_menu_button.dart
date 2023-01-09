@@ -24,7 +24,7 @@ class _HeadphonesMessageMenuButton
   ///
   @override
   void onTap() {
-    Logger().i('${toString()} - ${message.type}');
+    Logger().i('${toString()} - ${message.messageType}');
     super.onTap();
   }
 }

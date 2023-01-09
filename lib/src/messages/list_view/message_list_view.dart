@@ -276,9 +276,9 @@ class MessageListViewState extends State<MessageListView>
           receiverId: index % 2 == 1 ? 'zhongpei' : widget.media.mediaId,
           // media: MediaTypeEnum.personal,
           content: TextContentDto(text: 'logId:$autoId'),
-          sendTime: DateTime.now(),
+          creationTime: DateTime.now(),
           state: MessageStateEnum.success,
-          type: MessageTypeEnum.text,
+          messageType: MessageTypeEnum.text,
           // rollbackTime: DateTime.now(),
         );
       });
@@ -560,8 +560,8 @@ class MessageListViewState extends State<MessageListView>
       return true;
     }
     var diff = _messageList[index]
-        .sendTime!
-        .difference(_messageList[previousIndex].sendTime!);
+        .creationTime!
+        .difference(_messageList[previousIndex].creationTime!);
 
     return diff.inMinutes >= 3;
   }
@@ -595,6 +595,8 @@ class MessageListViewState extends State<MessageListView>
               index != (_isReverse ? 0 : messageList.length - 1) &&
                   (_readedLogId?.globalKey == message.globalKey ||
                       _readedLogId?.autoId == message.autoId);
+
+          Logger().e('-----------${message.globalKey}');
 
           return MessageResolver(
             key: ValueKey(message.globalKey.toString()),

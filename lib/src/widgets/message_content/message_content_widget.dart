@@ -29,7 +29,7 @@ abstract class MessageContentWidget<TContent> extends StatefulWidget {
   //   text: '转发',
   //   code: MenuTypeEnum.forward,
   //   onTap: (_) {
-  //     if (arguments.message.type == MessageTypeEnum.text) {}
+  //     if (arguments.message.messageType == MessageTypeEnum.text) {}
   //   },
   // );
 

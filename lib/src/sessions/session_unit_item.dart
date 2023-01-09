@@ -37,7 +37,7 @@ class SessionUnitItemState extends State<SessionUnitItem> {
 
   String get subtitle => 'subtitle:$title-getItemInfo(int index)';
 
-  DateTime? get sendTime => lastMessage?.sendTime ?? DateTime.now();
+  DateTime? get sendTime => lastMessage?.creationTime ?? DateTime.now();
 
   String get sendTimeDisplay => sendTime != null ? formatTime(sendTime!) : '';
 

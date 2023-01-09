@@ -30,13 +30,13 @@ class _ShareMessageMenuButtonState
   ///
   @override
   void onTap() {
-    Logger().i('${toString()} - ${message.type}');
+    Logger().i('${toString()} - ${message.messageType}');
     super.onTap();
 
     var senderInfo = context.read<UsersProvide>().getById(message.senderId);
 
     var sendName = '${senderInfo?.name}';
-    switch (message.type) {
+    switch (message.messageType) {
       case MessageTypeEnum.file:
         var fileContent = content as FileContentDto;
         Share.shareFiles([fileContent.path!],

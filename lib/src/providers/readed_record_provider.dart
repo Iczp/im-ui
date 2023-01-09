@@ -55,15 +55,16 @@ class ReadedRecordProvider with ChangeNotifier, DiagnosticableTreeMixin {
   final _readedMaps = <String, ReadedRecordModel>{};
 
   ///
-  void setReaded(String sessionId, double logId, GlobalKey? globalKey) {
+  void setReaded(String sessionUnitId, double logId, GlobalKey? globalKey) {
     var readedRecordModel = ReadedRecordModel(logId, globalKey);
-    _readedMaps[sessionId] = readedRecordModel;
+    _readedMaps[sessionUnitId] = readedRecordModel;
     notifyListeners();
-    Logger().w('ReadedProvider.setReaded sessionId:$sessionId');
+    Logger().w('ReadedProvider.setReaded sessionUnitId:$sessionUnitId');
     Logger().w(readedRecordModel);
   }
 
-  ReadedRecordModel? getReaded(String sessionId) => _readedMaps[sessionId];
+  ReadedRecordModel? getReaded(String sessionUnitId) =>
+      _readedMaps[sessionUnitId];
 
   /// Makes `_readedMaps` readable inside the devtools by listing all of its properties
   @override

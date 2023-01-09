@@ -5,7 +5,7 @@ import '../commons/utils.dart';
 class MessageSendtimeWidget extends StatelessWidget {
   const MessageSendtimeWidget({
     Key? key,
-    required this.sendTime,
+    required this.creationTime,
     this.isDisplay = true,
   }) : super(key: key);
 
@@ -13,9 +13,9 @@ class MessageSendtimeWidget extends StatelessWidget {
   final bool isDisplay;
 
   ///
-  final DateTime sendTime;
+  final DateTime creationTime;
 
-  String get sendTimeDisplay => formatTime(sendTime);
+  String get sendTimeDisplay => formatTime(creationTime);
 
   @override
   Widget build(BuildContext context) {

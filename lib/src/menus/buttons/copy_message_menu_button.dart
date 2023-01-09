@@ -26,9 +26,9 @@ class _CopyMessageMenuButtonState
   ///
   @override
   void onTap() {
-    Logger().i('${toString()} - ${message.type}');
+    Logger().i('${toString()} - ${message.messageType}');
     super.onTap();
-    if (message.type != MessageTypeEnum.text) {
+    if (message.messageType != MessageTypeEnum.text) {
       return;
     }
     var text = message.getContent<TextContentDto>().text;

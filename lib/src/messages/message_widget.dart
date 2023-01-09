@@ -64,7 +64,7 @@ abstract class MessageWidget<TMessage extends MessageDto>
 class MessageWidgetState<T extends MessageWidget> extends State<T>
     implements IMessageWidgetState {
   ///
-  DateTime get sendTime => arguments.message.sendTime!;
+  DateTime get sendTime => arguments.message.creationTime;
 
   ///
   final stateGlobalKey = GlobalKey();
@@ -127,8 +127,8 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
   void navToMessageViewer() {
     var messageList = MessageListViewState.of(context)
         ?.messageList
-        .where((x) =>
-            [MessageTypeEnum.image, MessageTypeEnum.video].contains(x.type))
+        .where((x) => [MessageTypeEnum.image, MessageTypeEnum.video]
+            .contains(x.messageType))
         .toList();
     if (messageList?.isEmpty ?? true) {
       Logger().w('_messageList:${messageList?.length}');
@@ -207,7 +207,7 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
     return MessageSendtimeWidget(
       key: ValueKey(sendTime),
       isDisplay: widget.isSendTimeDisplay,
-      sendTime: sendTime,
+      creationTime: sendTime,
     );
   }
 

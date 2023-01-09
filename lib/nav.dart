@@ -9,6 +9,7 @@ class Nav {
   ///
   static void toChat(
     BuildContext context, {
+    String? title,
     required String sessionUnitId,
   }) {
     print('ImUi.globalKey.currentContext:${ImUi.globalKey.currentContext}');
@@ -19,8 +20,9 @@ class Nav {
         builder: (context) {
           // return ChatPage();
           return ChatingPage(
-            title: sessionUnitId,
+            title: title ?? sessionUnitId,
             media: const MediaInput.build('zhongpei', MediaTypeEnum.personal),
+            sessionUnitId: sessionUnitId,
           );
         },
       ),

@@ -83,7 +83,7 @@ class _MessagePreviewState extends State<MessagePreview> {
   /// message content
   Widget buildMessageContent() {
     var message = widget.message!;
-    switch (widget.message!.type) {
+    switch (widget.message!.messageType) {
       case MessageTypeEnum.text:
         var textContent = message.content as TextContentDto;
         return textWidget(textContent.text);
@@ -102,7 +102,7 @@ class _MessagePreviewState extends State<MessagePreview> {
         return textWidget(
             '${fileContentDto.fileName} ${formatSize(fileContentDto.contentLength)}');
       default:
-        return textWidget(widget.message!.type.toString());
+        return textWidget(widget.message!.messageType.toString());
     }
   }
 
@@ -118,7 +118,7 @@ class _MessagePreviewState extends State<MessagePreview> {
   ///消息类型图标
   Widget messageTypeIcon() {
     return Text(
-      widget.message!.type!.toText(),
+      widget.message!.messageType!.toText(),
       style: _textStyle,
     );
   }

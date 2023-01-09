@@ -57,10 +57,10 @@ class _MessageViewerPageState extends State<MessageViewerPage> {
     pageController = PageController(initialPage: pageIndex);
 
     _messageList
-        ?.where((x) =>
-            [MessageTypeEnum.image, MessageTypeEnum.video].contains(x.type))
+        ?.where((x) => [MessageTypeEnum.image, MessageTypeEnum.video]
+            .contains(x.messageType))
         .forEach((message) {
-      if (message.type == MessageTypeEnum.video) {
+      if (message.messageType == MessageTypeEnum.video) {
         var videoContent = message.getContent<VideoContentDto>();
         _videoControlles[message.autoId.toString()] =
             VideoPlayerController.file(File(videoContent.path!))
@@ -93,8 +93,8 @@ class _MessageViewerPageState extends State<MessageViewerPage> {
   @override
   void dispose() {
     _messageList
-        ?.where((x) =>
-            [MessageTypeEnum.image, MessageTypeEnum.video].contains(x.type))
+        ?.where((x) => [MessageTypeEnum.image, MessageTypeEnum.video]
+            .contains(x.messageType))
         .forEach((message) {
       _videoControlles[message.autoId.toString()]?.dispose();
     });
@@ -185,7 +185,7 @@ class _MessageViewerPageState extends State<MessageViewerPage> {
   ///
   ImageProvider getImage(MessageDto message) {
     String imagePath = '';
-    switch (message.type) {
+    switch (message.messageType) {
       case MessageTypeEnum.image:
         imagePath = message.getContent<ImageContentDto>().path!;
         break;
@@ -242,7 +242,7 @@ class _MessageViewerPageState extends State<MessageViewerPage> {
 
   PhotoViewGalleryPageOptions buildItem(BuildContext context, int index) {
     var message = widget.messages[index];
-    if (message.type == MessageTypeEnum.video) {
+    if (message.messageType == MessageTypeEnum.video) {
       return chewieVideoMessageViewer(message);
       // return videoMessageViewer(message);
     } else {

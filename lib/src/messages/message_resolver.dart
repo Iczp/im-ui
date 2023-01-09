@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:im_core/im_core.dart';
+import 'package:logger/logger.dart';
 
 import '../models/message_arguments.dart';
 import 'templates/message_item_widget.dart';
@@ -25,7 +26,7 @@ class MessageResolver extends StatelessWidget {
   final Widget? footer;
 
   ///
-  MessageTypeEnum get messageType => arguments.message.type!;
+  MessageTypeEnum get messageType => arguments.message.messageType!;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class MessageResolver extends StatelessWidget {
   }
 
   Widget buildMessageItem() {
-    // Logger().d('${toString()}--build');
+    Logger().d('${toString()}--build-${arguments.message.content.runtimeType}');
     switch (messageType) {
       case MessageTypeEnum.text:
         return TextMessageWidget(arguments: arguments);

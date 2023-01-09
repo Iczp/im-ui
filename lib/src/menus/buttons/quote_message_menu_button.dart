@@ -25,7 +25,7 @@ class _QuoteMessageMenuButtonState
   ///
   @override
   void onTap() {
-    Logger().i('${toString()} - ${message.type}');
+    Logger().i('${toString()} - ${message.messageType}');
     super.onTap();
     widget.arguments.chatInputKey
         ?.state<ChatInputState>()

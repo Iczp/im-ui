@@ -15,20 +15,20 @@ class MessageProvider with ChangeNotifier, DiagnosticableTreeMixin {
   static final _sessionMessages = <String, List<MessageDto>>{};
 
   ///
-  void append(String sessionId, MessageDto message) {
-    if (!_sessionMessages.containsKey(sessionId)) {
-      _sessionMessages[sessionId] = <MessageDto>[];
+  void append(String sessionUnitId, MessageDto message) {
+    if (!_sessionMessages.containsKey(sessionUnitId)) {
+      _sessionMessages[sessionUnitId] = <MessageDto>[];
     }
-    _sessionMessages[sessionId]!.add(message);
+    _sessionMessages[sessionUnitId]!.add(message);
     notifyListeners();
   }
 
   static List<MessageDto> getMessages(
-    String sessionId, {
+    String sessionUnitId, {
     int? maxCount,
     bool reversed = false,
   }) {
-    var list = _sessionMessages[sessionId] ?? <MessageDto>[];
+    var list = _sessionMessages[sessionUnitId] ?? <MessageDto>[];
     if (reversed) {
       list = list.reversed.toList();
     }
@@ -51,34 +51,34 @@ class MessageProvider with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
-  void setMessages(String sessionId, List<MessageDto> messageList) {
-    _sessionMessages[sessionId] = messageList;
+  void setMessages(String sessionUnitId, List<MessageDto> messageList) {
+    _sessionMessages[sessionUnitId] = messageList;
     // notifyListeners();
   }
 
   ///
-  ResultModel updateMessage(String sessionId, MessageDto message) {
-    if (_sessionMessages[sessionId] == null) {
+  ResultModel updateMessage(String sessionUnitId, MessageDto message) {
+    if (_sessionMessages[sessionUnitId] == null) {
       return ResultModel(
         isSuccess: false,
-        message: '消息为null,sessionId:$sessionId',
+        message: '消息为null,sessionUnitId:$sessionUnitId',
       );
     }
 
-    var item = _sessionMessages[sessionId]
+    var item = _sessionMessages[sessionUnitId]
         ?.singleWhere((x) => x.globalKey == message.globalKey);
     if (item == null) {
       return ResultModel(
         isSuccess: false,
         message:
-            '未找到消息,sessionId:$sessionId,message.globalKey:${message.globalKey}',
+            '未找到消息,sessionUnitId:$sessionUnitId,message.globalKey:${message.globalKey}',
       );
     }
-    var index = _sessionMessages[sessionId]!.indexOf(item);
-    _sessionMessages[sessionId]![index] = item;
+    var index = _sessionMessages[sessionUnitId]!.indexOf(item);
+    _sessionMessages[sessionUnitId]![index] = item;
     return ResultModel(isSuccess: true);
   }
 
-  List<MessageDto> getSessionMessages(String sessionId) =>
-      _sessionMessages[sessionId] ?? <MessageDto>[];
+  List<MessageDto> getSessionMessages(String sessionUnitId) =>
+      _sessionMessages[sessionUnitId] ?? <MessageDto>[];
 }
