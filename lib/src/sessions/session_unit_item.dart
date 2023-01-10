@@ -29,9 +29,9 @@ class SessionUnitItemState extends State<SessionUnitItem> {
 
   GlobalKey get globalKey => item.globalKey;
 
-  ChatObject get dest => widget.data.destination ?? ChatObject();
+  ChatObject? get dest => widget.data.destination;
 
-  String get title => dest.name ?? '';
+  String get title => dest?.name ?? '';
 
   MessageDto? get lastMessage => item.lastMessage;
 
@@ -71,7 +71,7 @@ class SessionUnitItemState extends State<SessionUnitItem> {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Expand(
           fixed: MediaAvatar(
-            meidaId: dest.id!,
+            meidaId: dest?.id ?? '',
             meidaType: MediaTypeEnum.personal,
           ),
           separated: const SizedBox(width: 8),

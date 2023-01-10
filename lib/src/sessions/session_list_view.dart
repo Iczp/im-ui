@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import 'package:im_ui/src/messages/list_view/loading_widget.dart';
+import 'package:im_ui/src/providers/session_unit_provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'session_unit_item.dart';
@@ -40,6 +41,9 @@ class _SessionListViewState extends State<SessionListView> {
   @override
   void initState() {
     super.initState();
+
+    sesssionUnitList = SessionUnitProvider.instance.getList();
+    setState(() {});
     fetchData();
     //监听滚动事件，打印滚动位置
     _controller.addListener(() {
@@ -59,9 +63,10 @@ class _SessionListViewState extends State<SessionListView> {
       ownerId: widget.ownerId,
       maxResultCount: 20,
       skipCount: sesssionUnitList.length,
-    ).submit().then((ret) {
-      sesssionUnitList = ret.items;
+    ).submit().then((_) {
+      SessionUnitProvider.instance.setMany(_.items);
       isInited = true;
+      sesssionUnitList = SessionUnitProvider.instance.getList();
       setState(() {});
     });
   }
@@ -107,7 +112,7 @@ class _SessionListViewState extends State<SessionListView> {
 
   @override
   Widget build(BuildContext context) {
-    if (!isInited) {
+    if (!isInited && sesssionUnitList.isEmpty) {
       return const Center(
           child: LoadingWidget(
         color: Colors.red,
