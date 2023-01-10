@@ -4,7 +4,8 @@ import 'package:im_core/im_core.dart';
 import '../../models/message_arguments.dart';
 
 ///消息内容部件
-abstract class MessageContentWidget<TContent> extends StatefulWidget {
+abstract class MessageContentWidget<TContent extends MessageContent>
+    extends StatefulWidget {
   const MessageContentWidget({
     Key? key,
     required this.arguments,
