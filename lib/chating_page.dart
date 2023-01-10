@@ -146,7 +146,7 @@ class _ChatingPageState extends State<ChatingPage>
   }
 
   void fetchData() {
-    SessionUnitGetMessageList(id: sessionUnitId).fetch().then((ret) {
+    SessionUnitGetMessageList(id: sessionUnitId).submit().then((ret) {
       Logger().e(ret.totalCount);
       messageProvider.append(sessionUnitId, ret.items[0]);
       messageListViewState.setMessages(ret.items);

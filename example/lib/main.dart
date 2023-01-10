@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
-import 'package:im_ui/chating_page.dart';
 import 'package:im_ui/nav.dart';
 import 'package:im_ui/session_page.dart';
 import 'package:im_ui/im_ui.dart';
@@ -60,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
   ///
   void fetchBadge() {
     SessionUnitGetBadge(ownerId: 'b700aef5-d48b-4aac-9bbe-52fdcdfd53cb')
-        .fetch()
+        .submit()
         .then((count) {
       badge = count;
       setState(() {});

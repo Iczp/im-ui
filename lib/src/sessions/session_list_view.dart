@@ -59,7 +59,7 @@ class _SessionListViewState extends State<SessionListView> {
       ownerId: widget.ownerId,
       maxResultCount: 20,
       skipCount: sesssionUnitList.length,
-    ).fetch().then((ret) {
+    ).submit().then((ret) {
       sesssionUnitList = ret.items;
       isInited = true;
       setState(() {});

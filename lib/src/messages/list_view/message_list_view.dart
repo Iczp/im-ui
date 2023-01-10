@@ -560,8 +560,8 @@ class MessageListViewState extends State<MessageListView>
       return true;
     }
     var diff = _messageList[index]
-        .creationTime!
-        .difference(_messageList[previousIndex].creationTime!);
+        .creationTime
+        .difference(_messageList[previousIndex].creationTime);
 
     return diff.inMinutes >= 3;
   }

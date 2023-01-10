@@ -307,9 +307,6 @@ class _MessageViewerPageState extends State<MessageViewerPage> {
     ///
     var videoController = _videoControlles[message.autoId.toString()]!;
 
-    ///
-    var videoContent = message.getContent<VideoContentDto>();
-
     Logger().d('chewieVideoMessageViewer:$videoController');
 
     final videoPlayerController = VideoPlayerController.network(
