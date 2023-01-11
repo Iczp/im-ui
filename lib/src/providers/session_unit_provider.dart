@@ -12,7 +12,7 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
   static SessionUnitProvider get instance => _instance;
 
   ///
-  static final _sessionUnitMap = <String, SessionUnit>{};
+  final _sessionUnitMap = <String, SessionUnit>{};
 
   ///
   SessionUnit? get(String id) {
@@ -28,10 +28,15 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   ///
   void setMany(List<SessionUnit> list) {
+    if (list.isEmpty) {
+      Logger().d('setMany:list.isEmpty');
+      return;
+    }
     for (var e in list) {
       set(e, isNotify: false);
     }
-    Logger().w('setMany: ${_sessionUnitMap.keys.length}');
+    Logger().w(
+        'listCount:${list.length},totalCount: ${_sessionUnitMap.keys.length}');
     notifyListeners();
   }
 
@@ -53,5 +58,40 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
     // See the documentation of debugFillProperties for more information.
     properties.add(DiagnosticsProperty<Map<String, SessionUnit>>(
         'sessionUnitMap', _sessionUnitMap));
+  }
+
+  void setBadge(String id, int? badge) {
+    if (get(id)?.badge != null) {
+      get(id)?.badge = null;
+    } else {
+      get(id)?.badge = badge;
+    }
+    notifyListeners();
+  }
+
+  int? getBadge(String id) => get(id)?.badge;
+
+  int? getReadedMessageAutoId(String id) => get(id)?.readedMessageAutoId;
+
+  Future setReaded({
+    required String id,
+    required String messageId,
+    required double messageAutoId,
+  }) async {
+    var entity = get(id);
+    if (entity == null) {
+      Logger().e('No such entity[SessionUnit]:$id');
+      return;
+    }
+    if (entity.readedMessageAutoId == messageAutoId) {
+      Logger().w('No change required [readedMessageAutoId]:$messageAutoId');
+      return;
+    }
+    SessionUnitSetReaded(id: id, messageId: messageId)
+        .submit()
+        .whenComplete(() {
+      entity.readedMessageAutoId = messageAutoId.toInt();
+      setBadge(id, 0);
+    });
   }
 }

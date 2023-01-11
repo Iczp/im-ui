@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:im_core/im_core.dart';
+import 'package:logger/logger.dart';
 
 /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
 
@@ -21,11 +22,16 @@ class ChatObjectProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ///
   void set(ChatObject entity) {
     _chatObjectMap[entity.id] = entity;
+    notifyListeners();
   }
 
   ///
   void setMany(List<ChatObject> list) {
-    list.map((e) => set(e));
+    for (var e in list) {
+      set(e);
+    }
+    Logger()
+        .d('setMany count:${list.length},totalCount:${_chatObjectMap.length}');
   }
 
   ///

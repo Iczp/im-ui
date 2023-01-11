@@ -2,7 +2,11 @@ import 'dart:async';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
+import 'package:im_ui/src/providers/session_unit_provider.dart';
+import 'package:im_ui/src/widgets/expand.dart';
+import 'package:im_ui/src/widgets/immersed_icon.dart';
 import 'package:im_ui/src/widgets/message_menu_buttons_all.dart';
+import 'package:im_ui/src/widgets/session_title.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
@@ -139,10 +143,12 @@ class _ChatingPageState extends State<ChatingPage>
   @override
   Future<void> dispose() async {
     ///
-    super.dispose();
+
     subscription?.cancel();
     WidgetsBinding.instance.removeObserver(this);
+
     Logger().w('chating page dispose');
+    super.dispose();
   }
 
   void fetchData() {
@@ -188,13 +194,21 @@ class _ChatingPageState extends State<ChatingPage>
   }
 
   ///
-  void setReaded() async {
+  Future setReaded() async {
     var messages = MessageProvider.getMessages(sessionUnitId);
-    if (messages.isNotEmpty) {
-      context.read<ReadedRecordProvider>().setReaded(
-          sessionUnitId, messages.last.autoId, messages.last.globalKey);
+    var lastMessage = messages.lastOrNull((x) => x.id != null);
+    if (lastMessage != null) {
+      context
+          .read<ReadedRecordProvider>()
+          .setReaded(sessionUnitId, lastMessage.autoId, lastMessage.globalKey);
+      SessionUnitProvider.instance.setReaded(
+        id: sessionUnitId,
+        messageId: lastMessage.id!,
+        messageAutoId: lastMessage.autoId,
+      );
     }
-    Logger().d('setReaded messages.length:${messages.length}');
+
+    Logger().w('setReaded messages.length:${messages.length}');
   }
 
   ///
@@ -416,7 +430,7 @@ class _ChatingPageState extends State<ChatingPage>
             appBar: AppBar(
               // leading: ,
               elevation: 0,
-              title: Text(widget.title + widget.media.mediaId),
+              title: buildTitle(),
               actions: [
                 IconButton(
                   onPressed: () {
@@ -593,6 +607,14 @@ class _ChatingPageState extends State<ChatingPage>
       scrollMode: widget.scrollMode,
       //   );
       // },
+    );
+  }
+
+  Widget buildTitle() {
+    return SessionTitle(
+      title: widget.title,
+      // subTitle: widget.title,
+      isImmersed: true,
     );
   }
 }

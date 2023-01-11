@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import 'package:im_ui/src/messages/list_view/loading_widget.dart';
+import 'package:im_ui/src/providers/chat_object_provider.dart';
 import 'package:im_ui/src/providers/session_unit_provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -65,6 +66,10 @@ class _SessionListViewState extends State<SessionListView> {
       skipCount: sesssionUnitList.length,
     ).submit().then((_) {
       SessionUnitProvider.instance.setMany(_.items);
+      ChatObjectProvider.instance.setMany(_.items
+          .where((x) => x.destination != null)
+          .map((e) => e.destination!)
+          .toList());
       isInited = true;
       sesssionUnitList = SessionUnitProvider.instance.getList();
       setState(() {});

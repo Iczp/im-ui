@@ -2,11 +2,15 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/entities.dart';
 import 'package:im_core/enums.dart';
+import 'package:im_ui/src/avatars/chat_avatar.dart';
+import 'package:im_ui/src/providers/session_unit_provider.dart';
+import 'package:provider/provider.dart';
 
-import '../../medias.dart';
 import '../../nav.dart';
 import '../commons/utils.dart';
 import '../widgets/expand.dart';
+import '../widgets/immersed_icon.dart';
+import '../widgets/session_layout.dart';
 
 class SessionUnitItem extends StatefulWidget {
   ///
@@ -41,7 +45,7 @@ class SessionUnitItemState extends State<SessionUnitItem> {
 
   String get sendTimeDisplay => sendTime != null ? formatTime(sendTime!) : '';
 
-  int get badge => item.badge ?? 0;
+  // int get badge => item.badge ?? 0;
 
   bool get isImmersed => false; //item.isImmersed;
 
@@ -51,72 +55,40 @@ class SessionUnitItemState extends State<SessionUnitItem> {
 
   bool get isRemind => reminderMeCount + reminderAllCount > 0;
 
-  void setBadge(int value) {
-    item.badge = badge;
-    setState(() {});
-  }
-
   ///
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return SessionLayout(
       key: globalKey,
       onTap: () {
-        item.badge = item.badge! + 1;
-        setBadge(item.badge!);
-        Nav.toChat(context, sessionUnitId: item.id);
+        // SessionUnitProvider.instance.setBadge(item.id, 555);
+        Nav.toChat(context, sessionUnitId: item.id, title: title);
       },
-      child: Container(
-        height: 56,
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+      avatar: ChatAvatar(id: dest?.id),
+      title: Text(
+        title,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(color: Colors.black87, fontSize: 14),
+      ),
+      subTitle: Text(
+        sendTimeDisplay,
+        style: const TextStyle(color: Colors.black54, fontSize: 12),
+      ),
+      child: SizedBox(
+        height: 20,
         child: Expand(
-          fixed: MediaAvatar(
-            meidaId: dest?.id ?? '',
-            meidaType: MediaTypeEnum.personal,
+          dir: TextDirection.rtl,
+          fixed: Row(
+            children: [
+              ImmersedIcon(visible: isImmersed),
+              buildBadge(),
+            ],
           ),
           separated: const SizedBox(width: 8),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 24,
-                child: Expand(
-                  dir: TextDirection.rtl,
-                  fixed: Text(
-                    sendTimeDisplay,
-                    style: const TextStyle(color: Colors.black54, fontSize: 12),
-                  ),
-                  separated: const SizedBox(width: 8),
-                  child: Text(
-                    title,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(color: Colors.black87, fontSize: 14),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-                child: Expand(
-                  dir: TextDirection.rtl,
-                  fixed: Row(
-                    children: [
-                      const Icon(
-                        Icons.notifications_off,
-                        size: 16,
-                        color: Colors.black26,
-                      ),
-                      ...buildBadge(),
-                    ],
-                  ),
-                  separated: const SizedBox(width: 8),
-                  child: const Text(
-                    'subtitleDioMixin.ure >.<',
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-            ],
+          child: const Text(
+            'subtitleDioMixin.ure >.<',
+            style: TextStyle(color: Colors.grey, fontSize: 12),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ),
@@ -124,26 +96,29 @@ class SessionUnitItemState extends State<SessionUnitItem> {
   }
 
   ///
-  List<Widget> buildBadge() {
-    if (badge == 0) {
-      return <Widget>[];
-    }
-    return <Widget>[
-      const SizedBox(width: 4),
-      !isImmersed
-          ? Badge(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-              shape: BadgeShape.square,
-              borderRadius: BorderRadius.circular(48),
-              badgeContent: Text(
-                '$badge',
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
-                ),
+  Widget buildBadge() {
+    return Selector<SessionUnitProvider, int?>(
+        selector: ((_, x) => x.getBadge(item.id)),
+        builder: (context, value, child) {
+          if (value == null || value == 0) {
+            return Container();
+          }
+          if (isImmersed) {
+            return Badge();
+          }
+          return Badge(
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            animationType: BadgeAnimationType.fade,
+            shape: BadgeShape.square,
+            borderRadius: BorderRadius.circular(48),
+            badgeContent: Text(
+              '$value',
+              style: const TextStyle(
+                fontSize: 12,
+                color: Colors.white,
               ),
-            )
-          : Badge()
-    ];
+            ),
+          );
+        });
   }
 }
