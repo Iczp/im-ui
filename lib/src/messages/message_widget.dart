@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import 'package:logger/logger.dart';
 
+import 'containers/bubble_container.dart';
 import 'list_view/message_list_view.dart';
 import '../message_viewer/message_viewer_page.dart';
 import '../models/message_arguments.dart';
@@ -249,7 +250,17 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
   @override
   Widget buildMessageContentWidget(BuildContext context) {
     // return const Text('data');
-    return const Text('不支持');
+    return BubbleContainer(
+      isSelf: widget.isSelf,
+      child: Text(
+        '[不支持的消息类型:${widget.message.messageType}]',
+        style: const TextStyle(
+          fontSize: 12,
+          color: Colors.black26,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+    );
   }
 
   @override

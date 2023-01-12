@@ -64,6 +64,14 @@ class _MyHomePageState extends State<MyHomePage> {
       badge = count;
       setState(() {});
     });
+
+    SessionUnitGetList(
+      ownerId: 'b700aef5-d48b-4aac-9bbe-52fdcdfd53cb',
+      isTopping: true,
+      maxResultCount: 100,
+    ).submit().then((_) {
+      SessionUnitProvider.instance.setMany(_.items);
+    });
   }
 
   @override

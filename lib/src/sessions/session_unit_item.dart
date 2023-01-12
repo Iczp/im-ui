@@ -1,9 +1,9 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/entities.dart';
-import 'package:im_core/enums.dart';
 import 'package:im_ui/src/avatars/chat_avatar.dart';
 import 'package:im_ui/src/providers/session_unit_provider.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 import '../../nav.dart';
@@ -35,11 +35,12 @@ class SessionUnitItemState extends State<SessionUnitItem> {
 
   ChatObject? get dest => widget.data.destination;
 
-  String get title => dest?.name ?? '';
+  String get title => item.rename ?? dest?.name ?? '';
 
   MessageDto? get lastMessage => item.lastMessage;
 
-  String get subtitle => 'subtitle:$title-getItemInfo(int index)';
+  String get subtitle =>
+      '[${dest?.objectType.toString()}] ${item.sorting}|| lastMessageAutoId:${item.lastMessageAutoId}-autoId:${lastMessage?.autoId}';
 
   DateTime? get sendTime => lastMessage?.creationTime ?? DateTime.now();
 
@@ -47,7 +48,7 @@ class SessionUnitItemState extends State<SessionUnitItem> {
 
   // int get badge => item.badge ?? 0;
 
-  bool get isImmersed => false; //item.isImmersed;
+  bool get isImmersed => item.isImmersed;
 
   int get reminderAllCount => item.reminderAllCount ?? 0;
 
@@ -64,6 +65,9 @@ class SessionUnitItemState extends State<SessionUnitItem> {
         // SessionUnitProvider.instance.setBadge(item.id, 555);
         Nav.toChat(context, sessionUnitId: item.id, title: title);
       },
+      onLongPress: () {
+        Logger().d('onLongPress id:${item.id},dest_id:${dest?.id}');
+      },
       avatar: ChatAvatar(id: dest?.id),
       title: Text(
         title,
@@ -74,24 +78,7 @@ class SessionUnitItemState extends State<SessionUnitItem> {
         sendTimeDisplay,
         style: const TextStyle(color: Colors.black54, fontSize: 12),
       ),
-      child: SizedBox(
-        height: 20,
-        child: Expand(
-          dir: TextDirection.rtl,
-          fixed: Row(
-            children: [
-              ImmersedIcon(visible: isImmersed),
-              buildBadge(),
-            ],
-          ),
-          separated: const SizedBox(width: 8),
-          child: const Text(
-            'subtitleDioMixin.ure >.<',
-            style: TextStyle(color: Colors.grey, fontSize: 12),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ),
+      child: buildDescription(),
     );
   }
 
@@ -120,5 +107,26 @@ class SessionUnitItemState extends State<SessionUnitItem> {
             ),
           );
         });
+  }
+
+  Widget buildDescription() {
+    return SizedBox(
+      height: 20,
+      child: Expand(
+        dir: TextDirection.rtl,
+        fixed: Row(
+          children: [
+            ImmersedIcon(visible: isImmersed),
+            buildBadge(),
+          ],
+        ),
+        separated: const SizedBox(width: 8),
+        child: Text(
+          subtitle,
+          style: const TextStyle(color: Colors.grey, fontSize: 12),
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+    );
   }
 }

@@ -43,10 +43,9 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ///
   List<SessionUnit> getList() {
     var list = _sessionUnitMap.values.toList();
-    list.sort((a, b) => ((a.sorting ?? 0) - (b.sorting ?? 0)).toInt());
-    list.sort(
-        (a, b) => (a.lastMessageAutoId ?? 0) - (b.lastMessageAutoId ?? 0));
+    list.sort((a, b) => a.compareTo(b));
     Logger().w('getList: ${list.length}');
+
     return list;
   }
 

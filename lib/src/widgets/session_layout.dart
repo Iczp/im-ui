@@ -12,6 +12,7 @@ class SessionLayout extends StatelessWidget {
     this.padding = const EdgeInsets.all(8),
     this.separated = const SizedBox(width: 8),
     this.onTap,
+    this.onLongPress,
   });
 
   final Widget? avatar;
@@ -30,10 +31,13 @@ class SessionLayout extends StatelessWidget {
 
   final void Function()? onTap;
 
+  final void Function()? onLongPress;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      onLongPress: onLongPress,
       child: Container(
         // height: 56,
         padding: padding,

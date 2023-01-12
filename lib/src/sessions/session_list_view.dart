@@ -62,7 +62,7 @@ class _SessionListViewState extends State<SessionListView> {
   void fetchData() {
     SessionUnitGetList(
       ownerId: widget.ownerId,
-      maxResultCount: 20,
+      maxResultCount: 100,
       skipCount: sesssionUnitList.length,
     ).submit().then((_) {
       SessionUnitProvider.instance.setMany(_.items);
