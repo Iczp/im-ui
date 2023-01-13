@@ -4,6 +4,7 @@ import 'package:im_core/im_core.dart';
 import 'package:im_ui/src/messages/list_view/loading_widget.dart';
 import 'package:im_ui/src/providers/chat_object_provider.dart';
 import 'package:im_ui/src/providers/session_unit_provider.dart';
+import 'package:logger/logger.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'session_unit_item.dart';
@@ -25,7 +26,7 @@ class _SessionListViewState extends State<SessionListView> {
   late List<SessionUnit> sesssionUnitList = <SessionUnit>[];
 
   /// 滚动监听
-  final ScrollController _controller = ScrollController();
+  final ScrollController scrollController = ScrollController();
 
   ///滚动物理学
   final ScrollPhysics _physics =
@@ -46,16 +47,43 @@ class _SessionListViewState extends State<SessionListView> {
     sesssionUnitList = SessionUnitProvider.instance.getList();
     setState(() {});
     fetchData();
-    //监听滚动事件，打印滚动位置
-    _controller.addListener(() {
-      if (kDebugMode) {
-        // print(_controller.offset);
-      } //打印滚动位置
-    });
+
+    scrollController.addListener(_scrollHander);
   }
 
   double getMaxAutoId() {
     return 0;
+  }
+
+  void _scrollHander() {
+    //监听滚动事件，打印滚动位置
+    if (kDebugMode) {
+      // print(_controller.offset);
+    }
+    var pixels = scrollController.position.pixels;
+    if (pixels < scrollController.position.minScrollExtent - 50) {
+      // Logger().d(':up:$pixels');
+      _headerHander();
+    } else if (pixels > scrollController.position.maxScrollExtent + 50) {
+      _footerHander();
+      // Logger().d(':down:${pixels - scrollController.position.maxScrollExtent}');
+    }
+  }
+
+  late bool isHeaderHanded = false;
+  void _headerHander() {
+    if (isHeaderHanded) {
+      return;
+    }
+    Logger().w('_headerHander');
+    isHeaderHanded = true;
+    // SessionUnitProvider.instance
+    //     .fetchNewSession()
+    //     .then((value) => isHeaderHanded = false);
+  }
+
+  void _footerHander() {
+    Logger().d('_footerHander');
   }
 
   ///
@@ -104,7 +132,7 @@ class _SessionListViewState extends State<SessionListView> {
       header: const WaterDropHeader(),
       child: ListView.builder(
           itemCount: sesssionUnitList.length,
-          controller: _controller,
+          controller: scrollController,
           physics: _physics,
           // itemExtent: 50.0, //强制高度为50.0
           itemBuilder: (BuildContext context, int index) {
@@ -123,15 +151,34 @@ class _SessionListViewState extends State<SessionListView> {
         color: Colors.red,
       ));
     }
-    return ListView.builder(
-        itemCount: sesssionUnitList.length,
-        controller: _controller,
-        physics: _physics,
-        // itemExtent: 50.0, //强制高度为50.0
-        itemBuilder: (BuildContext context, int index) {
-          return SessionUnitItem(
-            data: sesssionUnitList[index],
-          );
-        });
+    return Listener(
+      onPointerCancel: (event) {
+        Logger().d('onPointerCancel');
+      },
+      onPointerDown: (event) {
+        Logger().d('onPointerDown');
+      },
+      onPointerUp: (event) {
+        Logger().d('onPointerUp');
+        var pixels = scrollController.position.pixels;
+        if (pixels < scrollController.position.minScrollExtent - 50) {
+          Logger().d('onPointerUp:refresh()');
+          SessionUnitProvider.instance.fetchNewSession().then((value) => null);
+        }
+      },
+      onPointerMove: (event) {
+        // Logger().d('onPointerMove');
+      },
+      child: ListView.builder(
+          itemCount: sesssionUnitList.length,
+          controller: scrollController,
+          physics: _physics,
+          // itemExtent: 50.0, //强制高度为50.0
+          itemBuilder: (BuildContext context, int index) {
+            return SessionUnitItem(
+              data: sesssionUnitList[index],
+            );
+          }),
+    );
   }
 }

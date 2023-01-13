@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   ///
   void fetchBadge() {
-    SessionUnitGetBadge(ownerId: 'b700aef5-d48b-4aac-9bbe-52fdcdfd53cb')
+    SessionUnitGetBadge(ownerId: ChatObjectProvider.instance.currentId)
         .submit()
         .then((count) {
       badge = count;
@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     SessionUnitGetList(
-      ownerId: 'b700aef5-d48b-4aac-9bbe-52fdcdfd53cb',
+      ownerId: ChatObjectProvider.instance.currentId,
       isTopping: true,
       maxResultCount: 100,
     ).submit().then((_) {

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:im_core/im_core.dart';
+import 'package:im_ui/providers.dart';
 import 'package:logger/logger.dart';
 
 /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
@@ -14,6 +15,10 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ///
   final _sessionUnitMap = <String, SessionUnit>{};
 
+  final _maxAutoIdMap = <String, int>{};
+
+  late int _maxAutoId = 0;
+
   ///
   SessionUnit? get(String id) {
     return _sessionUnitMap[id];
@@ -22,7 +27,8 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ///
   void set(SessionUnit entity, {bool isNotify = true}) {
     _sessionUnitMap[entity.id] = entity;
-    Logger().w('set:${_sessionUnitMap.length}');
+    setMaxAutoId(entity.lastMessageAutoId ?? 0);
+    // Logger().w('set:${_sessionUnitMap.length}');
     notifyListeners();
   }
 
@@ -45,7 +51,6 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
     var list = _sessionUnitMap.values.toList();
     list.sort((a, b) => a.compareTo(b));
     Logger().w('getList: ${list.length}');
-
     return list;
   }
 
@@ -77,12 +82,14 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
     required String messageId,
     required double messageAutoId,
   }) async {
+    Logger().d(
+        'setReaded:id:$id,messageId:$messageId,messageAutoId:$messageAutoId');
     var entity = get(id);
     if (entity == null) {
       Logger().e('No such entity[SessionUnit]:$id');
       return;
     }
-    if (entity.readedMessageAutoId == messageAutoId) {
+    if (entity.readedMessageAutoId == messageAutoId && entity.badge == 0) {
       Logger().w('No change required [readedMessageAutoId]:$messageAutoId');
       return;
     }
@@ -92,5 +99,35 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
       entity.readedMessageAutoId = messageAutoId.toInt();
       setBadge(id, 0);
     });
+  }
+
+  void setMaxAutoId(int value) {
+    if (value > _maxAutoId) {
+      _maxAutoId = value;
+      Logger().d('setMaxAutoId:$_maxAutoId');
+    }
+  }
+
+  int getMaxAutoId() {
+    var maxItem = _sessionUnitMap.values.toList().reduce((curr, next) {
+      var currAutoId = curr.lastMessageAutoId ?? 0;
+      var nextAutoId = next.lastMessageAutoId ?? 0;
+      return currAutoId > nextAutoId ? curr : next;
+    });
+    return maxItem.lastMessageAutoId ?? 0;
+  }
+
+  Future fetchNewSession() async {
+    var ret = await SessionUnitGetList(
+      ownerId: ChatObjectProvider.instance.currentId,
+      minAutoId: _maxAutoId,
+      maxResultCount: 20,
+    ).submit();
+
+    setMany(ret.items);
+    ChatObjectProvider.instance.setMany(ret.items
+        .where((x) => x.destination != null)
+        .map((e) => e.destination!)
+        .toList());
   }
 }

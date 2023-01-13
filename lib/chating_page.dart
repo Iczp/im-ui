@@ -152,10 +152,14 @@ class _ChatingPageState extends State<ChatingPage>
   }
 
   void fetchData() {
-    SessionUnitGetMessageList(id: sessionUnitId).submit().then((ret) {
+    SessionUnitGetMessageList(
+      id: sessionUnitId,
+    ).submit().then((ret) {
       Logger().e(ret.totalCount);
       messageProvider.append(sessionUnitId, ret.items[0]);
-      messageListViewState.setMessages(ret.items);
+      messageListViewState.setMessages(ret.items.reversed.toList());
+
+      // messageListViewState.scrollToBottom();
       messageListViewState.setState(() {});
     });
   }
@@ -195,12 +199,16 @@ class _ChatingPageState extends State<ChatingPage>
 
   ///
   Future setReaded() async {
-    var messages = MessageProvider.getMessages(sessionUnitId);
-    var lastMessage = messages.lastOrNull((x) => x.id != null);
+    // var messages = MessageProvider.getMessages(sessionUnitId);
+    var messages = messageListViewState.messageList;
+    var lastMessage = messages.firstOrNull((x) => x.id != null);
+
     if (lastMessage != null) {
-      context
-          .read<ReadedRecordProvider>()
-          .setReaded(sessionUnitId, lastMessage.autoId, lastMessage.globalKey);
+      // context
+      //     .read<ReadedRecordProvider>()
+      //     .setReaded(sessionUnitId, lastMessage.autoId, lastMessage.globalKey);
+
+      Logger().w('lastMessage:$lastMessage');
       SessionUnitProvider.instance.setReaded(
         id: sessionUnitId,
         messageId: lastMessage.id!,
