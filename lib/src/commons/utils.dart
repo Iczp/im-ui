@@ -24,8 +24,14 @@ String formatSize(dynamic size, [int round = 2]) {
 }
 
 String formatTime(DateTime dateTime) {
+  Logger().d('dateTime.weekday:${dateTime.weekday}');
   if (Utils.isToday(dateTime)) {
     return DateFormat("HH:mm").format(dateTime);
+  }
+  if (Utils.isCurrentWeek(dateTime)) {
+    return DateFormat("EEEE HH:mm").format(dateTime) +
+        ' ' +
+        dateTime.weekday.toString();
   }
   return DateFormat("yyyy-MM-dd HH:mm:ss").format(dateTime);
 }
@@ -82,5 +88,9 @@ class Utils {
         .difference(DateTime(dateTime.year, dateTime.month, dateTime.day));
 
     return diff.inDays == 0;
+  }
+
+  static bool isCurrentWeek(DateTime dateTime) {
+    return true;
   }
 }

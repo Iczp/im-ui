@@ -167,18 +167,21 @@ class _SessionListViewState extends State<SessionListView> {
         }
       },
       onPointerMove: (event) {
-        // Logger().d('onPointerMove');
+        Logger().d('onPointerMove:${event.distance} - ${event}');
       },
-      child: ListView.builder(
-          itemCount: sesssionUnitList.length,
-          controller: scrollController,
-          physics: _physics,
-          // itemExtent: 50.0, //强制高度为50.0
-          itemBuilder: (BuildContext context, int index) {
-            return SessionUnitItem(
-              data: sesssionUnitList[index],
-            );
-          }),
+      child: ReorderableListView.builder(
+        itemCount: sesssionUnitList.length,
+        scrollController: scrollController,
+        physics: _physics,
+        // itemExtent: 50.0, //强制高度为50.0
+        itemBuilder: (BuildContext context, int index) {
+          return SessionUnitItem(
+            key: Key(sesssionUnitList[index].globalKey.toString()),
+            data: sesssionUnitList[index],
+          );
+        },
+        onReorder: (int oldIndex, int newIndex) {},
+      ),
     );
   }
 }

@@ -33,7 +33,10 @@ class _SessionTitleState extends State<SessionTitle> {
       // fixed: const ImmersedIcon(visible: true),
       child: Column(
         crossAxisAlignment: widget.crossAxisAlignment,
-        children: [titleWidget(), subTitleWidget()],
+        children: [
+          titleWidget(),
+          subTitleWidget(),
+        ],
       ),
     );
   }
