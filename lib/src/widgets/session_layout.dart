@@ -6,7 +6,7 @@ class SessionLayout extends StatelessWidget {
     super.key,
     this.avatar,
     required this.title,
-    this.subTitle,
+    this.side,
     required this.child,
     this.titleHeight = 24,
     this.padding = const EdgeInsets.all(8),
@@ -19,7 +19,7 @@ class SessionLayout extends StatelessWidget {
 
   final Widget title;
 
-  final Widget? subTitle;
+  final Widget? side;
 
   final Widget child;
 
@@ -51,8 +51,8 @@ class SessionLayout extends StatelessWidget {
                 height: titleHeight,
                 child: Expand(
                   dir: TextDirection.rtl,
-                  fixed: subTitle,
-                  separated: subTitle == null ? Container() : separated,
+                  fixed: side,
+                  separated: side == null ? Container() : separated,
                   child: title,
                 ),
               ),

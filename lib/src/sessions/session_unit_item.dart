@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/entities.dart';
 import 'package:im_ui/src/avatars/chat_avatar.dart';
+import 'package:im_ui/src/avatars/chat_name.dart';
 import 'package:im_ui/src/providers/session_unit_provider.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
@@ -37,24 +38,24 @@ class SessionUnitItemState extends State<SessionUnitItem> {
 
   String get title => item.rename ?? dest?.name ?? '';
 
-  MessageDto? get lastMessage => item.lastMessage;
+  MessageDto? get message => item.lastMessage;
 
-  String get subtitle =>
-      '[${dest?.objectType.toString()}] ${item.sorting}|| lastMessageAutoId:${item.lastMessageAutoId}-autoId:${lastMessage?.autoId}';
+  // String get subtitle =>
+  //     '[${dest?.objectType.toString()}] ${item.sorting}|| lastMessageAutoId:${item.lastMessageAutoId}-autoId:${message?.autoId}';
 
-  DateTime? get sendTime => lastMessage?.creationTime ?? DateTime.now();
+  // DateTime? get sendTime => message?.creationTime ?? DateTime.now();
 
-  String get sendTimeDisplay => sendTime != null ? formatTime(sendTime!) : '';
+  // String get sendTimeDisplay => sendTime != null ? formatTime(sendTime!) : '';
 
-  // int get badge => item.badge ?? 0;
+  // // int get badge => item.badge ?? 0;
 
-  bool get isImmersed => item.isImmersed;
+  // bool get isImmersed => item.isImmersed;
 
-  int get reminderAllCount => item.reminderAllCount ?? 0;
+  // int get reminderAllCount => item.reminderAllCount ?? 0;
 
-  int get reminderMeCount => item.reminderMeCount ?? 0;
+  // int get reminderMeCount => item.reminderMeCount ?? 0;
 
-  bool get isRemind => reminderMeCount + reminderAllCount > 0;
+  // bool get isRemind => reminderMeCount + reminderAllCount > 0;
 
   ///
   @override
@@ -69,37 +70,32 @@ class SessionUnitItemState extends State<SessionUnitItem> {
         Logger().d('onLongPress id:${item.toJson()}');
       },
       avatar: ChatAvatar(id: dest?.id),
-      title: Text(
-        title,
-        overflow: TextOverflow.ellipsis,
-        style: const TextStyle(color: Colors.black87, fontSize: 14),
-      ),
-      subTitle: Text(
-        sendTimeDisplay,
-        style: const TextStyle(color: Colors.black54, fontSize: 12),
-      ),
+      title: buildChatName(),
+      side: buildSendTime(),
       child: buildDescription(),
     );
   }
 
   ///
   Widget buildBadge() {
-    return Selector<SessionUnitProvider, int?>(
-        selector: ((_, x) => x.getBadge(item.id)),
-        builder: (context, value, child) {
-          if (value == null || value == 0) {
+    return Selector<SessionUnitProvider, SessionUnit?>(
+        selector: ((_, x) => x.get(item.id)),
+        builder: (context, entity, child) {
+          if (entity?.badge == null || entity!.badge == 0) {
             return Container();
           }
-          if (isImmersed) {
+
+          if (entity.isImmersed) {
             return Badge();
           }
+
           return Badge(
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
             animationType: BadgeAnimationType.fade,
             shape: BadgeShape.square,
             borderRadius: BorderRadius.circular(48),
             badgeContent: Text(
-              '$value',
+              '${entity.badge}',
               style: const TextStyle(
                 fontSize: 12,
                 color: Colors.white,
@@ -116,17 +112,66 @@ class SessionUnitItemState extends State<SessionUnitItem> {
         dir: TextDirection.rtl,
         fixed: Row(
           children: [
-            ImmersedIcon(visible: isImmersed),
+            buildImmersedIcon(),
             buildBadge(),
           ],
         ),
         separated: const SizedBox(width: 8),
-        child: Text(
-          subtitle,
+        child: buildMessageThumb(),
+      ),
+    );
+  }
+
+  Widget buildSendTime() {
+    return Selector<SessionUnitProvider, DateTime?>(
+      selector: ((_, x) => x.getSendTime(item.id)),
+      builder: (_, value, child) {
+        return Text(
+          value != null ? formatTime(value) : '',
+          style: const TextStyle(color: Colors.black54, fontSize: 12),
+        );
+      },
+    );
+  }
+
+  Widget buildChatName() {
+    if (item.rename == null) {
+      return ChatName(id: dest?.id);
+    }
+
+    return Selector<SessionUnitProvider, String>(
+      selector: ((_, x) => x.getRename(item.id) ?? ''),
+      builder: (_, value, child) {
+        return Text(
+          value,
+          style: const TextStyle(color: Colors.black54, fontSize: 12),
+        );
+      },
+    );
+  }
+
+  Widget buildMessageThumb() {
+    return Selector<SessionUnitProvider, MessageDto?>(
+      selector: ((_, x) => x.getLastMessage(item.id)),
+      builder: (_, message, child) {
+        if (message == null) {
+          return Container();
+        }
+        return Text(
+          '${message.content}',
           style: const TextStyle(color: Colors.grey, fontSize: 12),
           overflow: TextOverflow.ellipsis,
-        ),
-      ),
+        );
+      },
+    );
+  }
+
+  Widget buildImmersedIcon() {
+    return Selector<SessionUnitProvider, bool?>(
+      selector: ((_, x) => x.getImmersed(item.id) ?? false),
+      builder: (_, value, child) {
+        return ImmersedIcon(visible: value!);
+      },
     );
   }
 }

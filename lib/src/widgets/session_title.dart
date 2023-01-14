@@ -47,7 +47,7 @@ class _SessionTitleState extends State<SessionTitle> {
                 fontSize: 14,
                 overflow: TextOverflow.ellipsis,
               )),
-          ImmersedIcon(visible: !widget.isImmersed),
+          ImmersedIcon(visible: widget.isImmersed),
         ],
       ),
     );

@@ -19,6 +19,7 @@ class ImmersedIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Logger().d(visible);
     if (!visible) {
       return Container();
     }

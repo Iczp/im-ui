@@ -77,6 +77,14 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   int? getReadedMessageAutoId(String id) => get(id)?.readedMessageAutoId;
 
+  DateTime? getSendTime(id) => get(id)?.lastMessage?.creationTime;
+
+  String? getRename(String id) => get(id)?.rename;
+
+  bool? getImmersed(String id) => get(id)?.isImmersed;
+
+  MessageDto? getLastMessage(String id) => get(id)?.lastMessage;
+
   Future setReaded({
     required String id,
     required String messageId,
@@ -93,11 +101,12 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
       Logger().w('No change required [readedMessageAutoId]:$messageAutoId');
       return;
     }
-    SessionUnitSetReaded(id: id, messageId: messageId)
-        .submit()
-        .whenComplete(() {
-      entity.readedMessageAutoId = messageAutoId.toInt();
-      setBadge(id, 0);
+    SessionUnitSetReaded(
+      id: id,
+      messageId: messageId,
+    ).submit().then((ret) => set(ret)).whenComplete(() {
+      // entity.readedMessageAutoId = messageAutoId.toInt();
+      // setBadge(id, 0);
     });
   }
 
