@@ -12,6 +12,7 @@ class MessageProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ///
   static MessageProvider get instance => _instance;
 
+  /// <sessionUnitId,List<MessageDto>>{}
   static final _sessionMessages = <String, List<MessageDto>>{};
 
   ///

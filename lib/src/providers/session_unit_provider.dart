@@ -28,7 +28,7 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
   void set(SessionUnit entity, {bool isNotify = true}) {
     _sessionUnitMap[entity.id] = entity;
     setMaxAutoId(entity.lastMessageAutoId ?? 0);
-    // Logger().w('set:${_sessionUnitMap.length}');
+    Logger().w('set:${_sessionUnitMap.length}');
     notifyListeners();
   }
 
@@ -109,12 +109,8 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   int getMaxAutoId() {
-    var maxItem = _sessionUnitMap.values.toList().reduce((curr, next) {
-      var currAutoId = curr.lastMessageAutoId ?? 0;
-      var nextAutoId = next.lastMessageAutoId ?? 0;
-      return currAutoId > nextAutoId ? curr : next;
-    });
-    return maxItem.lastMessageAutoId ?? 0;
+    var maxItem = _sessionUnitMap.values.max((x) => x.lastMessageAutoId);
+    return maxItem?.lastMessageAutoId ?? 0;
   }
 
   Future fetchNewSession() async {

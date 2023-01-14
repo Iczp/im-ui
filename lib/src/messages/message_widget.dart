@@ -391,7 +391,7 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
   }
 
   @override
-  Widget buildMessageScaffold(BuildContext context) {
+  Widget buildMessageLayout(BuildContext context) {
     // Logger().d('${toString()} -buildMessageScaffold');
     return Column(
       // mainAxisAlignment: MainAxisAlignment.start,
@@ -467,7 +467,7 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
   @override
   Widget build(BuildContext context) {
     // Logger().d('${toString()} -build');
-    return buildMessageScaffold(context);
+    return buildMessageLayout(context);
   }
 
   // MenuButton _buildMenuButton(
@@ -578,5 +578,5 @@ abstract class IMessageWidgetState {
   Widget buildSeparatedWdiget(BuildContext context);
 
   /// 消息骨架
-  Widget buildMessageScaffold(BuildContext context);
+  Widget buildMessageLayout(BuildContext context);
 }

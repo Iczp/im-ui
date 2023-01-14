@@ -66,7 +66,7 @@ class SessionUnitItemState extends State<SessionUnitItem> {
         Nav.toChat(context, sessionUnitId: item.id, title: title);
       },
       onLongPress: () {
-        Logger().d('onLongPress id:${item.id},dest_id:${dest?.id}');
+        Logger().d('onLongPress id:${item.toJson()}');
       },
       avatar: ChatAvatar(id: dest?.id),
       title: Text(

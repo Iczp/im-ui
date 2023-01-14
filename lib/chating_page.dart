@@ -201,7 +201,10 @@ class _ChatingPageState extends State<ChatingPage>
   Future setReaded() async {
     // var messages = MessageProvider.getMessages(sessionUnitId);
     var messages = messageListViewState.messageList;
-    var lastMessage = messages.firstOrNull((x) => x.id != null);
+
+    // var lastMessage = messages.lastOrNull((x) => x.id != null);
+
+    var lastMessage = messages.where((x) => x.id != null).max((x) => x.autoId);
 
     if (lastMessage != null) {
       // context

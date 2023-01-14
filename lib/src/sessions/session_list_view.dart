@@ -47,7 +47,7 @@ class _SessionListViewState extends State<SessionListView> {
     sesssionUnitList = SessionUnitProvider.instance.getList();
     setState(() {});
     fetchData();
-
+    SessionUnitProvider.instance.fetchNewSession().then((value) => null);
     scrollController.addListener(_scrollHander);
   }
 
