@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'expand.dart';
-import 'immersed_icon.dart';
+import 'session_immersed.dart';
+import '../widgets/expand.dart';
 
 class SessionTitle extends StatefulWidget {
   const SessionTitle({
@@ -9,22 +9,24 @@ class SessionTitle extends StatefulWidget {
     required this.title,
     this.subTitle,
     this.crossAxisAlignment = CrossAxisAlignment.center,
-    this.isImmersed = false,
+    required this.sessionUnitId,
   });
 
   final String title;
 
   final String? subTitle;
 
-  final CrossAxisAlignment crossAxisAlignment;
+  final String sessionUnitId;
 
-  final bool isImmersed;
+  final CrossAxisAlignment crossAxisAlignment;
 
   @override
   State<SessionTitle> createState() => _SessionTitleState();
 }
 
 class _SessionTitleState extends State<SessionTitle> {
+  get sessionUnitId => widget.sessionUnitId;
+
   @override
   Widget build(BuildContext context) {
     return Expand(
@@ -47,7 +49,7 @@ class _SessionTitleState extends State<SessionTitle> {
                 fontSize: 14,
                 overflow: TextOverflow.ellipsis,
               )),
-          ImmersedIcon(visible: widget.isImmersed),
+          SessionImmersed(sessionUnitId: sessionUnitId)
         ],
       ),
     );

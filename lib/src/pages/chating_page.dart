@@ -3,27 +3,23 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import 'package:im_ui/src/providers/session_unit_provider.dart';
-import 'package:im_ui/src/widgets/expand.dart';
-import 'package:im_ui/src/widgets/immersed_icon.dart';
 import 'package:im_ui/src/widgets/message_menu_buttons_all.dart';
-import 'package:im_ui/src/widgets/session_title.dart';
+import 'package:im_ui/src/sessions/session_title.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
-
-import 'src/apis/api.dart';
-import 'src/models/message_arguments.dart';
-import 'src/providers/max_log_id_provider.dart';
-import 'src/providers/message_provider.dart';
-import 'src/providers/readed_record_provider.dart';
-import 'src/chat_input/input_function_buttons.dart';
-import 'src/chat_input/chat_input.dart';
-import 'src/widgets/dialog/media_menu_dialog.dart';
-import 'src/menus/message_menu_dialog.dart';
-import 'src/widgets/mask.dart';
-import 'src/menus/menu_button.dart';
-import 'src/messages/message_widget.dart';
-import 'src/widgets/operation_menus.dart';
-import 'src/messages/list_view/message_list_view.dart';
+import '../apis/api.dart';
+import '../models/message_arguments.dart';
+import '../providers/max_log_id_provider.dart';
+import '../providers/message_provider.dart';
+import '../chat_input/input_function_buttons.dart';
+import '../chat_input/chat_input.dart';
+import '../widgets/dialog/media_menu_dialog.dart';
+import '../menus/message_menu_dialog.dart';
+import '../widgets/mask.dart';
+import '../menus/menu_button.dart';
+import '../messages/message_widget.dart';
+import '../widgets/operation_menus.dart';
+import '../messages/list_view/message_list_view.dart';
 // import 'widget/notice_widget.dart';
 
 /// 聊天页
@@ -623,9 +619,9 @@ class _ChatingPageState extends State<ChatingPage>
 
   Widget buildTitle() {
     return SessionTitle(
+      sessionUnitId: sessionUnitId,
       title: widget.title,
       // subTitle: widget.title,
-      isImmersed: true,
     );
   }
 }

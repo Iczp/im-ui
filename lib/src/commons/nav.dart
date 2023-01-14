@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:im_core/entities.dart';
 import 'package:im_core/enums.dart';
 
-import 'chating_page.dart';
+import '../pages/chating_page.dart';
 
 class Nav {
   ///

@@ -7,11 +7,12 @@ import 'package:im_ui/src/providers/session_unit_provider.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
-import '../../nav.dart';
+import '../commons/nav.dart';
 import '../commons/utils.dart';
 import '../widgets/expand.dart';
 import '../widgets/immersed_icon.dart';
 import '../widgets/session_layout.dart';
+import 'session_immersed.dart';
 
 class SessionUnitItem extends StatefulWidget {
   ///
@@ -39,23 +40,6 @@ class SessionUnitItemState extends State<SessionUnitItem> {
   String get title => item.rename ?? dest?.name ?? '';
 
   MessageDto? get message => item.lastMessage;
-
-  // String get subtitle =>
-  //     '[${dest?.objectType.toString()}] ${item.sorting}|| lastMessageAutoId:${item.lastMessageAutoId}-autoId:${message?.autoId}';
-
-  // DateTime? get sendTime => message?.creationTime ?? DateTime.now();
-
-  // String get sendTimeDisplay => sendTime != null ? formatTime(sendTime!) : '';
-
-  // // int get badge => item.badge ?? 0;
-
-  // bool get isImmersed => item.isImmersed;
-
-  // int get reminderAllCount => item.reminderAllCount ?? 0;
-
-  // int get reminderMeCount => item.reminderMeCount ?? 0;
-
-  // bool get isRemind => reminderMeCount + reminderAllCount > 0;
 
   ///
   @override
@@ -112,7 +96,7 @@ class SessionUnitItemState extends State<SessionUnitItem> {
         dir: TextDirection.rtl,
         fixed: Row(
           children: [
-            buildImmersedIcon(),
+            SessionImmersed(sessionUnitId: item.id),
             buildBadge(),
           ],
         ),
@@ -162,15 +146,6 @@ class SessionUnitItemState extends State<SessionUnitItem> {
           style: const TextStyle(color: Colors.grey, fontSize: 12),
           overflow: TextOverflow.ellipsis,
         );
-      },
-    );
-  }
-
-  Widget buildImmersedIcon() {
-    return Selector<SessionUnitProvider, bool?>(
-      selector: ((_, x) => x.getImmersed(item.id) ?? false),
-      builder: (_, value, child) {
-        return ImmersedIcon(visible: value!);
       },
     );
   }

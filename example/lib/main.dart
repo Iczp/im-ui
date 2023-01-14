@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import 'package:im_ui/nav.dart';
-import 'package:im_ui/session_page.dart';
+import 'package:im_ui/pages.dart';
 import 'package:im_ui/im_ui.dart';
 import 'package:im_ui/providers.dart';
 import 'package:provider/provider.dart';
