@@ -18,7 +18,7 @@ class ChatObjectProvider with ChangeNotifier, DiagnosticableTreeMixin {
   final _currentMap = <String, bool>{};
 
   ///
-  String get currentId => 'b700aef5-d48b-4aac-9bbe-52fdcdfd53cb';
+  String get currentId => '7afd5b0a-2db3-4191-9996-091e33dcc83f';
 
   ///
   late ChatObject? _current;

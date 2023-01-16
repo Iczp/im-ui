@@ -29,7 +29,7 @@ class _SessionListViewState extends State<SessionListView> {
   final ScrollController scrollController = ScrollController();
 
   ///滚动物理学
-  final ScrollPhysics _physics =
+  final ScrollPhysics scrollPhysics =
       const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics());
 
   ///
@@ -44,13 +44,13 @@ class _SessionListViewState extends State<SessionListView> {
 
   ///
   @override
-  void initState() {
+  initState() {
     super.initState();
 
     sesssionUnitList = SessionUnitProvider.instance.getList();
     setState(() {});
-    fetchMore();
     fetchNew();
+    fetchMore();
     scrollController.addListener(_scrollHander);
   }
 
@@ -130,45 +130,6 @@ class _SessionListViewState extends State<SessionListView> {
     setState(() {});
   }
 
-  void _onRefresh() async {
-    // monitor network fetch
-    await Future.delayed(const Duration(milliseconds: 1000));
-    // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
-  }
-
-  void _onLoading() async {
-    // monitor network fetch
-    await Future.delayed(const Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    // items.add((items.length+1).toString());
-    if (mounted) setState(() {});
-    _refreshController.loadComplete();
-  }
-
-  ///
-  // @override
-  Widget build_refresher(BuildContext context) {
-    return SmartRefresher(
-      enablePullDown: true,
-      enablePullUp: true,
-      controller: _refreshController,
-      onRefresh: _onRefresh,
-      onLoading: _onLoading,
-      header: const WaterDropHeader(),
-      child: ListView.builder(
-          itemCount: sesssionUnitList.length,
-          controller: scrollController,
-          physics: _physics,
-          // itemExtent: 50.0, //强制高度为50.0
-          itemBuilder: (BuildContext context, int index) {
-            return SessionUnitItem(
-              data: sesssionUnitList[index],
-            );
-          }),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     if (!isInited && sesssionUnitList.isEmpty) {
@@ -198,7 +159,7 @@ class _SessionListViewState extends State<SessionListView> {
       child: ReorderableListView.builder(
         itemCount: sesssionUnitList.length,
         scrollController: scrollController,
-        physics: _physics,
+        physics: scrollPhysics,
         // itemExtent: 50.0, //强制高度为50.0
         itemBuilder: (BuildContext context, int index) {
           return SessionUnitItem(

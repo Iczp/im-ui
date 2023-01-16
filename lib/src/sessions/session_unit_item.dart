@@ -52,6 +52,7 @@ class SessionUnitItemState extends State<SessionUnitItem> {
       },
       onLongPress: () {
         Logger().d('onLongPress id:${item.toJson()}');
+        SessionUnitProvider.instance.toggleImmersed(id: item.id);
       },
       avatar: ChatAvatar(id: dest?.id),
       title: buildChatName(),

@@ -153,4 +153,13 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
     ).submit();
     _fetchDataHander(ret.items);
   }
+
+  Future<void> toggleImmersed({
+    required String id,
+  }) async {
+    var isImmersed = get(id)!.isImmersed;
+    var entity =
+        await SessionUnitSetImmersed(id: id, isImmersed: !isImmersed).submit();
+    set(entity);
+  }
 }
