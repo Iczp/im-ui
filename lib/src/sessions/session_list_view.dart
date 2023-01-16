@@ -39,6 +39,9 @@ class _SessionListViewState extends State<SessionListView> {
   ///
   late bool isInited = false;
 
+  final GlobalKey<LoadingWidgetState> footerLoading = GlobalKey();
+  final GlobalKey<LoadingWidgetState> headerLoading = GlobalKey();
+
   ///
   @override
   void initState() {
@@ -46,8 +49,8 @@ class _SessionListViewState extends State<SessionListView> {
 
     sesssionUnitList = SessionUnitProvider.instance.getList();
     setState(() {});
-    fetchData();
-    SessionUnitProvider.instance.fetchNewSession().then((value) => null);
+    fetchMore();
+    fetchNew();
     scrollController.addListener(_scrollHander);
   }
 
@@ -65,12 +68,13 @@ class _SessionListViewState extends State<SessionListView> {
       // Logger().d(':up:$pixels');
       _headerHander();
     } else if (pixels > scrollController.position.maxScrollExtent + 50) {
-      _footerHander();
+      fetchMore();
       // Logger().d(':down:${pixels - scrollController.position.maxScrollExtent}');
     }
   }
 
   late bool isHeaderHanded = false;
+  late bool isFooterHanded = false;
   void _headerHander() {
     if (isHeaderHanded) {
       return;
@@ -82,26 +86,48 @@ class _SessionListViewState extends State<SessionListView> {
     //     .then((value) => isHeaderHanded = false);
   }
 
-  void _footerHander() {
-    Logger().d('_footerHander');
+  void fetchMore() {
+    if (footerLoading.currentState?.visible ?? false) {
+      return;
+    }
+    Logger().d('footerLoading');
+    footerLoading.currentState?.show();
+    SessionUnitProvider.instance
+        .fetchMore(ownerId: widget.ownerId)
+        .whenComplete(() => footerLoading.currentState?.hide());
+  }
+
+  void fetchNew() {
+    if (headerLoading.currentState?.visible ?? false) {
+      return;
+    }
+    Logger().d('headerLoading');
+    headerLoading.currentState?.show();
+    SessionUnitProvider.instance
+        .fetchNew(ownerId: widget.ownerId)
+        .whenComplete(() => headerLoading.currentState?.hide());
+
+    SessionUnitProvider.instance
+        .fetchNew(ownerId: ChatObjectProvider.instance.currentId);
   }
 
   ///
-  void fetchData() {
-    SessionUnitGetList(
+  Future<void> fetchData() async {
+    var ret = await SessionUnitGetList(
       ownerId: widget.ownerId,
+      isTopping: false,
       maxResultCount: 100,
       skipCount: sesssionUnitList.length,
-    ).submit().then((_) {
-      SessionUnitProvider.instance.setMany(_.items);
-      ChatObjectProvider.instance.setMany(_.items
-          .where((x) => x.destination != null)
-          .map((e) => e.destination!)
-          .toList());
-      isInited = true;
-      sesssionUnitList = SessionUnitProvider.instance.getList();
-      setState(() {});
-    });
+    ).submit();
+    SessionUnitProvider.instance.setMany(ret.items);
+    ChatObjectProvider.instance.setMany(ret.items
+        .where((x) => x.destination != null)
+        .map((e) => e.destination!)
+        .toList());
+    isInited = true;
+    sesssionUnitList = SessionUnitProvider.instance.getList();
+    // sesssionUnitList.addAll(ret.items);
+    setState(() {});
   }
 
   void _onRefresh() async {
@@ -156,18 +182,18 @@ class _SessionListViewState extends State<SessionListView> {
         Logger().d('onPointerCancel');
       },
       onPointerDown: (event) {
-        Logger().d('onPointerDown');
+        // Logger().d('onPointerDown');
       },
       onPointerUp: (event) {
-        Logger().d('onPointerUp');
+        // Logger().d('onPointerUp');
         var pixels = scrollController.position.pixels;
         if (pixels < scrollController.position.minScrollExtent - 50) {
           Logger().d('onPointerUp:refresh()');
-          SessionUnitProvider.instance.fetchNewSession().then((value) => null);
+          fetchNew();
         }
       },
       onPointerMove: (event) {
-        Logger().d('onPointerMove:${event.distance} - ${event}');
+        // Logger().d('onPointerMove:${event.distance} - ${event}');
       },
       child: ReorderableListView.builder(
         itemCount: sesssionUnitList.length,
@@ -181,6 +207,8 @@ class _SessionListViewState extends State<SessionListView> {
           );
         },
         onReorder: (int oldIndex, int newIndex) {},
+        header: LoadingWidget(key: headerLoading),
+        footer: LoadingWidget(key: footerLoading),
       ),
     );
   }

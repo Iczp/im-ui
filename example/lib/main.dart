@@ -64,14 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
       badge = count;
       setState(() {});
     });
-
-    SessionUnitGetList(
-      ownerId: ChatObjectProvider.instance.currentId,
-      isTopping: true,
-      maxResultCount: 100,
-    ).submit().then((_) {
-      SessionUnitProvider.instance.setMany(_.items);
-    });
   }
 
   @override

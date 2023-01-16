@@ -5,13 +5,13 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 class LoadingWidget extends StatefulWidget {
   const LoadingWidget({
     Key? key,
-    this.color,
+    this.color = Colors.black26,
     this.height = 48,
-    this.visible = true,
+    this.visible = false,
   }) : super(key: key);
   final double height;
 
-  final Color? color;
+  final Color color;
 
   final bool visible;
 
@@ -25,6 +25,8 @@ class LoadingWidgetState extends State<LoadingWidget> {
 
   ///
   double get height => widget.height;
+
+  bool get visible => _isVisible;
 
   ///
   void show() {

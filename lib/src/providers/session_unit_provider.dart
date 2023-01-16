@@ -122,17 +122,35 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
     return maxItem?.lastMessageAutoId ?? 0;
   }
 
-  Future fetchNewSession() async {
-    var ret = await SessionUnitGetList(
-      ownerId: ChatObjectProvider.instance.currentId,
-      minAutoId: _maxAutoId,
-      maxResultCount: 20,
-    ).submit();
-
-    setMany(ret.items);
-    ChatObjectProvider.instance.setMany(ret.items
+  void _fetchDataHander(List<SessionUnit> items) {
+    setMany(items);
+    ChatObjectProvider.instance.setMany(items
         .where((x) => x.destination != null)
         .map((e) => e.destination!)
         .toList());
+  }
+
+  Future fetchNew({required String ownerId, int maxResultCount = 20}) async {
+    var ret = await SessionUnitGetList(
+      ownerId: ownerId,
+      minAutoId: _maxAutoId,
+      maxResultCount: maxResultCount,
+    ).submit();
+    _fetchDataHander(ret.items);
+    //loop
+    if (ret.items.length == maxResultCount) {
+      await fetchNew(ownerId: ownerId, maxResultCount: maxResultCount);
+    }
+  }
+
+  Future fetchMore({
+    required String ownerId,
+  }) async {
+    var ret = await SessionUnitGetList(
+      ownerId: ownerId,
+      skipCount: _sessionUnitMap.length,
+      maxResultCount: 100,
+    ).submit();
+    _fetchDataHander(ret.items);
   }
 }

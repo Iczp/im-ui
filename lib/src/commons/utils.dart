@@ -24,7 +24,7 @@ String formatSize(dynamic size, [int round = 2]) {
 }
 
 String formatTime(DateTime dateTime) {
-  Logger().d('dateTime.weekday:${dateTime.weekday}');
+  // Logger().d('dateTime.weekday:${dateTime.weekday}');
   if (Utils.isToday(dateTime)) {
     return DateFormat("HH:mm").format(dateTime);
   }
