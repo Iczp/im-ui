@@ -4,13 +4,14 @@ import 'package:im_core/entities.dart';
 import 'package:im_ui/src/avatars/chat_avatar.dart';
 import 'package:im_ui/src/avatars/chat_name.dart';
 import 'package:im_ui/src/providers/session_unit_provider.dart';
+import 'package:im_ui/src/sessions/session_topping.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 import '../commons/nav.dart';
 import '../commons/utils.dart';
 import '../widgets/expand.dart';
-import '../widgets/immersed_icon.dart';
+import '../widgets/real_datetime.dart';
 import '../widgets/session_layout.dart';
 import 'session_immersed.dart';
 
@@ -44,21 +45,29 @@ class SessionUnitItemState extends State<SessionUnitItem> {
   ///
   @override
   Widget build(BuildContext context) {
-    return SessionLayout(
-      key: globalKey,
-      onTap: () {
-        // SessionUnitProvider.instance.setBadge(item.id, 555);
-        Nav.toChat(context, sessionUnitId: item.id, title: title);
-      },
-      onLongPress: () {
-        Logger().d('onLongPress id:${item.toJson()}');
-        SessionUnitProvider.instance.toggleImmersed(id: item.id);
-      },
-      avatar: ChatAvatar(id: dest?.id),
-      title: buildChatName(),
-      side: buildSendTime(),
-      child: buildDescription(),
-    );
+    return Selector<SessionUnitProvider, SessionUnit?>(
+        selector: ((_, x) => x.get(item.id)),
+        builder: (context, entity, child) {
+          return SessionLayout(
+            key: globalKey,
+            backgroupColor: entity?.isTopping ?? false
+                ? Colors.grey.shade100
+                : Colors.white,
+            onTap: () {
+              // SessionUnitProvider.instance.setBadge(item.id, 555);
+              Nav.toChat(context, sessionUnitId: item.id, title: title);
+            },
+            onLongPress: () {
+              Logger().d('onLongPress id:${item.toJson()}');
+              SessionUnitProvider.instance.toggleImmersed(id: item.id);
+              // SessionUnitProvider.instance.toggleTopping(id: item.id);
+            },
+            avatar: ChatAvatar(id: dest?.id),
+            title: buildChatName(),
+            side: buildSendTime(),
+            child: buildDescription(),
+          );
+        });
   }
 
   ///
@@ -98,6 +107,7 @@ class SessionUnitItemState extends State<SessionUnitItem> {
         fixed: Row(
           children: [
             SessionImmersed(sessionUnitId: item.id),
+            SessionTopping(sessionUnitId: item.id),
             buildBadge(),
           ],
         ),
@@ -111,9 +121,8 @@ class SessionUnitItemState extends State<SessionUnitItem> {
     return Selector<SessionUnitProvider, DateTime?>(
       selector: ((_, x) => x.getSendTime(item.id)),
       builder: (_, value, child) {
-        return Text(
-          value != null ? formatTime(value) : '',
-          style: const TextStyle(color: Colors.black54, fontSize: 12),
+        return RealDatetime(
+          dateTime: value,
         );
       },
     );

@@ -81,7 +81,9 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   String? getRename(String id) => get(id)?.rename;
 
-  bool? getImmersed(String id) => get(id)?.isImmersed;
+  bool getImmersed(String id) => get(id)?.isImmersed ?? false;
+
+  bool getTopping(String id) => get(id)?.isTopping ?? false;
 
   MessageDto? getLastMessage(String id) => get(id)?.lastMessage;
 
@@ -154,12 +156,17 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
     _fetchDataHander(ret.items);
   }
 
-  Future<void> toggleImmersed({
-    required String id,
-  }) async {
+  Future<void> toggleImmersed({required String id}) async {
     var isImmersed = get(id)!.isImmersed;
     var entity =
         await SessionUnitSetImmersed(id: id, isImmersed: !isImmersed).submit();
+    set(entity);
+  }
+
+  Future<void> toggleTopping({required String id}) async {
+    var isTopping = get(id)!.sorting != 0;
+    var entity =
+        await SessionUnitSetTopping(id: id, isTopping: !isTopping).submit();
     set(entity);
   }
 }

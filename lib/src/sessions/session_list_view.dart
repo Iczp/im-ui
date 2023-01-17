@@ -160,6 +160,7 @@ class _SessionListViewState extends State<SessionListView> {
         itemCount: sesssionUnitList.length,
         scrollController: scrollController,
         physics: scrollPhysics,
+        buildDefaultDragHandles: false,
         // itemExtent: 50.0, //强制高度为50.0
         itemBuilder: (BuildContext context, int index) {
           return SessionUnitItem(
@@ -167,6 +168,7 @@ class _SessionListViewState extends State<SessionListView> {
             data: sesssionUnitList[index],
           );
         },
+
         onReorder: (int oldIndex, int newIndex) {},
         header: LoadingWidget(key: headerLoading),
         footer: LoadingWidget(key: footerLoading),

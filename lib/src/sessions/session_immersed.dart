@@ -15,10 +15,10 @@ class SessionImmersed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<SessionUnitProvider, bool?>(
-      selector: ((_, x) => x.getImmersed(sessionUnitId) ?? false),
+    return Selector<SessionUnitProvider, bool>(
+      selector: ((_, x) => x.getImmersed(sessionUnitId)),
       builder: (_, value, child) {
-        return ImmersedIcon(visible: value!);
+        return ImmersedIcon(visible: value);
       },
     );
   }

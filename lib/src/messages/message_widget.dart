@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
+import 'package:im_ui/src/avatars/chat_avatar.dart';
+import 'package:im_ui/src/avatars/chat_name.dart';
 import 'package:logger/logger.dart';
 
 import 'containers/bubble_container.dart';
@@ -215,24 +217,25 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
   ///
   @override
   Widget buildMediaAvatarWidget(BuildContext context) {
-    return MediaAvatar(
-      meidaId: widget.message.senderId,
-      meidaType: MediaTypeEnum.personal, //==
-      isDisplay: widget.isMediaAvatarDisplay,
-      size: MessageArguments.mediaSize,
-      onLongPressed: (p0, p1, p2) {
-        widget.onMediaLongPressed?.call(p0, p1, widget.isSelf);
-      },
+    return ChatAvatar(
+      id: widget.message.senderId,
+      // meidaId: widget.message.senderId,
+      // meidaType: MediaTypeEnum.personal, //==
+      // isDisplay: widget.isMediaAvatarDisplay,
+      // size: MessageArguments.mediaSize,
+      // onLongPressed: (p0, p1, p2) {
+      //   widget.onMediaLongPressed?.call(p0, p1, widget.isSelf);
+      // },
     );
   }
 
   ///
   @override
   Widget buildMediaNameWidget(BuildContext context) {
-    return MediaNameWidget(
-      mediaId: widget.message.senderId,
-      mediaType: MediaTypeEnum.personal, //==
-      isDisplay: widget.isMediaNameDisplay,
+    return ChatName(
+      id: widget.message.senderId,
+      // mediaType: MediaTypeEnum.personal, //==
+      // isDisplay: widget.isMediaNameDisplay,
     );
   }
 
