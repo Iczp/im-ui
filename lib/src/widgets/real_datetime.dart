@@ -23,28 +23,30 @@ class _RealDatetimeState extends State<RealDatetime> {
 
   late String displayDatetime = datetime != null ? formatTime(datetime!) : '';
 
-  late Timer _timer;
+  late Timer? _timer;
 
   ///
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(widget.duration, (timer) {
-      if (datetime != null) {
-        var oldValue = displayDatetime;
-        displayDatetime = formatTime(datetime!);
-        if (oldValue != displayDatetime) {
-          setState(() {});
+    if (datetime != null && DateTime.now().difference(datetime!).inDays < 1) {
+      _timer = Timer.periodic(widget.duration, (timer) {
+        if (datetime != null) {
+          var oldValue = displayDatetime;
+          displayDatetime = formatTime(datetime!);
+          if (oldValue != displayDatetime) {
+            setState(() {});
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   ///
   @override
   void dispose() {
     super.dispose();
-    _timer.cancel();
+    _timer?.cancel();
   }
 
   ///
