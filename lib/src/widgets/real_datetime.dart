@@ -31,8 +31,9 @@ class _RealDatetimeState extends State<RealDatetime> {
     super.initState();
     _timer = Timer.periodic(widget.duration, (timer) {
       if (datetime != null) {
-        var newDisplayDatetime = formatTime(datetime!);
-        if (newDisplayDatetime != displayDatetime) {
+        var oldValue = displayDatetime;
+        displayDatetime = formatTime(datetime!);
+        if (oldValue != displayDatetime) {
           setState(() {});
         }
       }

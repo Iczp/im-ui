@@ -24,6 +24,21 @@ String formatSize(dynamic size, [int round = 2]) {
   return filesize(size, round);
 }
 
+String hourText(int hour) {
+  if (hour < 6) {
+    return '凌晨';
+  } else if (hour < 12) {
+    return '上午';
+  } else if (hour < 14) {
+    return '中午';
+  } else if (hour < 18) {
+    return '下午';
+  } else if (hour < 24) {
+    return '晚上';
+  }
+  return '';
+}
+
 String formatTime(DateTime dateTime) {
   // Logger().d('dateTime.weekday:${dateTime.weekday}');
 
@@ -33,21 +48,24 @@ String formatTime(DateTime dateTime) {
   var diff = now.difference(dateTime);
   // Logger().d('diff: ${thisWeekStart.difference(dateTime).inDays}');
   //今天
-  if (diff.inDays == 0) {
-    if (diff.inMinutes < 3) {
-      return '刚刚${DateFormat("HH:mm").format(dateTime)}';
+  if (diff.inDays == 0 && now.day == dateTime.day) {
+    if (diff.inMinutes < 1) {
+      return '刚刚';
+    }
+    if (diff.inMinutes == 30) {
+      return '半小时前';
     }
     if (diff.inMinutes < 60) {
-      return '${diff.inMinutes}分前';
+      return '${diff.inMinutes}分钟前';
     }
     if (diff.inHours < 3) {
       return '${diff.inHours}小时前 ${DateFormat("HH:mm").format(dateTime)}';
     }
-    return DateFormat("HH:mm").format(dateTime);
+    return DateFormat("${hourText(dateTime.hour)} HH:mm").format(dateTime);
   }
   // 昨天
-  if (diff.inDays == 1) {
-    return DateFormat("昨天 HH:mm").format(dateTime);
+  if (now.add(const Duration(days: -1)).day == dateTime.day) {
+    return DateFormat("昨天${hourText(dateTime.hour)} HH:mm").format(dateTime);
   }
   //本周
   if (thisWeekStart.difference(dateTime).inDays < 0) {
@@ -59,11 +77,16 @@ String formatTime(DateTime dateTime) {
     var week = $WeekConsts[dateTime.weekday]!;
     return '上$week ${DateFormat("HH:mm").format(dateTime)}';
   }
-  if (dateTime.year == now.year) {
-    return DateFormat("MM月dd日 HH:mm").format(dateTime);
+  //本月
+  if (dateTime.year == now.year && dateTime.month == now.day) {
+    return DateFormat("dd日${hourText(dateTime.hour)} HH:mm").format(dateTime);
   }
-
-  return DateFormat("yyy-MM-dd HH:mm").format(dateTime);
+  //今年
+  if (dateTime.year == now.year) {
+    return DateFormat("MM月dd日${hourText(dateTime.hour)} HH:mm")
+        .format(dateTime);
+  }
+  return DateFormat("yyyy年MM月dd日").format(dateTime);
 }
 
 class Utils {
