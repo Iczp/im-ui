@@ -47,6 +47,9 @@ String formatTime(DateTime dateTime) {
 
   var diff = now.difference(dateTime);
   // Logger().d('diff: ${thisWeekStart.difference(dateTime).inDays}');
+
+  // return DateFormat("yyyy年MM月dd日").format(dateTime);
+
   //今天
   if (diff.inDays == 0 && now.day == dateTime.day) {
     if (diff.inMinutes < 1) {
@@ -70,23 +73,23 @@ String formatTime(DateTime dateTime) {
   //本周
   if (thisWeekStart.difference(dateTime).inDays < 0) {
     var week = $WeekConsts[dateTime.weekday]!;
-    return '$week ${DateFormat("HH:mm").format(dateTime)}';
+    return '$week${hourText(dateTime.hour)} ${DateFormat("HH:mm").format(dateTime)}';
   }
   //上周
-  if (thisWeekStart.difference(dateTime).inDays < 7) {
-    var week = $WeekConsts[dateTime.weekday]!;
-    return '上$week ${DateFormat("HH:mm").format(dateTime)}';
-  }
+  // if (thisWeekStart.difference(dateTime).inDays < 7) {
+  //   var week = $WeekConsts[dateTime.weekday]!;
+  //   return '上$week${hourText(dateTime.hour)} ${DateFormat("HH:mm").format(dateTime)}';
+  // }
   //本月
   if (dateTime.year == now.year && dateTime.month == now.day) {
-    return DateFormat("dd日${hourText(dateTime.hour)} HH:mm").format(dateTime);
+    return DateFormat("dd日 ${hourText(dateTime.hour)} HH:mm").format(dateTime);
   }
   //今年
   if (dateTime.year == now.year) {
-    return DateFormat("MM月dd日${hourText(dateTime.hour)} HH:mm")
+    return DateFormat("M月dd日 ${hourText(dateTime.hour)} HH:mm")
         .format(dateTime);
   }
-  return DateFormat("yyyy年MM月dd日").format(dateTime);
+  return DateFormat("yyyy年M月dd日").format(dateTime);
 }
 
 class Utils {

@@ -9,11 +9,17 @@ class RealDatetime extends StatefulWidget {
     super.key,
     this.dateTime,
     this.duration = const Duration(seconds: 1),
+    this.fontSize = 12,
+    this.color = Colors.black54,
   });
 
   final DateTime? dateTime;
 
   final Duration duration;
+
+  final double fontSize;
+
+  final Color color;
   @override
   State<RealDatetime> createState() => _RealDatetimeState();
 }
@@ -29,6 +35,7 @@ class _RealDatetimeState extends State<RealDatetime> {
   @override
   void initState() {
     super.initState();
+    _timer = null;
     if (datetime != null && DateTime.now().difference(datetime!).inDays < 1) {
       _timer = Timer.periodic(widget.duration, (timer) {
         if (datetime != null) {
@@ -55,9 +62,9 @@ class _RealDatetimeState extends State<RealDatetime> {
   Widget build(BuildContext context) {
     return Text(
       displayDatetime,
-      style: const TextStyle(
-        color: Colors.black54,
-        fontSize: 12,
+      style: TextStyle(
+        color: widget.color,
+        fontSize: widget.fontSize,
       ),
     );
   }

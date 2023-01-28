@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:im_core/im_core.dart';
-import 'package:logger/logger.dart';
 
 /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
 

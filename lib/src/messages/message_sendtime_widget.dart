@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../commons/utils.dart';
+import 'package:im_ui/src/widgets/real_datetime.dart';
 
 /// 消息发送时间
 class MessageSendtimeWidget extends StatelessWidget {
@@ -15,8 +15,6 @@ class MessageSendtimeWidget extends StatelessWidget {
   ///
   final DateTime creationTime;
 
-  String get sendTimeDisplay => formatTime(creationTime);
-
   @override
   Widget build(BuildContext context) {
     if (!isDisplay) {
@@ -28,16 +26,14 @@ class MessageSendtimeWidget extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 8),
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
         decoration: BoxDecoration(
-          color: Colors.white,
+          // color: Colors.white,
           borderRadius: BorderRadius.circular(4),
         ),
 
-        child: Text(
-          sendTimeDisplay,
-          style: const TextStyle(
-            color: Colors.black26,
-            fontSize: 12,
-          ),
+        child: RealDatetime(
+          dateTime: creationTime,
+          fontSize: 11,
+          color: Colors.black26,
         ),
       ),
     );

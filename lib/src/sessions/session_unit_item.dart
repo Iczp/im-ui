@@ -49,7 +49,7 @@ class SessionUnitItemState extends State<SessionUnitItem> {
         selector: ((_, x) => x.get(item.id)),
         builder: (context, entity, child) {
           return SessionLayout(
-            key: globalKey,
+            // key: globalKey,
             backgroupColor: entity?.isTopping ?? false
                 ? Colors.grey.shade100
                 : Colors.white,

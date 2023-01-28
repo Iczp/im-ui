@@ -28,14 +28,14 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
   void set(SessionUnit entity, {bool isNotify = true}) {
     _sessionUnitMap[entity.id] = entity;
     setMaxAutoId(entity.lastMessageAutoId ?? 0);
-    Logger().w('set:${_sessionUnitMap.length}');
+    // Logger().w('set _sessionUnitMap.length:${_sessionUnitMap.length}');
     notifyListeners();
   }
 
   ///
   void setMany(List<SessionUnit> list) {
     if (list.isEmpty) {
-      Logger().d('setMany:list.isEmpty');
+      // Logger().d('setMany:list.isEmpty');
       return;
     }
     for (var e in list) {

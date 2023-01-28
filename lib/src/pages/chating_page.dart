@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:badges/badges.dart' as Badges;
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import 'package:im_ui/src/providers/session_unit_provider.dart';
@@ -451,11 +451,11 @@ class _ChatingPageState extends State<ChatingPage>
                     //       ),
                     //     ));
                   },
-                  icon: Badges.Badge(
+                  icon: badges.Badge(
                     showBadge: true,
                     // badgeColor: Colors.blue,
                     // shape: BadgeShape.square,
-                    position: Badges.BadgePosition.topEnd(top: 0, end: -5),
+                    position: badges.BadgePosition.topEnd(top: 0, end: -5),
                     // borderRadius: BorderRadius.circular(5),
                     // badgeContent: const Text('3'),
                     child: const Icon(Icons.more_vert_rounded),
