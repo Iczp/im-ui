@@ -6,10 +6,16 @@ class ChatName extends StatelessWidget {
   const ChatName({
     Key? key,
     this.id,
+    this.color = Colors.black87,
+    this.fontSize = 14,
   }) : super(key: key);
 
   ///
   final String? id;
+
+  final Color color;
+
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,10 @@ class ChatName extends StatelessWidget {
         return Text(
           value,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(color: Colors.black87, fontSize: 14),
+          style: TextStyle(
+            color: color,
+            fontSize: fontSize,
+          ),
         );
       },
     );

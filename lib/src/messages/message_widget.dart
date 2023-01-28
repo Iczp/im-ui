@@ -157,7 +157,7 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
   ///触发 Tap 事件
   void onMessageTap() {
     setIsPlayed(true);
-    Logger().d('onMessageTap');
+    Logger().d('onMessageTap ${widget.message.toString()}');
     ChatInputState? chatInputState =
         widget.arguments.chatInputKey?.state<ChatInputState>();
     chatInputState?.closeChatInput();
@@ -230,11 +230,14 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
 
   ///
   @override
-  Widget buildMediaNameWidget(BuildContext context) {
-    return ChatName(
-      id: widget.message.senderId,
-      // mediaType: MediaTypeEnum.personal, //==
-      // isDisplay: widget.isMediaNameDisplay,
+  Widget buildChatName(BuildContext context) {
+    return Container(
+      height: 22,
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: ChatName(
+        id: widget.message.senderId,
+        fontSize: 12,
+      ),
     );
   }
 
@@ -380,7 +383,7 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
                     ? CrossAxisAlignment.end
                     : CrossAxisAlignment.start,
                 children: [
-                  buildMediaNameWidget(context),
+                  buildChatName(context),
                   buildMessageBodyWidget(context),
                   buildQuoteMessageWidget(context),
                 ],
@@ -556,7 +559,7 @@ abstract class IMessageWidgetState {
   Widget buildMediaAvatarWidget(BuildContext context);
 
   ///媒体名称
-  Widget buildMediaNameWidget(BuildContext context);
+  Widget buildChatName(BuildContext context);
 
   ///消息状态
   Widget buildMessageStateWidget(BuildContext context);

@@ -10,7 +10,7 @@ import '../providers/users_provide.dart';
 class ChatAvatar extends StatefulWidget {
   const ChatAvatar({
     Key? key,
-    this.size,
+    this.size = 44,
     this.child,
     this.entity,
     this.onLongPressed,
@@ -22,23 +22,15 @@ class ChatAvatar extends StatefulWidget {
   /// chat object id
   final String? id;
 
-  /// 媒体实体
   final ChatObject? entity;
 
-  ///
   final double radius;
 
-  ///
   final bool isDisplay;
 
-  /// size
-  final double? size;
+  final double size;
 
-  /// child
   final Widget? child;
-
-  /// defaultSize 44
-  static const double defaultSize = 44;
 
   ///头像长按事件
   final MediaAvatarLongPressCallback? onLongPressed;
@@ -80,8 +72,8 @@ class _ChatAvatarState extends State<ChatAvatar> {
       key: _globalKey,
       link: _layerLink,
       child: Container(
-        width: widget.size ?? ChatAvatar.defaultSize,
-        height: widget.size ?? ChatAvatar.defaultSize,
+        width: widget.size,
+        height: widget.size,
         decoration: BoxDecoration(
           // color: const Color.fromARGB(199, 221, 221, 221),
           borderRadius: BorderRadius.circular(widget.radius),

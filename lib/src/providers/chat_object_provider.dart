@@ -58,7 +58,7 @@ class ChatObjectProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ///
   ChatObject? get(String id) => _chatObjectMap[id];
 
-  String getName(String id) => get(id)?.name ?? '';
+  String getName(String id) => get(id)?.name ?? '--';
 
   ///
   void set(ChatObject entity) {

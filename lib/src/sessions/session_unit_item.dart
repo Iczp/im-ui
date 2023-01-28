@@ -9,7 +9,6 @@ import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 import '../commons/nav.dart';
-// import '../commons/utils.dart';
 import '../widgets/expand.dart';
 import '../widgets/real_datetime.dart';
 import '../widgets/session_layout.dart';
@@ -84,10 +83,11 @@ class SessionUnitItemState extends State<SessionUnitItem> {
           }
 
           return badges.Badge(
-            // padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-            // animationType: BadgeAnimationType.fade,
-            // shape: BadgeShape.square,
-            // borderRadius: BorderRadius.circular(48),
+            badgeAnimation: const badges.BadgeAnimation.fade(),
+            badgeStyle: const badges.BadgeStyle(
+              // borderRadius: BorderRadius.circular(48),
+              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            ),
             badgeContent: Text(
               '${entity.badge}',
               style: const TextStyle(
@@ -153,7 +153,10 @@ class SessionUnitItemState extends State<SessionUnitItem> {
         }
         return Text(
           '${message.content}',
-          style: const TextStyle(color: Colors.grey, fontSize: 12),
+          style: const TextStyle(
+            color: Colors.grey,
+            fontSize: 12,
+          ),
           overflow: TextOverflow.ellipsis,
         );
       },

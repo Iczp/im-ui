@@ -25,10 +25,10 @@ class MessageSendtimeWidget extends StatelessWidget {
         // height: 22,
         margin: const EdgeInsets.symmetric(vertical: 8),
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-        decoration: BoxDecoration(
-          // color: Colors.white,
-          borderRadius: BorderRadius.circular(4),
-        ),
+        // decoration: BoxDecoration(
+        //   color: Colors.white,
+        //   borderRadius: BorderRadius.circular(4),
+        // ),
 
         child: RealDatetime(
           dateTime: creationTime,
