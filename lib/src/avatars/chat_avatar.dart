@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:im_core/im_core.dart';
-import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../models/message_arguments.dart';

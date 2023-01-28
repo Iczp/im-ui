@@ -5,7 +5,7 @@ import 'package:im_ui/src/messages/list_view/loading_widget.dart';
 import 'package:im_ui/src/providers/chat_object_provider.dart';
 import 'package:im_ui/src/providers/session_unit_provider.dart';
 import 'package:logger/logger.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+// import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'session_unit_item.dart';
 
@@ -32,9 +32,9 @@ class _SessionListViewState extends State<SessionListView> {
   final ScrollPhysics scrollPhysics =
       const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics());
 
-  ///
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  // ///
+  // final RefreshController _refreshController =
+  //     RefreshController(initialRefresh: false);
 
   ///
   late bool isInited = false;

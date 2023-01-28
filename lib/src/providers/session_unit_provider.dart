@@ -15,7 +15,7 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ///
   final _sessionUnitMap = <String, SessionUnit>{};
 
-  final _maxAutoIdMap = <String, int>{};
+  // final _maxAutoIdMap = <String, int>{};
 
   late int _maxAutoId = 0;
 

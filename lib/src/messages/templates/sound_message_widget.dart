@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 
@@ -106,11 +106,11 @@ class _SoundMessageWidgetState extends MessageWidgetState<SoundMessageWidget> {
           ),
         )),
         !widget.isSelf && !isPlayed
-            ? Badge(
+            ? const badges.Badge(
                 // showBadge: true,
-                toAnimate: false,
-                elevation: 0,
-              )
+                // toAnimate: false,
+                // elevation: 0,
+                )
             : const SizedBox(),
       ],
     );

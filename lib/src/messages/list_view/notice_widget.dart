@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 
 ///消息通知组件
@@ -35,26 +35,26 @@ class _NoticeWidgetState extends State<NoticeWidget> {
             //       ),
             //     ));
           },
-          child: ListTile(
+          child: const ListTile(
             // isThreeLine: true,
             // contentPadding: EdgeInsets.all(8),
             selected: false,
-            leading: const Icon(
+            leading: Icon(
               Icons.notifications_active_rounded,
               size: 36,
               color: Color.fromARGB(255, 231, 54, 0),
             ),
-            title: const Text('你 1 条 新消息'),
-            subtitle: const Text(
+            title: Text('你 1 条 新消息'),
+            subtitle: Text(
               '子组件若需要监听键盘高度，需设置为false',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
-            trailing: Badge(
-              shape: BadgeShape.square,
-              borderRadius: BorderRadius.circular(24),
+            trailing: badges.Badge(
+              // shape: Badges.BadgeShape.square,
+              // borderRadius: BorderRadius.circular(24),
               // position: BadgePosition.topEnd(top: 10, end: 10),
-              badgeContent: const Text(
+              badgeContent: Text(
                 '106',
                 style: TextStyle(
                   color: Colors.white,

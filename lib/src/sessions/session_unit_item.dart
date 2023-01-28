@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:im_core/entities.dart';
 import 'package:im_ui/src/avatars/chat_avatar.dart';
@@ -9,7 +9,7 @@ import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 import '../commons/nav.dart';
-import '../commons/utils.dart';
+// import '../commons/utils.dart';
 import '../widgets/expand.dart';
 import '../widgets/real_datetime.dart';
 import '../widgets/session_layout.dart';
@@ -80,14 +80,14 @@ class SessionUnitItemState extends State<SessionUnitItem> {
           }
 
           if (entity.isImmersed) {
-            return Badge();
+            return const badges.Badge();
           }
 
-          return Badge(
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-            animationType: BadgeAnimationType.fade,
-            shape: BadgeShape.square,
-            borderRadius: BorderRadius.circular(48),
+          return badges.Badge(
+            // padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            // animationType: BadgeAnimationType.fade,
+            // shape: BadgeShape.square,
+            // borderRadius: BorderRadius.circular(48),
             badgeContent: Text(
               '${entity.badge}',
               style: const TextStyle(

@@ -147,7 +147,7 @@ class _SoundInputContainerState extends State<SoundInputContainer> {
   void initState() {
     super.initState();
     initRecorder().then((value) {
-      Overlay.of(context)!.insert(overlayEntry);
+      Overlay.of(context).insert(overlayEntry);
 
       ///订阅事件
       setSubscriptionDuration(widget.subscriptionDuration ?? 300);

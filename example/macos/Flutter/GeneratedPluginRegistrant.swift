@@ -8,9 +8,9 @@ import Foundation
 import audio_session
 import device_info_plus_macos
 import emoji_picker_flutter
-import path_provider_macos
+import path_provider_foundation
 import share_plus_macos
-import shared_preferences_macos
+import shared_preferences_foundation
 import url_launcher_macos
 import video_compress
 import wakelock_macos

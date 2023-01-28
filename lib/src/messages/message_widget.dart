@@ -9,8 +9,7 @@ import 'list_view/message_list_view.dart';
 import '../message_viewer/message_viewer_page.dart';
 import '../models/message_arguments.dart';
 import '../chat_input/chat_input.dart';
-import '../medias/media_avatar.dart';
-import '../medias/media_name_widget.dart';
+
 import '../widgets/message_menu_buttons_all.dart';
 import 'containers/choice_container.dart';
 import 'message_preview.dart';

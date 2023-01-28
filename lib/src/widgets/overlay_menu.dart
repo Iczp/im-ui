@@ -44,7 +44,7 @@ class Toast {
     );
 
     //插入到 Overlay中显示 OverlayEntry
-    Overlay.of(context)!.insert(overlayEntry);
+    Overlay.of(context).insert(overlayEntry);
 
     //延时两秒，移除 OverlayEntry
     Future.delayed(const Duration(seconds: 2)).then((value) {
