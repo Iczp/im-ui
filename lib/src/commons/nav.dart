@@ -6,12 +6,12 @@ import '../pages/chating_page.dart';
 
 class Nav {
   ///
-  static void toChat(
+  static Future toChat(
     BuildContext context, {
     String? title,
     required String sessionUnitId,
   }) {
-    Navigator.push(
+    return Navigator.push(
       context,
       CupertinoPageRoute(
         builder: (context) {

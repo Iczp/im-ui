@@ -58,9 +58,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   ///
   void fetchBadge() {
-    SessionUnitGetBadge(ownerId: ChatObjectProvider.instance.currentId)
-        .submit()
-        .then((count) {
+    SessionUnitGetBadge(
+      ownerId: ChatObjectProvider.instance.currentId,
+      isImmersed: null,
+    ).submit().then((count) {
       badge = count;
       setState(() {});
     });

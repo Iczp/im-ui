@@ -4,9 +4,12 @@ import 'package:im_core/im_core.dart';
 import 'package:im_ui/src/messages/list_view/loading_widget.dart';
 import 'package:im_ui/src/providers/chat_object_provider.dart';
 import 'package:im_ui/src/providers/session_unit_provider.dart';
+import 'package:im_ui/src/sessions/session_dialog.dart';
 import 'package:logger/logger.dart';
 // import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../models/session_menu.dart';
+import '../routes/pop_route.dart';
 import 'session_unit_item.dart';
 
 class SessionListView extends StatefulWidget {
@@ -40,14 +43,16 @@ class _SessionListViewState extends State<SessionListView> {
   late bool isInited = false;
 
   final GlobalKey<LoadingWidgetState> footerLoading = GlobalKey();
+
   final GlobalKey<LoadingWidgetState> headerLoading = GlobalKey();
+
+  final sessionUnitProvider = SessionUnitProvider.instance;
 
   ///
   @override
   initState() {
     super.initState();
-
-    sesssionUnitList = SessionUnitProvider.instance.getList();
+    sesssionUnitList = sessionUnitProvider.getList();
     setState(() {});
     fetchNew();
     fetchMore();
@@ -81,7 +86,7 @@ class _SessionListViewState extends State<SessionListView> {
     }
     Logger().w('_headerHander');
     isHeaderHanded = true;
-    // SessionUnitProvider.instance
+    // sessionUnitProvider
     //     .fetchNewSession()
     //     .then((value) => isHeaderHanded = false);
   }
@@ -92,9 +97,10 @@ class _SessionListViewState extends State<SessionListView> {
     }
     Logger().d('footerLoading');
     footerLoading.currentState?.show();
-    SessionUnitProvider.instance
-        .fetchMore(ownerId: widget.ownerId)
-        .whenComplete(() => footerLoading.currentState?.hide());
+    sessionUnitProvider.fetchMore(ownerId: widget.ownerId).then((value) {
+      sesssionUnitList = sessionUnitProvider.getList();
+      setState(() {});
+    }).whenComplete(() => footerLoading.currentState?.hide());
   }
 
   void fetchNew() {
@@ -103,12 +109,12 @@ class _SessionListViewState extends State<SessionListView> {
     }
     Logger().d('headerLoading');
     headerLoading.currentState?.show();
-    SessionUnitProvider.instance
+    sessionUnitProvider
         .fetchNew(ownerId: widget.ownerId)
         .whenComplete(() => headerLoading.currentState?.hide());
 
-    SessionUnitProvider.instance
-        .fetchNew(ownerId: ChatObjectProvider.instance.currentId);
+    sessionUnitProvider.fetchNew(
+        ownerId: ChatObjectProvider.instance.currentId);
   }
 
   ///
@@ -119,13 +125,13 @@ class _SessionListViewState extends State<SessionListView> {
       maxResultCount: 100,
       skipCount: sesssionUnitList.length,
     ).submit();
-    SessionUnitProvider.instance.setMany(ret.items);
+    sessionUnitProvider.setMany(ret.items);
     ChatObjectProvider.instance.setMany(ret.items
         .where((x) => x.destination != null)
         .map((e) => e.destination!)
         .toList());
     isInited = true;
-    sesssionUnitList = SessionUnitProvider.instance.getList();
+    sesssionUnitList = sessionUnitProvider.getList();
     // sesssionUnitList.addAll(ret.items);
     setState(() {});
   }
@@ -140,7 +146,7 @@ class _SessionListViewState extends State<SessionListView> {
     }
     return Listener(
       onPointerCancel: (event) {
-        Logger().d('onPointerCancel');
+        // Logger().d('onPointerCancel');
       },
       onPointerDown: (event) {
         // Logger().d('onPointerDown');
@@ -163,7 +169,31 @@ class _SessionListViewState extends State<SessionListView> {
         buildDefaultDragHandles: false,
         // itemExtent: 50.0, //强制高度为50.0
         itemBuilder: (BuildContext context, int index) {
+          var entity = sesssionUnitList[index];
           return SessionUnitItem(
+            onLongPress: () async {
+              // Logger().d('onLongPress id:${item.toJson()}');
+
+              var result = await Navigator.push(
+                context,
+                PopRoute(
+                  child: SessionDialog(sessionUnit: entity),
+                ),
+              ) as SessionMenu?;
+              Logger().d('onLongPress back:$result');
+              if (result?.id == 'immersed') {
+                await sessionUnitProvider.toggleImmersed(id: entity.id);
+                sesssionUnitList = sessionUnitProvider.getList();
+                setState(() {});
+              } else if (result?.id == 'topping') {
+                await sessionUnitProvider.toggleTopping(id: entity.id);
+                sesssionUnitList = sessionUnitProvider.getList();
+                setState(() {});
+              }
+
+              // sessionUnitProvider.toggleImmersed(id: item.id);
+              // sessionUnitProvider.toggleTopping(id: item.id);
+            },
             key: Key(sesssionUnitList[index].globalKey.toString()),
             data: sesssionUnitList[index],
           );

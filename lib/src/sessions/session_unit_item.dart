@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:im_core/entities.dart';
 import 'package:im_ui/src/avatars/chat_avatar.dart';
 import 'package:im_ui/src/avatars/chat_name.dart';
+
 import 'package:im_ui/src/providers/session_unit_provider.dart';
 import 'package:im_ui/src/sessions/session_topping.dart';
-import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 import '../commons/nav.dart';
@@ -19,10 +19,13 @@ class SessionUnitItem extends StatefulWidget {
   const SessionUnitItem({
     super.key,
     required this.data,
+    this.onLongPress,
   });
 
   ///
   final SessionUnit data;
+
+  final void Function()? onLongPress;
 
   @override
   State<SessionUnitItem> createState() => SessionUnitItemState();
@@ -33,13 +36,15 @@ class SessionUnitItemState extends State<SessionUnitItem> {
   ///
   SessionUnit get item => widget.data;
 
-  GlobalKey get globalKey => item.globalKey;
+  // GlobalKey get globalKey => item.globalKey;
 
   ChatObject? get dest => widget.data.destination;
 
   String get title => item.rename ?? dest?.name ?? '';
 
   MessageDto? get message => item.lastMessage;
+
+  final GlobalKey globalKey = GlobalKey();
 
   ///
   @override
@@ -48,7 +53,7 @@ class SessionUnitItemState extends State<SessionUnitItem> {
         selector: ((_, x) => x.get(item.id)),
         builder: (context, entity, child) {
           return SessionLayout(
-            // key: globalKey,
+            key: globalKey,
             backgroupColor: entity?.isTopping ?? false
                 ? Colors.grey.shade100
                 : Colors.white,
@@ -56,11 +61,7 @@ class SessionUnitItemState extends State<SessionUnitItem> {
               // SessionUnitProvider.instance.setBadge(item.id, 555);
               Nav.toChat(context, sessionUnitId: item.id, title: title);
             },
-            onLongPress: () {
-              Logger().d('onLongPress id:${item.toJson()}');
-              SessionUnitProvider.instance.toggleImmersed(id: item.id);
-              // SessionUnitProvider.instance.toggleTopping(id: item.id);
-            },
+            onLongPress: widget.onLongPress,
             avatar: ChatAvatar(id: dest?.id),
             title: buildChatName(),
             side: buildSendTime(),
