@@ -236,7 +236,7 @@ class MessageWidgetState<T extends MessageWidget> extends State<T>
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: ChatName(
         id: widget.message.senderId,
-        fontSize: 12,
+        size: 12,
       ),
     );
   }

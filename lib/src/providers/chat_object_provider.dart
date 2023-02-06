@@ -80,4 +80,10 @@ class ChatObjectProvider with ChangeNotifier, DiagnosticableTreeMixin {
     var list = _chatObjectMap.values.toList();
     return list;
   }
+
+  // void fetch(List<String> idList){
+  //   ChatObjectGetMany(idList: [
+  //     ChatObjectProvider.instance.currentId,
+  //   ]).submit().then((list) => ChatObjectProvider.instance.setMany(list));
+  // }
 }

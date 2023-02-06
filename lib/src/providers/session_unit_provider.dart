@@ -99,7 +99,10 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
       Logger().e('No such entity[SessionUnit]:$id');
       return;
     }
-    if (entity.readedMessageAutoId == messageAutoId && entity.badge == 0) {
+    Logger().w(
+        'setReaded ${entity.readedMessageAutoId?.toDouble()}==$messageAutoId');
+    if (entity.readedMessageAutoId?.toDouble() == messageAutoId &&
+        entity.badge == 0) {
       Logger().w('No change required [readedMessageAutoId]:$messageAutoId');
       return;
     }

@@ -20,10 +20,13 @@ class SessionUnitItem extends StatefulWidget {
     super.key,
     required this.data,
     this.onLongPress,
+    required this.index,
   });
 
   ///
   final SessionUnit data;
+
+  final int index;
 
   final void Function()? onLongPress;
 
@@ -54,6 +57,7 @@ class SessionUnitItemState extends State<SessionUnitItem> {
         builder: (context, entity, child) {
           return SessionLayout(
             key: globalKey,
+            isTopSeparated: widget.index != 0,
             backgroupColor: entity?.isTopping ?? false
                 ? Colors.grey.shade100
                 : Colors.white,

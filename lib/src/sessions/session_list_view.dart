@@ -171,6 +171,7 @@ class _SessionListViewState extends State<SessionListView> {
         itemBuilder: (BuildContext context, int index) {
           var entity = sesssionUnitList[index];
           return SessionUnitItem(
+            index: index,
             onLongPress: () async {
               // Logger().d('onLongPress id:${item.toJson()}');
 

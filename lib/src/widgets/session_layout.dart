@@ -10,10 +10,12 @@ class SessionLayout extends StatelessWidget {
     required this.child,
     this.titleHeight = 24,
     this.padding = const EdgeInsets.all(8),
-    this.separated = const SizedBox(width: 12),
+    this.separated = const SizedBox(width: 10),
     this.onTap,
     this.onLongPress,
     this.backgroupColor,
+    this.isTopSeparated = false,
+    this.isBottomSeparated = false,
   });
 
   final Widget? avatar;
@@ -36,40 +38,54 @@ class SessionLayout extends StatelessWidget {
 
   final Color? backgroupColor;
 
+  final bool isTopSeparated;
+
+  final bool isBottomSeparated;
+
+  Widget buildDivider() {
+    return const Divider(height: 0.25, indent: 44 + 8 + 10);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: backgroupColor),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          onLongPress: onLongPress,
-          child: Container(
-            // height: 56,
-            padding: padding,
-            child: Expand(
-              fixed: avatar,
-              separated: avatar == null ? Container() : separated,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: titleHeight,
-                    child: Expand(
-                      dir: TextDirection.rtl,
-                      fixed: side,
-                      separated: side == null ? Container() : separated,
-                      child: title,
-                    ),
+    return Column(
+      children: [
+        if (isTopSeparated) buildDivider(),
+        Container(
+          decoration: BoxDecoration(color: backgroupColor),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: onTap,
+              onLongPress: onLongPress,
+              child: Container(
+                // height: 56,
+                padding: padding,
+                child: Expand(
+                  fixed: avatar,
+                  separated: avatar == null ? Container() : separated,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: titleHeight,
+                        child: Expand(
+                          dir: TextDirection.rtl,
+                          fixed: side,
+                          separated: side == null ? Container() : separated,
+                          child: title,
+                        ),
+                      ),
+                      child,
+                    ],
                   ),
-                  child,
-                ],
+                ),
               ),
             ),
           ),
         ),
-      ),
+        if (isTopSeparated) buildDivider(),
+      ],
     );
   }
 }

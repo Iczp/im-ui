@@ -99,7 +99,7 @@ class _ChatAvatarState extends State<ChatAvatar> {
         child: InkWell(
           radius: widget.radius,
           borderRadius: BorderRadius.circular(widget.radius),
-          onLongPress: _onLongPress,
+          // onLongPress: _onLongPress,
           // onLongPress: () {
           //   if (widget.onLongPressed != null) {
           //     widget.onLongPressed!();
@@ -114,15 +114,15 @@ class _ChatAvatarState extends State<ChatAvatar> {
           //   //   sourceKey: _key,
           //   // );
           // },
-          onTap: () {
-            // Navigator.push(
-            //     context,
-            //     CupertinoPageRoute(
-            //       builder: (context) => const PersonProfilePage(
-            //         title: 'title',
-            //       ),
-            //     ));
-          },
+          // onTap: () {
+          //   // Navigator.push(
+          //   //     context,
+          //   //     CupertinoPageRoute(
+          //   //       builder: (context) => const PersonProfilePage(
+          //   //         title: 'title',
+          //   //       ),
+          //   //     ));
+          // },
           // child: const Icon(
           //   Icons.person,
           //   color: Color.fromARGB(255, 245, 251, 255),
