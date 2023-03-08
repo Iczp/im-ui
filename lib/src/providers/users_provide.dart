@@ -16,7 +16,7 @@ class UsersProvide with ChangeNotifier, DiagnosticableTreeMixin {
   static UsersProvide get instance => _instance;
 
   ///登录用户 id(dev)
-  String? _loginUserId;
+  String? _loginUserId = '1a1c3b1d-0a3b-e8eb-64b2-3a07cfd2d8ca';
 
   // int _count = 0;
 
