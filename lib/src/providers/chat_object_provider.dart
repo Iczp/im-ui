@@ -11,7 +11,7 @@ class ChatObjectProvider with ChangeNotifier, DiagnosticableTreeMixin {
   static ChatObjectProvider get instance => _instance;
 
   ///
-  final _chatObjectMap = <String, ChatObject>{};
+  final _chatObjectMap = <int, ChatObject>{};
 
   ///
   final _currentMap = <int, bool>{};
@@ -62,7 +62,7 @@ class ChatObjectProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   ///
   void set(ChatObject entity) {
-    _chatObjectMap[entity.id.toString()] = entity;
+    _chatObjectMap[entity.id] = entity;
     notifyListeners();
   }
 

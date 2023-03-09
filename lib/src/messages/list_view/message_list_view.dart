@@ -10,7 +10,7 @@ import '../../models/message_arguments.dart';
 import '../../providers/keyboard_provider.dart';
 import '../../providers/message_provider.dart';
 import '../../providers/readed_record_provider.dart';
-import '../../providers/users_provider.dart';
+import '../../providers/user_provider.dart';
 import '../../chat_input/chat_input.dart';
 import '../../menus/message_menu_dialog.dart';
 import '../../widgets/text_divider.dart';
@@ -567,7 +567,7 @@ class MessageListViewState extends State<MessageListView>
 
   ///
   Widget buildListView() {
-    var currentUser = context.read<UsersProvider>().currentUser;
+    var currentUser = context.read<UserProvider>().currentUser;
 
     return GestureDetector(
       onTap: () {

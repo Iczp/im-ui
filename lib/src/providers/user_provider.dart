@@ -3,17 +3,17 @@ import 'package:flutter/foundation.dart';
 import 'package:im_core/im_core.dart';
 
 /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
-class UsersProvider with ChangeNotifier, DiagnosticableTreeMixin {
+class UserProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ///
-  UsersProvider() {
+  UserProvider() {
     initData();
   }
 
   ///
-  static final _instance = UsersProvider();
+  static final _instance = UserProvider();
 
   ///
-  static UsersProvider get instance => _instance;
+  static UserProvider get instance => _instance;
 
   ///登录用户 id(dev)
   String? _loginUserId = '1a1c3b1d-0a3b-e8eb-64b2-3a07cfd2d8ca';

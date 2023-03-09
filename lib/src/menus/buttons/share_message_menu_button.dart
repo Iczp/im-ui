@@ -4,7 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../providers/chat_object_provider.dart';
-import '../../providers/users_provider.dart';
+import '../../providers/user_provider.dart';
 import 'message_menu_button.dart';
 
 class ShareMessageMenuButton extends MessageMenuButton {

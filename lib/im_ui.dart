@@ -60,7 +60,7 @@ class ImUi {
 
   ///
   static List<SingleChildWidget> get providies => _providies ??= [
-        ChangeNotifierProvider(create: (_) => UsersProvider.instance),
+        ChangeNotifierProvider(create: (_) => UserProvider.instance),
         ChangeNotifierProvider(create: (_) => MessageProvider.instance),
         ChangeNotifierProvider(create: (_) => KeyboardProvider.instance),
         ChangeNotifierProvider(create: (_) => MaxLogIdProvider.instance),

@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   ImUi.initialized();
-  UsersProvider.instance.setLoginUser(AppUserDto(
+  UserProvider.instance.setLoginUser(AppUserDto(
     id: 'zhongpei',
     account: 'zhongpei',
     name: '陈忠培**',
@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ).submit().then((count) {
       badge = count;
       setState(() {});
-    });
+    }).catchError((e) {});
   }
 
   @override

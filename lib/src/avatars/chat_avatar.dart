@@ -4,7 +4,7 @@ import 'package:im_core/im_core.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../models/message_arguments.dart';
-import '../providers/users_provider.dart';
+import '../providers/user_provider.dart';
 
 /// 头像
 class ChatAvatar extends StatefulWidget {
@@ -66,7 +66,7 @@ class _ChatAvatarState extends State<ChatAvatar> {
       return const SizedBox();
     }
 
-    String imageUrl = UsersProvider.imgs[0];
+    String imageUrl = UserProvider.imgs[0];
 
     return CompositedTransformTarget(
       key: _globalKey,

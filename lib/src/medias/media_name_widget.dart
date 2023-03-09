@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:im_core/im_core.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/users_provider.dart';
+import '../providers/user_provider.dart';
 
 // class UserNameWidget extends StatefulWidget {
 //   const UserNameWidget({Key? key}) : super(key: key);
@@ -60,7 +60,7 @@ class MediaNameWidget extends StatelessWidget {
     }
 
     var mediaName = '';
-    var mediaInfo = context.read<UsersProvider>().getById(mediaId!);
+    var mediaInfo = context.read<UserProvider>().getById(mediaId!);
     if (mediaInfo != null) {
       mediaName = mediaInfo.name;
     }

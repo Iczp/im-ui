@@ -27,6 +27,13 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ///
   void set(SessionUnit entity, {bool isNotify = true}) {
     _sessionUnitMap[entity.id] = entity;
+
+    //chat object
+    if (entity.destination != null) {
+      Logger().d('set dest:${entity.destination}');
+      ChatObjectProvider.instance.set(entity.destination!);
+    }
+
     setMaxAutoId(entity.lastMessageAutoId ?? 0);
     // Logger().w('set _sessionUnitMap.length:${_sessionUnitMap.length}');
     notifyListeners();

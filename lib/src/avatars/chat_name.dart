@@ -35,7 +35,7 @@ class ChatName extends StatelessWidget {
           padding: padding,
           margin: margin,
           child: Text(
-            value,
+            '$value-1',
             overflow: TextOverflow.ellipsis,
             style:
                 TextStyle(color: color, fontSize: size, fontWeight: fontWeight),
