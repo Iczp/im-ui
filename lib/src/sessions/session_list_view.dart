@@ -19,7 +19,7 @@ class SessionListView extends StatefulWidget {
     required this.ownerId,
   });
 
-  final String ownerId;
+  final int ownerId;
   @override
   State<SessionListView> createState() => _SessionListViewState();
 }

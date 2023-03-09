@@ -17,10 +17,10 @@ class _SessionChangePageState extends State<SessionChangePage> {
 
   late List<ChatObject> list = <ChatObject>[
     ChatObject(id: chatObjectProvider.currentId),
-    ChatObject(id: '696aa1f2-e2dc-4d92-a4b0-dc2cbe4d0054'),
+    ChatObject(id: 100),
   ];
 
-  bool isCurrent(String chatObjectId) =>
+  bool isCurrent(int chatObjectId) =>
       chatObjectId == chatObjectProvider.currentId;
 
   @override

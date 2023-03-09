@@ -14,10 +14,10 @@ class ChatObjectProvider with ChangeNotifier, DiagnosticableTreeMixin {
   final _chatObjectMap = <String, ChatObject>{};
 
   ///
-  final _currentMap = <String, bool>{};
+  final _currentMap = <int, bool>{};
 
   ///
-  String get currentId => '7afd5b0a-2db3-4191-9996-091e33dcc83f';
+  int get currentId => 100;
 
   ///
   late ChatObject? _current;
@@ -47,7 +47,7 @@ class ChatObjectProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   ///
-  void setCurrent(String chatObjectId) {
+  void setCurrent(int chatObjectId) {
     for (var key in _currentMap.keys) {
       _currentMap[key] = false;
     }
@@ -56,13 +56,13 @@ class ChatObjectProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   ///
-  ChatObject? get(String id) => _chatObjectMap[id];
+  ChatObject? get(int id) => _chatObjectMap[id];
 
-  String getName(String id) => get(id)?.name ?? '--';
+  String getName(int id) => get(id)?.name ?? '--';
 
   ///
   void set(ChatObject entity) {
-    _chatObjectMap[entity.id] = entity;
+    _chatObjectMap[entity.id.toString()] = entity;
     notifyListeners();
   }
 

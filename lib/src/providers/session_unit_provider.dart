@@ -89,7 +89,7 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future setReaded({
     required String id,
-    required String messageId,
+    required int messageId,
     required double messageAutoId,
   }) async {
     Logger().d(
@@ -135,7 +135,7 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
         .toList());
   }
 
-  Future fetchNew({required String ownerId, int maxResultCount = 20}) async {
+  Future fetchNew({required int ownerId, int maxResultCount = 20}) async {
     var ret = await SessionUnitGetList(
       ownerId: ownerId,
       minAutoId: _maxAutoId,
@@ -149,7 +149,7 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   Future fetchMore({
-    required String ownerId,
+    required int ownerId,
   }) async {
     var ret = await SessionUnitGetList(
       ownerId: ownerId,

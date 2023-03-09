@@ -14,7 +14,7 @@ class ChatName extends StatelessWidget {
   }) : super(key: key);
 
   ///
-  final String? id;
+  final int? id;
 
   final Color? color;
 

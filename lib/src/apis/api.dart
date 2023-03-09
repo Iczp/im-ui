@@ -26,7 +26,7 @@ class Api {
 
     ///
     message.setMessageState(MessageStateEnum.success);
-    var logId = (message.autoId.toInt() + Random().nextInt(10)).toDouble();
+    var logId = (message.autoId!.toInt() + Random().nextInt(10)).toDouble();
     message.setLogId(logId);
     await MaxLogIdProvider.setMaxLogId(logId);
 

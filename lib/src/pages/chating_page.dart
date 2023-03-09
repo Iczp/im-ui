@@ -211,7 +211,7 @@ class _ChatingPageState extends State<ChatingPage>
       SessionUnitProvider.instance.setReaded(
         id: sessionUnitId,
         messageId: lastMessage.id!,
-        messageAutoId: lastMessage.autoId,
+        messageAutoId: lastMessage.autoId!,
       );
     }
 
@@ -234,11 +234,10 @@ class _ChatingPageState extends State<ChatingPage>
     Logger().d('_messageList.length:${messageList.length}');
     var logId = MaxLogIdProvider.takeMaxLogId();
     return MessageDto(
-      id: GlobalKey().toString(),
+      id: null,
       autoId: logId,
-      senderId: messageList.length % 2 == 0 ? 'zhongpei' : widget.media.mediaId,
-      receiverId:
-          messageList.length % 2 == 1 ? 'zhongpei' : widget.media.mediaId,
+      senderId: messageList.length % 2 == 0 ? 100 : 101,
+      receiverId: messageList.length % 2 == 1 ? 100 : 101,
       // media: MediaTypeEnum.personal,
       content: content,
       creationTime: DateTime.now(),

@@ -3,7 +3,8 @@ import 'package:im_core/im_core.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import '../../providers/users_provide.dart';
+import '../../providers/chat_object_provider.dart';
+import '../../providers/users_provider.dart';
 import 'message_menu_button.dart';
 
 class ShareMessageMenuButton extends MessageMenuButton {
@@ -33,7 +34,7 @@ class _ShareMessageMenuButtonState
     Logger().i('${toString()} - ${message.messageType}');
     super.onTap();
 
-    var senderInfo = context.read<UsersProvide>().getById(message.senderId);
+    var senderInfo = context.read<ChatObjectProvider>().get(message.senderId);
 
     var sendName = '${senderInfo?.name}';
     switch (message.messageType) {

@@ -4,7 +4,7 @@ import 'package:im_core/im_core.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../models/message_arguments.dart';
-import '../providers/users_provide.dart';
+import '../providers/users_provider.dart';
 
 /// 头像
 class ChatAvatar extends StatefulWidget {
@@ -20,7 +20,7 @@ class ChatAvatar extends StatefulWidget {
   }) : super(key: key);
 
   /// chat object id
-  final String? id;
+  final int? id;
 
   final ChatObject? entity;
 
@@ -66,7 +66,7 @@ class _ChatAvatarState extends State<ChatAvatar> {
       return const SizedBox();
     }
 
-    String imageUrl = UsersProvide.imgs[0];
+    String imageUrl = UsersProvider.imgs[0];
 
     return CompositedTransformTarget(
       key: _globalKey,

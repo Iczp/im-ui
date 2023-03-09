@@ -10,7 +10,7 @@ export 'src/providers/readed_record_provider.dart';
 
 export 'src/providers/scroll_provider.dart';
 
-export 'src/providers/users_provide.dart';
+export 'src/providers/users_provider.dart';
 
 export 'src/providers/session_unit_provider.dart';
 

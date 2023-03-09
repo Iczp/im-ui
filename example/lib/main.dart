@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   ImUi.initialized();
-  UsersProvide.instance.setLoginUser(AppUserDto(
+  UsersProvider.instance.setLoginUser(AppUserDto(
     id: 'zhongpei',
     account: 'zhongpei',
     name: '陈忠培**',

@@ -10,7 +10,7 @@ import '../../models/message_arguments.dart';
 import '../../providers/keyboard_provider.dart';
 import '../../providers/message_provider.dart';
 import '../../providers/readed_record_provider.dart';
-import '../../providers/users_provide.dart';
+import '../../providers/users_provider.dart';
 import '../../chat_input/chat_input.dart';
 import '../../menus/message_menu_dialog.dart';
 import '../../widgets/text_divider.dart';
@@ -270,10 +270,9 @@ class MessageListViewState extends State<MessageListView>
   List<MessageDto> generateMessage(int count) => List.generate(count, (index) {
         double autoId = (_messageList.length + 1 + index).toDouble();
         return MessageDto(
-          id: GlobalKey().toString(),
           autoId: autoId,
-          senderId: index % 2 == 0 ? 'zhongpei' : widget.media.mediaId,
-          receiverId: index % 2 == 1 ? 'zhongpei' : widget.media.mediaId,
+          senderId: index % 2 == 0 ? 100 : 101,
+          receiverId: index % 2 == 1 ? 100 : 101,
           // media: MediaTypeEnum.personal,
           content: TextContentDto(text: 'logId:$autoId'),
           creationTime: DateTime.now(),
@@ -568,7 +567,7 @@ class MessageListViewState extends State<MessageListView>
 
   ///
   Widget buildListView() {
-    var currentUser = context.read<UsersProvide>().currentUser;
+    var currentUser = context.read<UsersProvider>().currentUser;
 
     return GestureDetector(
       onTap: () {

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../models/message_arguments.dart';
-import '../providers/users_provide.dart';
+import '../providers/users_provider.dart';
 
 /// 头像
 class MediaAvatar extends StatefulWidget {
@@ -79,9 +79,9 @@ class _MediaAvatarState extends State<MediaAvatar> {
       return const SizedBox();
     }
 
-    mediaInfo = context.watch<UsersProvide>().getById(widget.meidaId);
+    mediaInfo = context.watch<UsersProvider>().getById(widget.meidaId);
 
-    String imageUrl = UsersProvide.imgs[0];
+    String imageUrl = UsersProvider.imgs[0];
     if (mediaInfo != null && mediaInfo!.portrait != null) {
       imageUrl = mediaInfo!.portrait!;
     }
