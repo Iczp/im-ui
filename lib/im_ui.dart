@@ -1,12 +1,15 @@
 library im_ui;
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:im_core/im_core.dart';
+import 'package:im_ui/src/commons/reg.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:im_core/services.dart';
+import 'package:im_core/extensions.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
 import 'providers.dart';
@@ -25,7 +28,8 @@ class ImUi {
       baseUrl: 'http://10.0.5.20:8044',
     );
 
-    var wsUrl = 'ws://10.0.5.20:31230/ws';
+    var wsUrl =
+        'ws://10.0.5.20:31230/ws?ticket=360cfedb-e92d-3331-1fad-3a086371e0e4';
     final channel = IOWebSocketChannel.connect(
       wsUrl,
       pingInterval: const Duration(seconds: 3),
@@ -40,15 +44,27 @@ class ImUi {
       channel.sink.add(DateTime.now().microsecondsSinceEpoch.toString());
     });
 
-    channel.stream.listen((message) {
+    channel.stream.listen((message) async {
+      debugPrint('received:$message');
       // channel.sink.add('received!');
 
-      Logger().e('received:$message');
-      debugPrint('received:$message');
-      // channel.sink.close(status.goingAway);
+      bool isJson = Reg.isJson(message);
+
+      if (isJson) {
+        var json = jsonDecode(message);
+        var pushPayload = PushPayload.fromJson(json);
+        Logger().w('pushPayload:${pushPayload.payload}');
+        Logger().w('command:${pushPayload.command}');
+      }
+
+      Logger().w('runtimeType:${message.runtimeType}');
+
+      // await channel.sink.close(status.goingAway);
+
+      // channel.sink.add('**************====******************');
     }, onDone: () {
       debugPrint('ws channel closed');
-      Logger().e('onDone');
+      Logger().w('onDone');
     }, onError: (e) {
       Logger().e('onError');
       debugPrint('Connection exception $e');
