@@ -200,7 +200,7 @@ class _ChatingPageState extends State<ChatingPage>
 
     // var lastMessage = messages.lastOrNull((x) => x.id != null);
 
-    var lastMessage = messages.where((x) => x.id != null).max((x) => x.autoId);
+    var lastMessage = messages.where((x) => x.id != null).max((x) => x.id);
 
     if (lastMessage != null) {
       // context
@@ -211,7 +211,7 @@ class _ChatingPageState extends State<ChatingPage>
       SessionUnitProvider.instance.setReaded(
         id: sessionUnitId,
         messageId: lastMessage.id!,
-        messageAutoId: lastMessage.autoId!,
+        messageAutoId: lastMessage.id!.toDouble(),
       );
     }
 
