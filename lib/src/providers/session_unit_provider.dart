@@ -31,7 +31,7 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
     //chat object
     if (entity.destination != null) {
       Logger().d('set dest:${entity.destination}');
-      ChatObjectProvider.instance.set(entity.destination!);
+      ChatObjectProvider.singleton.set(entity.destination!);
     }
 
     setMaxAutoId(entity.lastMessageAutoId ?? 0);
@@ -136,7 +136,7 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   void _fetchDataHander(List<SessionUnit> items) {
     setMany(items);
-    ChatObjectProvider.instance.setMany(items
+    ChatObjectProvider.singleton.setMany(items
         .where((x) => x.destination != null)
         .map((e) => e.destination!)
         .toList());

@@ -13,7 +13,7 @@ class SessionChangePage extends StatefulWidget {
 
 class _SessionChangePageState extends State<SessionChangePage> {
   ///
-  ChatObjectProvider get chatObjectProvider => ChatObjectProvider.instance;
+  ChatObjectProvider get chatObjectProvider => ChatObjectProvider.singleton;
 
   late List<ChatObject> list = <ChatObject>[
     ChatObject(id: chatObjectProvider.currentId),

@@ -22,7 +22,7 @@ class _SessionPageState extends State<SessionPage>
 
   get builder => null;
 
-  ChatObjectProvider get chatObjectProvider => ChatObjectProvider.instance;
+  ChatObjectProvider get chatObjectProvider => ChatObjectProvider.singleton;
 
   @override
   void initState() {
@@ -60,7 +60,7 @@ class _SessionPageState extends State<SessionPage>
                 ChatName(
                   id: chatObjectProvider.currentId,
                   margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                  size: 16,
+                  size: 14,
                   fontWeight: FontWeight.bold,
                   // color: Colors.white,
                 ),

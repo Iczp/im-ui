@@ -24,9 +24,14 @@ class ImUi {
   ///
   static void initialized() {
     appInitialized();
-    HttpHelper.init(
-      baseUrl: 'http://10.0.5.20:8044',
-    );
+    HttpHelper.init(HttpConfig(
+      apiHost: 'http://10.0.5.20:8044',
+      authHost: 'http://10.0.5.20:8043',
+      clientId: 'IM_App',
+      clientSecret: null,
+      username: 'admin',
+      password: '1q2w3E*',
+    ));
 
     var wsUrl =
         'ws://10.0.5.20:31230/ws?ticket=360cfedb-e92d-3331-1fad-3a086371e0e4';
@@ -84,6 +89,6 @@ class ImUi {
         ChangeNotifierProvider(create: (_) => ReadedRecordProvider.instance),
         ChangeNotifierProvider(create: (_) => ScrollProvider.instance),
         ChangeNotifierProvider(create: (_) => SessionUnitProvider.instance),
-        ChangeNotifierProvider(create: (_) => ChatObjectProvider.instance),
+        ChangeNotifierProvider(create: (_) => ChatObjectProvider.singleton),
       ];
 }

@@ -5,6 +5,7 @@ import 'package:im_ui/pages.dart';
 import 'package:im_ui/im_ui.dart';
 import 'package:im_ui/commons.dart';
 import 'package:im_ui/providers.dart';
+import 'package:im_ui/screenshot_widget.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -59,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   ///
   void fetchBadge() {
     SessionUnitGetBadge(
-      ownerId: ChatObjectProvider.instance.currentId,
+      ownerId: ChatObjectProvider.singleton.currentId,
       isImmersed: null,
     ).submit().then((count) {
       badge = count;
@@ -122,6 +123,9 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: Text('session list view($badge)'),
           ),
+          const ScreenshotWidget(
+            child: Text('ddddddddddd'),
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(

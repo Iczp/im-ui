@@ -4,11 +4,14 @@ import 'package:im_core/im_core.dart';
 /// Mix-in [DiagnosticableTreeMixin] to have access to [debugFillProperties] for the devtool
 
 class ChatObjectProvider with ChangeNotifier, DiagnosticableTreeMixin {
-  ///
-  static final _instance = ChatObjectProvider();
+  //私有构造函数
+  ChatObjectProvider._internal();
 
   ///
-  static ChatObjectProvider get instance => _instance;
+  static final _instance = ChatObjectProvider._internal();
+
+  ///
+  static ChatObjectProvider get singleton => _instance;
 
   ///
   final _chatObjectMap = <int, ChatObject>{};

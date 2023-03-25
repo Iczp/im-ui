@@ -114,7 +114,7 @@ class _SessionListViewState extends State<SessionListView> {
         .whenComplete(() => headerLoading.currentState?.hide());
 
     sessionUnitProvider.fetchNew(
-        ownerId: ChatObjectProvider.instance.currentId);
+        ownerId: ChatObjectProvider.singleton.currentId);
   }
 
   ///
@@ -126,7 +126,7 @@ class _SessionListViewState extends State<SessionListView> {
       skipCount: sesssionUnitList.length,
     ).submit();
     sessionUnitProvider.setMany(ret.items);
-    ChatObjectProvider.instance.setMany(ret.items
+    ChatObjectProvider.singleton.setMany(ret.items
         .where((x) => x.destination != null)
         .map((e) => e.destination!)
         .toList());
