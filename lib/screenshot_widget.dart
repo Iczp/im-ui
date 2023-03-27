@@ -26,11 +26,11 @@ class _ScreenshotWidgetState extends State<ScreenshotWidget> {
 
     if (boundary.debugNeedsPaint) {
       print("Waiting for boundary to be painted.");
-      await Future.delayed(const Duration(milliseconds: 20));
+      await Future.delayed(const Duration(milliseconds: 100));
       return _capturePng();
     }
 
-    var image = await boundary.toImage();
+    var image = await boundary.toImage(pixelRatio: 3.0);
     var byteData = await image.toByteData(format: ImageByteFormat.png);
     return byteData!.buffer.asUint8List();
   }

@@ -62,8 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
     SessionUnitGetBadge(
       ownerId: ChatObjectProvider.singleton.currentId,
       isImmersed: null,
-    ).submit().then((count) {
-      badge = count;
+    ).submit().then((badgeDto) {
+      badge = badgeDto.badge;
       setState(() {});
     }).catchError((e) {});
   }
