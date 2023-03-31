@@ -34,7 +34,7 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
       ChatObjectProvider.singleton.set(entity.destination!);
     }
 
-    setMaxAutoId(entity.lastMessageAutoId ?? 0);
+    setMaxAutoId(entity.lastMessageId ?? 0);
     // Logger().w('set _sessionUnitMap.length:${_sessionUnitMap.length}');
     notifyListeners();
   }
@@ -82,7 +82,7 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   int? getBadge(String id) => get(id)?.badge;
 
-  int? getReadedMessageAutoId(String id) => get(id)?.readedMessageAutoId;
+  int? getReadedMessageAutoId(String id) => get(id)?.readedMessageId;
 
   DateTime? getSendTime(id) => get(id)?.lastMessage?.creationTime;
 
@@ -106,18 +106,18 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
       Logger().e('No such entity[SessionUnit]:$id');
       return;
     }
-    Logger().w(
-        'setReaded ${entity.readedMessageAutoId?.toDouble()}==$messageAutoId');
-    if (entity.readedMessageAutoId?.toDouble() == messageAutoId &&
+    Logger()
+        .w('setReaded ${entity.readedMessageId?.toDouble()}==$messageAutoId');
+    if (entity.readedMessageId?.toDouble() == messageAutoId &&
         entity.badge == 0) {
-      Logger().w('No change required [readedMessageAutoId]:$messageAutoId');
+      Logger().w('No change required [readedMessageId]:$messageAutoId');
       return;
     }
     SessionUnitSetReaded(
       id: id,
       messageId: messageId,
     ).submit().then((ret) => set(ret)).whenComplete(() {
-      // entity.readedMessageAutoId = messageAutoId.toInt();
+      // entity.readedMessageId = messageAutoId.toInt();
       // setBadge(id, 0);
     });
   }
@@ -130,8 +130,8 @@ class SessionUnitProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   int getMaxAutoId() {
-    var maxItem = _sessionUnitMap.values.max((x) => x.lastMessageAutoId);
-    return maxItem?.lastMessageAutoId ?? 0;
+    var maxItem = _sessionUnitMap.values.max((x) => x.lastMessageId);
+    return maxItem?.lastMessageId ?? 0;
   }
 
   void _fetchDataHander(List<SessionUnit> items) {
